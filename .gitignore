@@ -1,0 +1,17 @@
+# Donnees (segmentations NIfTI) : ne pas versionner
+DELINEATION_COMPLETE/
+data/
+*.nii
+*.nii.gz
+
+# Systeme
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Python / notebooks
+__pycache__/
+*.pyc
+.venv/
+venv/
+.ipynb_checkpoints/
