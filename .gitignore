@@ -1,6 +1,7 @@
 # Donnees (segmentations NIfTI) : ne pas versionner
-DELINEATION_COMPLETE/
+DATA/
 data/
+DOCUMENTATION/given_documents/excel_delineation.xlsx
 *.nii
 *.nii.gz
 
