@@ -1,0 +1,510 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Comparateur de délinéations</title>
+<!-- Page générée par ANALYSIS/viewer/build_viewer.py : ouvrir RESULTS/viewer/index.html.
+     100 % local : aucune requête réseau. -->
+<style>
+:root {
+  color-scheme: dark;
+  --bg: #121211;
+  --panel: #1a1a19;
+  --panel-2: #232321;
+  --line: #34332f;
+  --text: #f0efec;
+  --text-2: #c3c2b7;
+  --muted: #8d8c84;
+  --accent: #3987e5;
+  --warn: #c98500;
+  --canvas-bg: #000;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--text);
+  font: 13px/1.4 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+header { display: flex; flex-wrap: wrap; gap: 12px 20px; align-items: center;
+  padding: 10px 16px; border-bottom: 1px solid var(--line); background: var(--panel); }
+header h1 { font-size: 15px; margin: 0; font-weight: 600; }
+.ctl { display: flex; align-items: center; gap: 6px; color: var(--text-2); }
+select, button { background: var(--panel-2); color: var(--text); border: 1px solid var(--line);
+  border-radius: 6px; padding: 4px 8px; font: inherit; cursor: pointer; }
+button:hover, select:hover { border-color: var(--muted); }
+.seg { display: inline-flex; border: 1px solid var(--line); border-radius: 6px; overflow: hidden; }
+.seg button { border: 0; border-radius: 0; border-right: 1px solid var(--line); }
+.seg button:last-child { border-right: 0; }
+.seg button.on { background: var(--accent); color: #fff; }
+input[type=range] { accent-color: var(--accent); }
+main { display: grid; grid-template-columns: 300px 1fr; min-height: calc(100vh - 52px); }
+aside { border-right: 1px solid var(--line); background: var(--panel); padding: 12px; overflow-y: auto; }
+aside h2 { font-size: 11px; text-transform: uppercase; letter-spacing: .06em; color: var(--muted);
+  margin: 14px 0 6px; font-weight: 600; }
+aside h2:first-child { margin-top: 0; }
+.row-btns { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 6px; }
+.del { display: grid; grid-template-columns: auto 14px 1fr auto; gap: 6px; align-items: start;
+  padding: 6px; border-radius: 6px; border: 1px solid transparent; }
+.del:hover { background: var(--panel-2); }
+.del.on { border-color: var(--line); background: var(--panel-2); }
+.del .sw { width: 14px; height: 14px; border-radius: 3px; margin-top: 2px; }
+.del .name { font-weight: 600; }
+.del .meta { color: var(--muted); font-size: 11px; word-break: break-all; }
+.del .iss { color: var(--warn); font-size: 11px; }
+.badge { display: inline-block; font-size: 10px; font-weight: 600; padding: 0 5px; border-radius: 4px;
+  border: 1px solid currentColor; margin: 2px 0; }
+.badge.ok { color: #4fb286; } .badge.fix { color: #6ea8f0; } .badge.ko { color: #e66767; }
+.del .key { color: var(--muted); font-size: 11px; font-variant-numeric: tabular-nums; }
+.del .solo { font-size: 11px; padding: 1px 6px; }
+.nuc { display: flex; align-items: center; gap: 6px; padding: 2px 0; }
+.nuc .sw { width: 12px; height: 12px; border-radius: 3px; }
+.views { padding: 12px 16px; display: flex; flex-direction: column; gap: 12px; min-width: 0; }
+.grid3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+.view { background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 8px; min-width: 0; }
+.view .vh { display: flex; justify-content: space-between; color: var(--text-2); margin-bottom: 6px; }
+.view .vh b { color: var(--text); font-weight: 600; }
+.cv-wrap { position: relative; display: flex; justify-content: center; }
+canvas { background: var(--canvas-bg); image-rendering: pixelated; cursor: crosshair; max-width: 100%; }
+.orient { position: absolute; top: 50%; color: var(--muted); font-size: 11px; transform: translateY(-50%); pointer-events: none; }
+.orient.l { left: 4px; } .orient.r { right: 4px; }
+.view input[type=range] { width: 100%; margin-top: 6px; }
+.panel { background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 10px 12px; }
+.panel h3 { margin: 0 0 8px; font-size: 13px; font-weight: 600; }
+.bottom { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+table { border-collapse: collapse; font-variant-numeric: tabular-nums; }
+th, td { padding: 3px 8px; text-align: right; border-bottom: 1px solid var(--line); }
+th { color: var(--text-2); font-weight: 600; }
+td:first-child, th:first-child { text-align: left; }
+.note { color: var(--muted); font-size: 12px; }
+.warnbox { color: var(--warn); font-size: 12px; margin: 6px 0; }
+.chip { display: inline-block; width: 10px; height: 10px; border-radius: 2px; margin-right: 4px; vertical-align: -1px; }
+.empty { color: var(--muted); padding: 40px; text-align: center; }
+@media (max-width: 1100px) { .grid3 { grid-template-columns: 1fr; } .bottom { grid-template-columns: 1fr; } }
+@media (max-width: 800px) { main { grid-template-columns: 1fr; } aside { border-right: 0; border-bottom: 1px solid var(--line); } }
+</style>
+</head>
+<body>
+<header>
+  <h1>Comparateur de délinéations</h1>
+  <span class="ctl">Données
+    <span class="seg" id="filter">
+      <button data-v="clean" class="on" title="Étapes 1 + 2 de 02_clean_name (= DATA/CLEAN_DELINEATION)">Propres</button><button data-v="correct" title="Étape 1 seulement : correctes telles quelles">Correctes</button><button data-v="rejected" title="Non traitées par 02_clean_name">Non traitées</button><button data-v="all" title="Tous les fichiers bruts lisibles">Toutes</button>
+    </span></span>
+  <label class="ctl">Sujet <select id="subject"></select></label>
+  <span class="ctl">Session <span class="seg" id="sessions"></span></span>
+  <span class="ctl">Affichage
+    <span class="seg" id="mode">
+      <button data-v="fill">Remplissage</button><button data-v="contour" class="on">Contours</button><button data-v="both">Les deux</button>
+    </span></span>
+  <span class="ctl">Couleur
+    <span class="seg" id="colorby">
+      <button data-v="label">par noyau</button><button data-v="del" class="on">par délinéation</button>
+    </span></span>
+  <label class="ctl">Opacité <input type="range" id="opacity" min="0.1" max="1" step="0.05" value="0.55"></label>
+  <label class="ctl">Zoom <input type="range" id="zoom" min="1" max="4" step="0.25" value="1"></label>
+  <label class="ctl"><input type="checkbox" id="cross" checked> Réticule</label>
+</header>
+<main>
+  <aside>
+    <h2>Délinéations</h2>
+    <div class="row-btns">
+      <button id="all">Tout afficher</button><button id="none">Tout masquer</button><button id="swap" title="Touche Espace">Inverser (Espace)</button>
+    </div>
+    <div class="note" style="margin-bottom:6px">Touches 1–9 : afficher/masquer · Espace : inverser les visibles</div>
+    <div id="dels"></div>
+    <h2>Noyaux (labels)</h2>
+    <div class="row-btns"><button id="nucAll">Tous</button><button id="nucNone">Aucun</button></div>
+    <div id="nuclei"></div>
+    <div class="note" style="margin-top:6px">Correspondance label ↔ noyau supposée (ordre de colors.md), non confirmée.</div>
+  </aside>
+  <section class="views">
+    <div id="sesWarn" class="warnbox" hidden>⚠ Plusieurs sessions affichées : ce sont des IRM différentes, la superposition voxel à voxel n'a pas de sens anatomique.</div>
+    <div class="grid3" id="grid"></div>
+    <div class="bottom">
+      <div class="panel"><h3>Sous le curseur</h3><div id="hover" class="note">Survoler une coupe.</div></div>
+      <div class="panel"><h3>Accord (Dice) entre délinéations visibles</h3><div id="dice" class="note"></div></div>
+    </div>
+  </section>
+</main>
+
+<!-- index.js chargé avec un paramètre unique : jamais servi depuis le cache -->
+<script>document.write('<script src="data/index.js?t=' + Date.now() + '"><\/script>');</script>
+<script>
+"use strict";
+// Couleurs par délinéation : palette catégorielle (8 teintes, pas de dark mode).
+const DEL_COLORS = ["#3987e5", "#d95926", "#199e70", "#c98500", "#d55181", "#008300", "#9085e9", "#e66767"];
+const NUCLEI = window.VIEWER_NUCLEI || [];
+const NUC = {}; NUCLEI.forEach(n => NUC[n.label] = n);
+const INDEX = window.VIEWER_INDEX || [];
+
+// Filtre sur le statut 02_clean_name.csv : 1_correct, 2_nom, non_traite, absent
+const FILTERS = {
+  clean: s => s === "1_correct" || s === "2_nom",
+  correct: s => s === "1_correct",
+  rejected: s => s === "non_traite" || s === "absent",
+  all: () => true,
+};
+const STEP_BADGE = {
+  "1_correct": ["ok", "✓ correct"], "2_nom": ["fix", "✓ nom corrigé"],
+  "non_traite": ["ko", "✗ non traité"], "absent": ["ko", "✗ hors journal"],
+};
+const passes = step => FILTERS[S.filter](step);
+const countFor = entry => entry.dels.filter(([, st]) => passes(st)).length;
+
+const S = {
+  filter: "clean",
+  subject: null, data: null, session: null, dels: [], visible: new Set(),
+  labelsOn: new Set(NUCLEI.map(n => n.label)), mode: "contour", colorBy: "del",
+  opacity: 0.55, zoom: 1, cross: true, cur: [0, 0, 0],
+};
+const $ = id => document.getElementById(id);
+
+// ---------------------------------------------------------------- données
+function decode(b64, Type) {
+  const bin = atob(b64), u8 = new Uint8Array(bin.length);
+  for (let i = 0; i < bin.length; i++) u8[i] = bin.charCodeAt(i);
+  return new Type(u8.buffer);
+}
+function loadSubject(subject) {
+  const entry = INDEX.find(s => s.subject === subject);
+  const ready = () => {
+    const d = window.VIEWER_DATA[subject], b = d.bbox, n = b.nx * b.ny * b.nz;
+    if (d.dels.some(m => !m.step)) {  // fichier généré par une ancienne version du script
+      $("grid").innerHTML = '<div class="empty">Données obsolètes pour ' + subject +
+        ' : relancer build_viewer.py puis recharger la page (Cmd+Shift+R).</div>';
+      return;
+    }
+    S.subject = subject; S.data = d;
+    S.dels = d.dels.map((m, i) => {
+      const vol = new Uint16Array(n), idx = decode(m.idx, Uint32Array), lab = decode(m.lab, Uint16Array);
+      for (let k = 0; k < idx.length; k++) vol[idx[k]] = lab[k];
+      return { ...m, i, vol, color: DEL_COLORS[i % DEL_COLORS.length] };
+    });
+    S.session = bestSession();
+    S.cur = centerOfMass();
+    resetVisible();
+    renderSessions(); renderDelList(); buildViews(); draw();
+    try { localStorage.setItem("viewer.subject", subject); } catch (e) {}
+  };
+  if (window.VIEWER_DATA && window.VIEWER_DATA[subject]) return ready();
+  const s = document.createElement("script");
+  s.src = "data/" + entry.file + ".js?v=" + (window.VIEWER_BUILD || Date.now()); s.onload = ready;
+  s.onerror = () => { $("grid").innerHTML = '<div class="empty">Fichier data/' + entry.file + '.js introuvable — relancer build_viewer.py</div>'; };
+  document.head.appendChild(s);
+}
+function sessionCounts() {
+  const c = {};
+  S.dels.filter(d => passes(d.step)).forEach(d => c[d.session] = (c[d.session] || 0) + 1);
+  return Object.entries(c).sort((a, b) => a[0].localeCompare(b[0]));
+}
+// Session par défaut : celle qui a le plus de délinéations sous le filtre courant
+function bestSession() {
+  const c = sessionCounts().sort((a, b) => b[1] - a[1]);
+  return c.length ? c[0][0] : "all";
+}
+function shown() {
+  return S.dels.filter(d => passes(d.step) && (S.session === "all" || d.session === S.session));
+}
+function resetVisible() { S.visible = new Set(shown().slice(0, 2).map(d => d.i)); }
+function centerOfMass() {
+  const b = S.data.bbox; let sx = 0, sy = 0, sz = 0, c = 0;
+  const d = S.dels[0]; if (!d) return [b.nx >> 1, b.ny >> 1, b.nz >> 1];
+  for (let z = 0; z < b.nz; z++) for (let y = 0; y < b.ny; y++) for (let x = 0; x < b.nx; x++)
+    if (d.vol[x + b.nx * (y + b.ny * z)]) { sx += x; sy += y; sz += z; c++; }
+  if (!c) return [b.nx >> 1, b.ny >> 1, b.nz >> 1];
+  // x : centre de l'hémisphère gauche (le centre global tombe entre les deux thalamus)
+  const mx = Math.round(sx / c); let lx = 0, lc = 0;
+  for (let z = 0; z < b.nz; z++) for (let y = 0; y < b.ny; y++) for (let x = 0; x < mx; x++)
+    if (d.vol[x + b.nx * (y + b.ny * z)]) { lx += x; lc++; }
+  return [lc ? Math.round(lx / lc) : mx, Math.round(sy / c), Math.round(sz / c)];
+}
+
+// ---------------------------------------------------------------- vues
+// Espace voxel (RAS). Axiale : x → droite, antérieur en haut. Coronale/sagittale : supérieur en haut.
+const VIEWS = [
+  { key: "ax", name: "Axiale", axis: 2, L: "G", R: "D",
+    dims: b => [b.nx, b.ny], vox: (c, r, s, b) => [c, b.ny - 1 - r, s], toCR: (p, b) => [p[0], b.ny - 1 - p[1]] },
+  { key: "co", name: "Coronale", axis: 1, L: "G", R: "D",
+    dims: b => [b.nx, b.nz], vox: (c, r, s, b) => [c, s, b.nz - 1 - r], toCR: (p, b) => [p[0], b.nz - 1 - p[2]] },
+  { key: "sa", name: "Sagittale", axis: 0, L: "P", R: "A",
+    dims: b => [b.ny, b.nz], vox: (c, r, s, b) => [s, c, b.nz - 1 - r], toCR: (p, b) => [p[1], b.nz - 1 - p[2]] },
+];
+const AXN = ["x", "y", "z"], AXSIZE = ["nx", "ny", "nz"], AX0 = ["x0", "y0", "z0"];
+
+function buildViews() {
+  const g = $("grid"); g.innerHTML = "";
+  VIEWS.forEach(v => {
+    const el = document.createElement("div"); el.className = "view";
+    el.innerHTML = `<div class="vh"><b>${v.name}</b><span class="sl"></span></div>
+      <div class="cv-wrap"><canvas></canvas><span class="orient l">${v.L}</span><span class="orient r">${v.R}</span></div>
+      <input type="range" min="0" step="1">`;
+    g.appendChild(el);
+    v.el = el; v.cv = el.querySelector("canvas"); v.range = el.querySelector("input"); v.lab = el.querySelector(".sl");
+    v.range.max = S.data.bbox[AXSIZE[v.axis]] - 1;
+    v.range.oninput = () => { S.cur[v.axis] = +v.range.value; draw(); };
+    v.cv.onwheel = e => { e.preventDefault(); step(v, e.deltaY > 0 ? -1 : 1); };
+    const pick = e => {
+      const r = v.cv.getBoundingClientRect(), [w, h] = v.dims(S.data.bbox);
+      const c = Math.floor((e.clientX - r.left) / r.width * w), rr = Math.floor((e.clientY - r.top) / r.height * h);
+      if (c < 0 || rr < 0 || c >= w || rr >= h) return null;
+      return v.vox(c, rr, S.cur[v.axis], S.data.bbox);
+    };
+    let dragging = false;
+    v.cv.onmousedown = e => { dragging = true; const p = pick(e); if (p) { S.cur = p; draw(); } };
+    window.addEventListener("mouseup", () => dragging = false);
+    v.cv.onmousemove = e => { const p = pick(e); if (!p) return; if (dragging) { S.cur = p; draw(); } showHover(p); };
+  });
+  sizeViews();
+}
+function step(v, d) {
+  const max = S.data.bbox[AXSIZE[v.axis]] - 1;
+  S.cur[v.axis] = Math.max(0, Math.min(max, S.cur[v.axis] + d)); draw();
+}
+function sizeViews() {
+  const b = S.data.bbox, dpr = window.devicePixelRatio || 1;
+  VIEWS.forEach(v => {
+    const [w, h] = v.dims(b), avail = v.el.clientWidth - 18;
+    const s = Math.max(2, Math.floor(avail / Math.max(w, h * 0.9))) * S.zoom;
+    v.scale = s; v.w = w; v.h = h;
+    v.cv.style.width = w * s + "px"; v.cv.style.height = h * s + "px";
+    v.cv.width = Math.round(w * s * dpr); v.cv.height = Math.round(h * s * dpr);
+    v.px = s * dpr;
+    v.off = v.off || document.createElement("canvas"); v.off.width = w; v.off.height = h;
+  });
+  $("grid").querySelectorAll(".cv-wrap").forEach(w => w.style.overflow = S.zoom > 1 ? "auto" : "visible");
+}
+
+function hexRGB(h) { return [1, 3, 5].map(i => parseInt(h.slice(i, i + 2), 16)); }
+function colorFor(d, label) {
+  if (S.colorBy === "del") return d.color;
+  return NUC[label] ? NUC[label].color : "#ffffff";
+}
+
+function draw() {
+  if (!S.data) return;
+  const b = S.data.bbox;
+  const vis = S.dels.filter(d => S.visible.has(d.i));
+  VIEWS.forEach(v => {
+    const ctx = v.cv.getContext("2d"), { w, h, px } = v, slice = S.cur[v.axis];
+    v.range.value = slice;
+    v.lab.textContent = `${AXN[v.axis]} = ${slice + b[AX0[v.axis]]}`;
+    ctx.setTransform(1, 0, 0, 1, 0, 0);
+    ctx.fillStyle = "#000"; ctx.fillRect(0, 0, v.cv.width, v.cv.height);
+    ctx.imageSmoothingEnabled = false;
+    // grille des labels de la coupe, par délinéation
+    const grids = vis.map(d => {
+      const g = new Uint16Array(w * h);
+      for (let r = 0; r < h; r++) for (let c = 0; c < w; c++) {
+        const [x, y, z] = v.vox(c, r, slice, b), l = d.vol[x + b.nx * (y + b.ny * z)];
+        if (l && S.labelsOn.has(l)) g[c + w * r] = l;
+      }
+      return { d, g };
+    });
+    if (S.mode !== "contour") {
+      const octx = v.off.getContext("2d");
+      grids.forEach(({ d, g }) => {
+        const img = octx.createImageData(w, h);
+        for (let k = 0; k < g.length; k++) if (g[k]) {
+          const [R, G, B] = hexRGB(colorFor(d, g[k]));
+          img.data.set([R, G, B, 255], k * 4);
+        }
+        octx.putImageData(img, 0, 0);
+        ctx.globalAlpha = S.mode === "both" ? S.opacity * 0.6 : S.opacity;
+        ctx.drawImage(v.off, 0, 0, w * px, h * px);
+      });
+      ctx.globalAlpha = 1;
+    }
+    if (S.mode !== "fill") {
+      ctx.lineWidth = Math.max(1.5, px * 0.22); ctx.lineCap = "square";
+      grids.forEach(({ d, g }) => {
+        const paths = {};
+        const seg = (col, x1, y1, x2, y2) => { (paths[col] = paths[col] || []).push(x1, y1, x2, y2); };
+        for (let r = 0; r < h; r++) for (let c = 0; c < w; c++) {
+          const l = g[c + w * r]; if (!l) continue;
+          const col = colorFor(d, l);
+          // bord gauche, droit, haut, bas si le voisin a un label différent
+          if (c === 0 || g[c - 1 + w * r] !== l) seg(col, c, r, c, r + 1);
+          if (c === w - 1 || g[c + 1 + w * r] !== l) seg(col, c + 1, r, c + 1, r + 1);
+          if (r === 0 || g[c + w * (r - 1)] !== l) seg(col, c, r, c + 1, r);
+          if (r === h - 1 || g[c + w * (r + 1)] !== l) seg(col, c, r + 1, c + 1, r + 1);
+        }
+        Object.entries(paths).forEach(([col, a]) => {
+          ctx.strokeStyle = col; ctx.beginPath();
+          for (let k = 0; k < a.length; k += 4) { ctx.moveTo(a[k] * px, a[k + 1] * px); ctx.lineTo(a[k + 2] * px, a[k + 3] * px); }
+          ctx.stroke();
+        });
+      });
+    }
+    if (S.cross) {
+      const [cc, rr] = v.toCR(S.cur, b);
+      ctx.strokeStyle = "rgba(255,255,255,0.35)"; ctx.lineWidth = 1; ctx.setLineDash([4, 4]);
+      ctx.beginPath();
+      ctx.moveTo((cc + 0.5) * px, 0); ctx.lineTo((cc + 0.5) * px, h * px);
+      ctx.moveTo(0, (rr + 0.5) * px); ctx.lineTo(w * px, (rr + 0.5) * px);
+      ctx.stroke(); ctx.setLineDash([]);
+    }
+  });
+  showHover(S.cur);
+}
+
+// ---------------------------------------------------------------- panneaux
+function showHover(p) {
+  const b = S.data.bbox, k = p[0] + b.nx * (p[1] + b.ny * p[2]);
+  const vis = S.dels.filter(d => S.visible.has(d.i));
+  let html = `<div>Voxel (${p[0] + b.x0}, ${p[1] + b.y0}, ${p[2] + b.z0})</div>`;
+  if (!vis.length) html += "<div>Aucune délinéation visible.</div>";
+  html += "<table>" + vis.map(d => {
+    const l = d.vol[k], n = NUC[l];
+    return `<tr><td><span class="chip" style="background:${d.color}"></span>${d.rater} (ses${d.session})</td>
+      <td style="text-align:left">${l ? (n ? `<span class="chip" style="background:${n.color}"></span>${l} · ${n.name}` : "label " + l) : "—"}</td></tr>`;
+  }).join("") + "</table>";
+  $("hover").innerHTML = html;
+}
+
+let diceTimer = null;
+function scheduleDice() { clearTimeout(diceTimer); diceTimer = setTimeout(computeDice, 60); }
+function computeDice() {
+  const vis = S.dels.filter(d => S.visible.has(d.i)), labs = [...S.labelsOn].sort((a, b) => a - b);
+  const el = $("dice");
+  if (vis.length < 2) { el.innerHTML = "Afficher au moins 2 délinéations."; return; }
+  if (new Set(vis.map(d => d.session)).size > 1) { el.innerHTML = "Sessions différentes : Dice non pertinent."; return; }
+  // Dice par label pour une paire
+  const pairDice = (A, B) => {
+    const inter = {}, ca = {}, cb = {};
+    labs.forEach(l => { inter[l] = 0; ca[l] = 0; cb[l] = 0; });
+    const a = A.vol, bb = B.vol;
+    for (let k = 0; k < a.length; k++) {
+      const x = a[k], y = bb[k];
+      if (x in ca) ca[x]++;
+      if (y in cb) cb[y]++;
+      if (x && x === y && x in inter) inter[x]++;
+    }
+    const per = {}; let sum = 0, n = 0;
+    labs.forEach(l => { const den = ca[l] + cb[l]; per[l] = den ? 2 * inter[l] / den : null; if (den) { sum += per[l]; n++; } });
+    return { per, mean: n ? sum / n : null };
+  };
+  const f = x => x === null ? "—" : x.toFixed(2);
+  if (vis.length === 2) {
+    const r = pairDice(vis[0], vis[1]);
+    el.innerHTML = `<div class="note">${vis[0].rater} vs ${vis[1].rater} — Dice par noyau (même label)</div><table><tr><th>Noyau</th><th>Dice</th></tr>` +
+      labs.map(l => `<tr><td><span class="chip" style="background:${NUC[l] ? NUC[l].color : "#fff"}"></span>${l} · ${NUC[l] ? NUC[l].name : ""}</td><td>${f(r.per[l])}</td></tr>`).join("") +
+      `<tr><th>Moyenne</th><th>${f(r.mean)}</th></tr></table>`;
+  } else {
+    let html = `<div class="note">Dice moyen sur les noyaux sélectionnés</div><table><tr><th></th>` +
+      vis.map(d => `<th><span class="chip" style="background:${d.color}"></span>${d.rater}</th>`).join("") + "</tr>";
+    vis.forEach((A, i) => {
+      html += `<tr><td><span class="chip" style="background:${A.color}"></span>${A.rater}</td>` +
+        vis.map((B, j) => j === i ? "<td>—</td>" : j < i ? `<td>${f(pairDice(B, A).mean)}</td>` : `<td>${f(pairDice(A, B).mean)}</td>`).join("") + "</tr>";
+    });
+    el.innerHTML = html + "</table>";
+  }
+}
+
+function renderSessions() {
+  const box = $("sessions");
+  const opts = sessionCounts().map(([k, n]) => [k, `ses${k} (${n})`]);
+  if (opts.length > 1) opts.push(["all", "toutes"]);
+  box.innerHTML = opts.map(([k, t]) => `<button data-v="${k}" class="${k === S.session ? "on" : ""}">${t}</button>`).join("");
+  box.querySelectorAll("button").forEach(btn => btn.onclick = () => {
+    S.session = btn.dataset.v; resetVisible(); renderSessions(); renderDelList(); draw();
+  });
+  // l'avertissement n'a de sens que si au moins 2 sessions sont réellement présentes
+  $("sesWarn").hidden = !(S.session === "all" && sessionCounts().length > 1);
+}
+function renderDelList() {
+  const list = shown();
+  $("dels").innerHTML = list.map((d, n) => `
+    <label class="del ${S.visible.has(d.i) ? "on" : ""}" data-i="${d.i}">
+      <input type="checkbox" ${S.visible.has(d.i) ? "checked" : ""}>
+      <span class="sw" style="background:${d.color}"></span>
+      <span><span class="name">Rater ${d.rater}</span> <span class="meta">· groupe ${d.group} · ses${d.session} · <span style="white-space:nowrap">${d.nvox} vox</span></span>
+        <div class="meta">${d.file.split("/").pop()}</div>
+        <div><span class="badge ${STEP_BADGE[d.step][0]}">${STEP_BADGE[d.step][1]}</span>
+          ${d.reason ? `<span class="iss">${d.reason}</span>` : ""}</div>
+        ${d.clean_file ? `<div class="meta">→ ${d.clean_file.split("/").pop()}</div>` : ""}
+        ${d.issues.length ? `<div class="iss">⚠ ${d.issues.join(" · ")}</div>` : ""}</span>
+      <span style="display:flex;flex-direction:column;align-items:end;gap:4px">
+        <span class="key">${n < 9 ? n + 1 : ""}</span><button class="solo" title="Afficher uniquement celle-ci">solo</button></span>
+    </label>`).join("") || '<div class="note">Aucune délinéation.</div>';
+  $("dels").querySelectorAll(".del").forEach(el => {
+    const i = +el.dataset.i;
+    el.querySelector("input").onchange = e => { e.target.checked ? S.visible.add(i) : S.visible.delete(i); update(); };
+    el.querySelector(".solo").onclick = e => { e.preventDefault(); S.visible = new Set([i]); update(); };
+  });
+  scheduleDice();
+}
+function renderNuclei() {
+  $("nuclei").innerHTML = NUCLEI.map(n => `<label class="nuc"><input type="checkbox" data-l="${n.label}" ${S.labelsOn.has(n.label) ? "checked" : ""}>
+    <span class="sw" style="background:${n.color}"></span>${n.label} · ${n.name}</label>`).join("");
+  $("nuclei").querySelectorAll("input").forEach(cb => cb.onchange = () => {
+    const l = +cb.dataset.l; cb.checked ? S.labelsOn.add(l) : S.labelsOn.delete(l); draw(); scheduleDice();
+  });
+}
+function update() { renderDelList(); draw(); }
+
+// ---------------------------------------------------------------- contrôles
+function seg(id, key) {
+  $(id).querySelectorAll("button").forEach(btn => btn.onclick = () => {
+    S[key] = btn.dataset.v;
+    $(id).querySelectorAll("button").forEach(x => x.classList.toggle("on", x === btn)); draw();
+  });
+}
+seg("mode", "mode"); seg("colorby", "colorBy");
+$("opacity").oninput = e => { S.opacity = +e.target.value; draw(); };
+$("zoom").oninput = e => { S.zoom = +e.target.value; sizeViews(); draw(); };
+$("cross").onchange = e => { S.cross = e.target.checked; draw(); };
+$("all").onclick = () => { S.visible = new Set(shown().map(d => d.i)); update(); };
+$("none").onclick = () => { S.visible = new Set(); update(); };
+const swap = () => { S.visible = new Set(shown().filter(d => !S.visible.has(d.i)).map(d => d.i)); update(); };
+$("swap").onclick = swap;
+$("nucAll").onclick = () => { S.labelsOn = new Set(NUCLEI.map(n => n.label)); renderNuclei(); draw(); scheduleDice(); };
+$("nucNone").onclick = () => { S.labelsOn = new Set(); renderNuclei(); draw(); scheduleDice(); };
+document.addEventListener("keydown", e => {
+  if (e.target.tagName === "SELECT" || !S.data) return;
+  if (e.key === " ") { e.preventDefault(); swap(); return; }
+  const n = parseInt(e.key, 10);
+  if (n >= 1 && n <= 9) {
+    const d = shown()[n - 1]; if (!d) return;
+    S.visible.has(d.i) ? S.visible.delete(d.i) : S.visible.add(d.i); update();
+  }
+});
+window.addEventListener("resize", () => { if (S.data) { sizeViews(); draw(); } });
+
+const sel = $("subject");
+// Liste des sujets ayant au moins une délinéation sous le filtre courant
+function renderSubjects() {
+  const avail = INDEX.filter(s => countFor(s) > 0);
+  sel.innerHTML = avail.map(s => `<option value="${s.subject}">${s.subject} — ${countFor(s)} délin.</option>`).join("");
+  return avail;
+}
+function applyFilter(v) {
+  S.filter = v;
+  $("filter").querySelectorAll("button").forEach(b => b.classList.toggle("on", b.dataset.v === v));
+  try { localStorage.setItem("viewer.filter", v); } catch (e) {}
+  const avail = renderSubjects();
+  if (!avail.length) { $("dels").innerHTML = '<div class="note">Aucune délinéation pour ce filtre.</div>'; return false; }
+  if (!avail.some(s => s.subject === S.subject)) { sel.value = avail[0].subject; loadSubject(avail[0].subject); return true; }
+  sel.value = S.subject;
+  if (S.data) { S.session = bestSession(); resetVisible(); renderSessions(); renderDelList(); draw(); }
+  return true;
+}
+$("filter").querySelectorAll("button").forEach(b => b.onclick = () => applyFilter(b.dataset.v));
+
+if (!INDEX.length) {
+  $("grid").innerHTML = '<div class="empty">Aucune donnée : lancer <code>python ANALYSIS/viewer/build_viewer.py</code></div>';
+} else {
+  sel.onchange = () => loadSubject(sel.value);
+  renderNuclei();
+  let f = "clean", start = null;
+  try {
+    const sf = localStorage.getItem("viewer.filter"); if (FILTERS[sf]) f = sf;
+    start = localStorage.getItem("viewer.subject");
+  } catch (e) {}
+  S.filter = f;
+  const avail = renderSubjects();
+  if (!avail.some(s => s.subject === start)) start = avail.length ? avail[0].subject : null;
+  S.subject = start;  // applyFilter le garde s'il est disponible
+  applyFilter(f);
+  if (start) { sel.value = start; loadSubject(start); }
+}
+</script>
+</body>
+</html>

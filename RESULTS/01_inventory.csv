@@ -1,441 +1,441 @@
-group,rater,file,scan,name_ok,rater_match_folder,format_ok,format_issue,n_labels,labels,labels_ok,duplicate,all_ok
-Group 1,1a,Group 1\Rater 1a\SUBC001_ses1_Rater1a_manual_seg.nii.gz,SUBC001_ses1,True,True,True,,2,4 5,False,False,False
-Group 1,1a,Group 1\Rater 1a\SUBC001_ses2_Rater1a_manual_seg.nii,SUBC001_ses2,False,,False,extension,9,1 2 3 4 5 6 7 8 9,True,False,False
-Group 1,1b,Group 1\Rater 1b\SUBC001_ses01_Rater1b_manual_seg.nii.gz,SUBC001_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 1,1c,Group 1\Rater 1c\SUBC001_ses1_Rater1c_manual_seg.nii.gz,SUBC001_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 1,1c,Group 1\Rater 1c\SUBC002_ses1_Rater1c_manual_seg.nii.gz,SUBC002_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 1,1c,Group 1\Rater 1c\SUBC003_ses1_Rater1c_manual_seg.nii.gz,SUBC003_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 1,1c,Group 1\Rater 1c\SUBC004_ses1_Rater1c_manual_seg.nii.gz,SUBC004_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 1,1c,Group 1\Rater 1c\SUBC005_ses1_Rater1c_manual_seg.nii.gz,SUBC005_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 1,1c,Group 1\Rater 1c\SUBC006_ses1_Rater1c_manual_seg.nii.gz,SUBC006_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 1,1c,Group 1\Rater 1c\SUBC007_ses1_Rater1c_manual_seg.nii.gz,SUBC007_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 1,1d,Group 1\Rater 1d\SUBC002_ses1_Rater1d_manual_seg.nii.gz,SUBC002_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 1,1d,Group 1\Rater 1d\SUBC003_ses1_Rater1d_manual_seg.nii.gz,SUBC003_ses1,True,True,True,,9,1 2 3 4 5 6 7 9 10,False,False,False
-Group 10,10b,Group 10\Rater 10b\SUBC020_ses2_Rater10b_manual_seg.nii.gz,SUBC020_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 10,10b,Group 10\Rater 10b\SUBC022_ses2_Rater10b_manual.nii.gz,SUBC022_ses2,False,,True,,9,1 2 3 4 5 6 7 8 9,True,False,False
-Group 10,10b,Group 10\Rater 10b\SUBG003_ses1_Rater10b_manual_seg.nii.gz,SUBG003_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 10,10c,Group 10\Rater 10c\SUBC020_ses2_Rater10c_manual_seg.nii.gz,SUBC020_ses2,True,True,True,,9,2 3 4 5 6 8 9 10 11,False,False,False
-Group 10,10c,Group 10\Rater 10c\SUBC022_ses2_RATER10c_manual_seg.nii.gz,SUBC022_ses2,False,,True,,9,1 2 3 4 5 6 7 8 9,True,False,False
-Group 10,10c,Group 10\Rater 10c\SUBC023_ses2_Rater10c_manual_seg.nii.gz,SUBC023_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 10,10c,Group 10\Rater 10c\SUBC024_ses2_RATER10c_manual_seg.nii.gz,SUBC024_ses2,False,,True,,9,1 2 3 4 5 6 7 8 9,True,False,False
-Group 10,10c,Group 10\Rater 10c\SUBC025_ses2_RATER10c_Manual_seg.nii.gz,SUBC025_ses2,False,,True,,9,1 2 3 4 5 6 7 8 9,True,False,False
-Group 10,10c,Group 10\Rater 10c\SUBC026_ses2_RATER10c_Manual_seg.nii.gz,SUBC026_ses2,False,,True,,9,1 2 3 4 5 6 7 8 9,True,False,False
-Group 10,10c,Group 10\Rater 10c\SUBG003_ses1_RATER10c_manual_seg.nii.gz,SUBG003_ses1,False,,True,,9,1 2 3 4 5 6 7 8 9,True,False,False
-Group 10,10d,Group 10\Rater 10d\SUBC022_ses2_Rater10d_manual_seg.nii.gz,SUBC022_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 10,10d,Group 10\Rater 10d\SUBC025_ses2_Rater10d_manual_seg.nii.gz,SUBC025_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 10,10d,Group 10\Rater 10d\SUBCO20_ses2_Rater10d_manual_seg.nii.gz,SUBC020_ses2,False,,True,,9,1 2 3 4 5 6 7 8 9,True,False,False
-Group 10,10d,Group 10\Rater 10d\SUBCO23_ses2_Rater10d_manual_seg.nii.gz,SUBC023_ses2,False,,True,,9,1 2 3 4 5 6 7 8 9,True,False,False
-Group 10,10d,Group 10\Rater 10d\SUBCO24_ses2_Rater10d_manual_seg.nii.gz,SUBC024_ses2,False,,True,,9,1 2 3 4 5 6 7 8 9,True,False,False
-Group 10,10d,Group 10\Rater 10d\SUBCO26_ses2_Rater10d_manual_seg.nii.gz,SUBC026_ses2,False,,True,,9,1 2 3 4 5 6 7 8 9,True,False,False
-Group 10,10d,Group 10\Rater 10d\SUBG003_ses1_Rater10d_manual_seg.nii.gz,SUBG003_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 10,10e,Group 10\Rater 10e\SUBC020_ses2_Rater10e_manual_seg.nii.gz,SUBC020_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 10,10e,Group 10\Rater 10e\SUBC022_ses2_Rater10e_manual_seg.nii.gz,SUBC022_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 10,10e,Group 10\Rater 10e\SUBC023_ses2_Rater10e_manual_seg.nii.gz,SUBC023_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 10,10e,Group 10\Rater 10e\SUBC024_ses2_Rater10e_manual_seg.nii.gz,SUBC024_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 10,10e,Group 10\Rater 10e\SUBC025_ses2_Rater10e_manual_seg.nii.gz,SUBC025_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 10,10e,Group 10\Rater 10e\SUBC026_ses2_Rater10e_manual_seg.nii.gz,SUBC026_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 10,10e,Group 10\Rater 10e\SUBG003_ses1_Rater10e_manual_seg.nii.gz,SUBG003_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 10,10i,Group 10\Rater 10i\SUBC020_ses2_10i_manual_seg.nii.gz,SUBC020_ses2,False,,True,,9,1 2 3 4 5 6 7 8 9,True,False,False
-Group 10,10i,Group 10\Rater 10i\SUBC022_ses2_i10_manual_seg.nii.gz,SUBC022_ses2,False,,True,,9,1 2 3 4 5 6 7 8 9,True,False,False
-Group 10,10i,Group 10\Rater 10i\SUBC023_ses2_10i_manual_seg.nii.gz,SUBC023_ses2,False,,True,,9,1 2 3 4 5 6 7 8 9,True,False,False
-Group 10,10i,Group 10\Rater 10i\SUBC024_ses2_10i_manual_seg.nii.gz,SUBC024_ses2,False,,True,,9,1 2 3 4 5 6 7 8 9,True,False,False
-Group 10,10i,Group 10\Rater 10i\SUBC025_ses2_10i_manual_seg.nii.gz,SUBC025_ses2,False,,True,,9,1 2 3 4 5 6 7 8 9,True,False,False
-Group 10,10i,Group 10\Rater 10i\SUBC026_ses2_10i_manual_seg.nii.gz,SUBC026_ses2,False,,True,,9,1 2 3 4 5 6 7 8 9,True,False,False
-Group 10,10i,Group 10\Rater 10i\SUBG003_ses1_10i_manual_seg.nii.gz,SUBG003_ses1,False,,True,,9,1 2 3 4 5 6 7 8 9,True,False,False
-Group 10,10j,Group 10\Rater 10j\SUBC001_ses2_Rater10j_manual_seg.nii.gz,SUBC001_ses2,True,True,False,IRM au lieu du masque,,,False,False,False
-Group 10,10k,Group 10\Rater 10k\SUBC20_ses2_Rater10k_manual_seg.nii.gz,SUBC020_ses2,False,,True,,9,1 2 3 4 5 6 7 8 9,True,False,False
-Group 10,10k,Group 10\Rater 10k\SUBC22_ses2_Rater10k_manual_seg.nii.gz,SUBC022_ses2,False,,True,,9,1 2 3 4 5 6 7 8 9,True,False,False
-Group 10,10k,Group 10\Rater 10k\SUBC23_ses2_Rater10k_manual_seg.nii.gz,SUBC023_ses2,False,,True,,9,1 2 3 4 5 6 7 8 9,True,False,False
-Group 10,10k,Group 10\Rater 10k\SUBC24_ses2_Rater10k_manual_seg.nii.gz,SUBC024_ses2,False,,True,,9,1 2 3 4 5 6 7 8 9,True,False,False
-Group 10,10k,Group 10\Rater 10k\SUBC25_ses2_Rater10k_manual_seg.nii.gz,SUBC025_ses2,False,,True,,9,1 2 3 4 5 6 7 8 9,True,False,False
-Group 10,10k,Group 10\Rater 10k\SUBC26_ses2_Rater10k_manual_seg.nii.gz,SUBC026_ses2,False,,True,,9,1 2 3 4 5 6 7 8 9,True,False,False
-Group 10,10k,Group 10\Rater 10k\SUBG03_ses1_Rater10k_manual_seg.nii.gz,SUBG003_ses1,False,,True,,9,1 2 3 4 5 6 7 8 9,True,False,False
-Group 11,11b,Group 11\Rater 11b\SUBC027_ses2_Rater11b_manual_seg.nii.gz,SUBC027_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 10,False,False,False
-Group 11,11b,Group 11\Rater 11b\SUBC028_ses2_Rater11b_manual_seg.nii.gz,SUBC028_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 11,11b,Group 11\Rater 11b\SUBC029_ses2_Rater11b_manual_seg.nii.gz,SUBC029_ses2,True,True,True,,9,1 4 5 6 7 8 9 10 11,False,False,False
-Group 11,11b,Group 11\Rater 11b\SUBC030_ses2_Rater11b_manual_seg.nii.gz,SUBC030_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 11,11b,Group 11\Rater 11b\SUBC031_ses2_Rater11b_manual_seg.nii.gz,SUBC031_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 11,11b,Group 11\Rater 11b\SUBC032_ses2_Rater11b_manual.seg.nii.gz,SUBC032_ses2,False,,True,,9,1 2 3 4 5 6 7 8 9,True,False,False
-Group 11,11b,Group 11\Rater 11b\SUBG04_ses1_Rater11b_manual_seg.nii.gz,SUBG004_ses1,False,,True,,9,1 2 3 4 5 6 7 8 9,True,False,False
-Group 11,11d,Group 11\Rater 11d\SUBC027_ses2_Rater11d_manual_seg 2.nii,SUBC027_ses2,False,,False,extension,9,1 2 3 4 5 6 7 8 9,True,False,False
-Group 11,11d,Group 11\Rater 11d\SUBC028_ses2_Rater11d_manual_seg.nii.gz,SUBC028_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 11,11d,Group 11\Rater 11d\SUBC029_ses2_Rater11d_manual_seg.nii.gz,SUBC029_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 11,11d,Group 11\Rater 11d\SUBC030_ses2_Rater11d_manual_seg.nii.gz,SUBC030_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 11,11d,Group 11\Rater 11d\SUBC031_ses2_Rater11d_manual_seg.nii.gz,SUBC031_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 11,11e,Group 11\Rater 11e\SUBCO27_ses2_Rater11e_manual_seg.nii.gz,SUBC027_ses2,False,,True,,0,,False,False,False
-Group 11,11e,Group 11\Rater 11e\SUBCO28_ses2_Rater11e_manual_seg.nii.gz,SUBC028_ses2,False,,True,,9,1 2 3 4 5 6 7 8 9,True,False,False
-Group 11,11e,Group 11\Rater 11e\SUBCO29_ses2_Rater11e_manual_seg.nii.gz,SUBC029_ses2,False,,False,IRM au lieu du masque,,,False,False,False
-Group 11,11e,Group 11\Rater 11e\SUBCO30_ses2_Rater11e_manual_seg.nii.gz,SUBC030_ses2,False,,True,,9,1 2 3 4 5 6 7 8 9,True,False,False
-Group 11,11e,Group 11\Rater 11e\SUBCO31_ses2_Rater11e_manual_seg.nii.gz,SUBC031_ses2,False,,False,IRM au lieu du masque,,,False,False,False
-Group 11,11e,Group 11\Rater 11e\SUBCO32_ses2_Rater11e_manual_seg.nii.gz,SUBC032_ses2,False,,False,IRM au lieu du masque,,,False,False,False
-Group 11,11e,Group 11\Rater 11e\SUBG004_ses1_Rater11e_manual_seg.nii.gz,SUBG004_ses1,True,True,False,IRM au lieu du masque,,,False,False,False
-Group 11,11f,Group 11\Rater 11f\SUBC027_ses2_Rater11f_manual_seg.nii.gz,SUBC027_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 11,11f,Group 11\Rater 11f\SUBC028_ses2_Rater11f_manual_seg.nii.gz,SUBC028_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 11,11f,Group 11\Rater 11f\SUBC029_ses2_Rater11f_manual_seg.nii.gz,SUBC029_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 11,11f,Group 11\Rater 11f\SUBC030_ses2_Rater11f_manual_seg.nii.gz,SUBC030_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 11,11f,Group 11\Rater 11f\SUBC031_ses2_Rater11f_manual_seg.nii.gz,SUBC031_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 11,11f,Group 11\Rater 11f\SUBC032_ses2_Rater11f_manual_seg.nii.gz,SUBC032_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 11,11f,Group 11\Rater 11f\SUBG004_ses1_Rater11f_manual_seg.nii.gz,SUBG004_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 11,11g,Group 11\Rater 11g\SUBC27_Session 2_Rater11g.manual_seg.nii.gz,SUBC027_ses2,False,,True,,9,1 2 3 4 5 6 7 8 9,True,False,False
-Group 11,11i,Group 11\Rater 11i\SUBC027_ses2_Rater11i.nii.gz,SUBC027_ses2,False,,True,,9,1 2 3 4 5 6 7 8 9,True,False,False
-Group 11,11i,Group 11\Rater 11i\SUBC028_ses_2_Rater11i.nii,SUBC028_ses2,False,,False,extension,9,1 2 3 4 5 6 7 8 9,True,False,False
-Group 11,11i,Group 11\Rater 11i\SUBC029_ses2_Rater11i.nii.gz,SUBC029_ses2,False,,True,,9,1 2 3 4 5 6 7 8 9,True,False,False
-Group 11,11i,Group 11\Rater 11i\SUBC030_ses2_Rater11i.nii,SUBC030_ses2,False,,False,extension,9,1 2 3 4 5 6 7 8 9,True,False,False
-Group 11,11i,Group 11\Rater 11i\SUBC031_ses2_Rater11i.nii,SUBC031_ses2,False,,False,extension,9,1 2 3 4 5 6 7 8 9,True,False,False
-Group 11,11i,Group 11\Rater 11i\SUBC032_ses2_Rater11i.nii.gz,SUBC032_ses2,False,,True,,9,1 2 3 4 5 6 7 8 9,True,False,False
-Group 11,11i,Group 11\Rater 11i\SUBG004_ses1_Rater11i.nii,SUBG004_ses1,False,,False,extension,9,1 2 3 4 5 6 7 8 9,True,False,False
-Group 11,11j,Group 11\Rater 11j\SUBC027_ses2_Rater11j_manual_seg.nii.gz,SUBC027_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 11,11j,Group 11\Rater 11j\SUBC028_ses2_Rater11j_manual_seg.nii.gz,SUBC028_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 11,11j,Group 11\Rater 11j\SUBC029_ses2_Rater11j_manual_seg.nii.gz,SUBC029_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 11,11j,Group 11\Rater 11j\SUBC030_ses2_Rater11j_manual_seg.nii.gz,SUBC030_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 11,11j,Group 11\Rater 11j\SUBC031_ses2_Rater11j_manual_seg.nii.gz,SUBC031_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 11,11j,Group 11\Rater 11j\SUBC032_ses2_Rater11j_manual_seg.nii.gz,SUBC032_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 11,11j,Group 11\Rater 11j\SUBG004_ses1_Rater11j_manual_seg.nii.gz,SUBG004_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 12,12b,Group 12\Rater 12b\SUBC035_ses2_Rater12b_manual_seg.nii.gz,SUBC035_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 12,12b,Group 12\Rater 12b\SUBC036_ses2_Rater12b_manual_seg.nii.gz,SUBC036_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 12,12b,Group 12\Rater 12b\SUBC037_ses2_Rater12b_manual_seg.nii.gz,SUBC037_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 12,12b,Group 12\Rater 12b\SUBC039_ses2_Rater12b_manual_seg.nii.gz,SUBC039_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 12,12b,Group 12\Rater 12b\SUBC040_ses2_Rater12b_manual_seg.nii.gz,SUBC040_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 12,12b,Group 12\Rater 12b\SUBG006_ses1_Rater12b_manual_seg.nii.gz,SUBG006_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 12,12b,Group 12\Rater 12b\SUBG007_ses2_Rater12b_manual_seg.nii.gz,SUBG007_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 12,12d,Group 12\Rater 12d\SUBC035_ses2_Rater12d_manual_seg.nii.gz,SUBC035_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 12,12d,Group 12\Rater 12d\SUBC036_ses2_Rater12d_manual_seg.nii.gz,SUBC036_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 12,12d,Group 12\Rater 12d\SUBC037_ses2_Rater12d_manual_seg.nii.gz,SUBC037_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 12,12d,Group 12\Rater 12d\SUBC039_ses2_Rater12d_manual_seg.nii.gz,SUBC039_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 12,12d,Group 12\Rater 12d\SUBC040_ses2_Rater12d_manual_seg.nii.gz,SUBC040_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 12,12d,Group 12\Rater 12d\SUBG006_ses1_Rater12d_manual_seg.nii.gz,SUBG006_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 12,12d,Group 12\Rater 12d\SUBG007_ses2_Rater12d_manual_seg.nii.gz,SUBG007_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 12,12h,Group 12\Rater 12h\SUBC035_ses2_Rater12h_manual_seg.nii.gz.gz,SUBC035_ses2,False,,False,extension,,,False,False,False
-Group 12,12h,Group 12\Rater 12h\SUBC036_ses2_Rater12h_manual_seg.nii.gz.gz,SUBC036_ses2,False,,False,extension,,,False,False,False
-Group 12,12h,Group 12\Rater 12h\SUBC037_ses2_Rater12h_manual_seg.nii.gz.gz,SUBC037_ses2,False,,False,extension,,,False,False,False
-Group 12,12h,Group 12\Rater 12h\SUBC039_ses2_Rater12h_manual_seg.nii.gz.gz,SUBC039_ses2,False,,False,extension,,,False,False,False
-Group 12,12h,Group 12\Rater 12h\SUBC040_ses2_Rater12h_manual_seg.nii.gz.gz,SUBC040_ses2,False,,False,extension,,,False,False,False
-Group 12,12h,Group 12\Rater 12h\SUBG006_ses1_Rater12h_manual_seg.nii.gz.gz,SUBG006_ses1,False,,False,extension,,,False,False,False
-Group 12,12h,Group 12\Rater 12h\SUBG007_ses2_Rater12h_manual_seg.nii.gz.gz,SUBG007_ses2,False,,False,extension,,,False,False,False
-Group 12,12k,Group 12\Rater 12k\SUBC035_ses2_Rater12k_manual_seg.nii,SUBC035_ses2,False,,False,extension,9,1 2 3 4 5 6 7 8 9,True,False,False
-Group 12,12k,Group 12\Rater 12k\SUBC036_ses2_Rater12k_manual_seg.nii,SUBC036_ses2,False,,False,extension,9,1 2 3 4 5 6 7 8 9,True,False,False
-Group 12,12k,Group 12\Rater 12k\SUBC037_ses2_Rater12k_manual_seg.nii,SUBC037_ses2,False,,False,extension,9,1 2 3 4 5 6 7 8 9,True,False,False
-Group 12,12k,Group 12\Rater 12k\SUBC039_ses2_Rater12k_manual_seg.nii,SUBC039_ses2,False,,False,extension,9,1 2 3 4 5 6 7 8 9,True,False,False
-Group 12,12k,Group 12\Rater 12k\SUBC040_ses2_rater12k_manual_seg.nii,SUBC040_ses2,False,,False,extension,9,1 2 3 4 5 6 7 8 9,True,False,False
-Group 13,13a,Group 13\Rater 13a\SUBC041_ses2_Rater13a_manual_seg.nii.gz,SUBC041_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 13,13a,Group 13\Rater 13a\SUBC042_ses02_Rater13a_manuel_seg.nii.gz,SUBC042_ses2,False,,True,,9,1 2 3 4 5 6 7 8 9,True,False,False
-Group 13,13a,Group 13\Rater 13a\SUBC045_ses2_Rater13a_manual_seg.nii.gz,SUBC045_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 13,13a,Group 13\Rater 13a\SUBG007_ses1_Rater13a_manual_seg.nii.gz,SUBG007_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 13,13a,Group 13\Rater 13a\SUBG008_ses02_Rater13a_manual_.nii.gz,SUBG008_ses2,False,,True,,9,1 2 3 4 5 6 7 8 9,True,False,False
-Group 13,13d,Group 13\Rater 13d\SUBC042_ses2_Rater13d_manual_seg.nii.gz,SUBC042_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 13,13d,Group 13\Rater 13d\SUBC045_ses2_Rater13d_manual_seg.nii.gz,SUBC045_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 13,13d,Group 13\Rater 13d\SUBCO41_ses2_Rater13d_manual_seg.nii.gz,SUBC041_ses2,False,,False,pas compressé,,,False,False,False
-Group 13,13d,Group 13\Rater 13d\SUBG007_ses1_Rater13d_manual_seg.nii.gz,SUBG007_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 13,13d,Group 13\Rater 13d\SUBG008_ses2_Rater13d_manual_seg.nii.gz,SUBG008_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 13,13e,Group 13\Rater 13e\SUBG007_ses1_Rater13e_manual_seg.nii,SUBG007_ses1,False,,False,extension,9,1 2 3 4 5 6 7 8 9,True,False,False
-Group 13,13f,Group 13\Rater 13f\SUBC041_ses2_WMn_Rater 13f_manual_seg.nii.gz,SUBC041_ses2,False,,False,IRM au lieu du masque,,,False,False,False
-Group 13,13f,Group 13\Rater 13f\SUBC042_ses2_WMn_Rater_ 13f_manual_seg.nii.gz,SUBC042_ses2,False,,False,IRM au lieu du masque,,,False,False,False
-Group 13,13f,Group 13\Rater 13f\SUBG007_ses1_WMn_Rater_ 13f_manual_seg.nii.gz,SUBG007_ses1,False,,False,IRM au lieu du masque,,,False,False,False
-Group 13,13f,Group 13\Rater 13f\SUBG008_ses2_WMn_Rater 13f_manual_seg.nii.gz,SUBG008_ses2,False,,False,IRM au lieu du masque,,,False,False,False
-Group 13,13j,Group 13\Rater 13j\SUBC041-S2rater13JMANUAL.nii.gz,SUBC041_ses?,False,,True,,9,1 2 3 4 5 6 7 8 9,True,False,False
-Group 13,13j,Group 13\Rater 13j\SUBC042_S2_13J_manual_seg.nii.gz,SUBC042_ses2,False,,True,,9,1 2 3 4 5 6 7 8 9,True,False,False
-Group 13,13k,Group 13\Rater 13k\SUBC041_ses2_WMn_manual.nii.gz,SUBC041_ses2,False,,True,,9,1 2 3 4 5 6 7 8 9,True,False,False
-Group 13,13k,Group 13\Rater 13k\SUBC042_ses2_WMn_manual.nii.gz,SUBC042_ses2,False,,True,,9,1 2 3 4 5 6 7 8 9,True,False,False
-Group 13,13k,Group 13\Rater 13k\SUBC45_Session02_manual.nii.gz,SUBC045_ses2,False,,True,,9,1 2 3 4 5 6 7 8 9,True,False,False
-Group 13,13k,Group 13\Rater 13k\SUBG007_ses1_WMn_manual.nii.gz,SUBG007_ses1,False,,True,,9,1 2 3 4 5 6 7 8 9,True,False,False
-Group 13,13k,Group 13\Rater 13k\SUBG08_Session02_manual.nii.gz,SUBG008_ses2,False,,True,,9,1 2 3 4 5 6 7 8 9,True,False,False
-Group 14,14c,Group 14\Rater 14c\SUBC047_ses2_Rater14c_manual_seg.nii.gz,SUBC047_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 14,14c,Group 14\Rater 14c\SUBC048_ses2_Rater14c_manual_seg.nii.gz,SUBC048_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 14,14c,Group 14\Rater 14c\SUBC049_ses2_Rater14c_manual_seg.nii.gz,SUBC049_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 14,14c,Group 14\Rater 14c\SUBC053_ses2_Rater14c_manual_seg.nii.gz,SUBC053_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 14,14c,Group 14\Rater 14c\SUBC055_ses2_Rater14c_manual_seg.nii.gz,SUBC055_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 14,14c,Group 14\Rater 14c\SUBG008_ses1_Rater14c_manual_seg.nii.gz,SUBG008_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 14,14c,Group 14\Rater 14c\SUBG009_ses2_Rater14c_manual_seg.nii.gz,SUBG009_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 14,14e,Group 14\Rater 14e\SUBC047_ses2_Rater14e_manual_seg.nii.gz,SUBC047_ses2,True,True,True,,9,1 2 3 4 5 6 7 9 10,False,False,False
-Group 14,14e,Group 14\Rater 14e\SUBC048_ses2_Rater14e_manual_seg.nii.gz,SUBC048_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 14,14e,Group 14\Rater 14e\SUBC049_ses2_Rater14e_manual_seg.nii.gz,SUBC049_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 14,14e,Group 14\Rater 14e\SUBC053_ses2_Rater14e_manual.seg.nii.gz,SUBC053_ses2,False,,True,,10,1 2 3 4 5 6 7 8 9 10,False,False,False
-Group 14,14e,Group 14\Rater 14e\SUBC055_ses2_Rater14e_manual_seg.nii.gz,SUBC055_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 14,14e,Group 14\Rater 14e\subg008_ses1_rater14e_manual_seg.nii.gz,SUBG008_ses1,False,,True,,9,1 2 3 4 5 6 7 8 9,True,False,False
-Group 14,14e,Group 14\Rater 14e\SUBG009_ses2_Rater14e_manual_seg.nii.gz,SUBG009_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 14,14f,Group 14\Rater 14f\SUBG009_ses2_RATER14F_manual_seg.nii.gz,SUBG009_ses2,False,,True,,9,1 2 3 4 5 6 7 8 9,True,False,False
-Group 14,14f,Group 14\Rater 14f\SUBG08_ses01_RATER14F_manual_seg.nii.gz,SUBG008_ses1,False,,True,,9,1 2 3 4 5 6 7 8 9,True,False,False
-Group 14,14h,Group 14\Rater 14h\SUBC47_ses2_Rater14h_manual_seg.nii.gz,SUBC047_ses2,False,,True,,9,1 2 3 4 5 6 7 8 9,True,False,False
-Group 14,14h,Group 14\Rater 14h\SUBC48_ses2_Rater14h_manual-seg.nii.gz,SUBC048_ses2,False,,True,,9,1 2 3 4 5 6 7 8 9,True,False,False
-Group 14,14h,Group 14\Rater 14h\SUBC49_ses2_Rater14h_manual_seg.nii.gz,SUBC049_ses2,False,,True,,9,1 2 3 4 5 6 7 8 9,True,False,False
-Group 14,14h,Group 14\Rater 14h\SUBC53_ses2_Rater14h_manual_seg.nii.gz,SUBC053_ses2,False,,True,,9,1 2 3 4 5 6 7 8 9,True,False,False
-Group 14,14h,Group 14\Rater 14h\SUBC55_ses2_Rater14h_manual_seg.nii.gz,SUBC055_ses2,False,,True,,9,1 2 3 4 5 6 7 8 9,True,False,False
-Group 14,14h,Group 14\Rater 14h\SUBG08_ses1_Rater14h_manual_seg.nii.gz,SUBG008_ses1,False,,True,,9,1 2 3 4 5 6 7 8 9,True,False,False
-Group 14,14h,Group 14\Rater 14h\SUBG09_ses2_Rater14h_manual_seg.nii.gz,SUBG009_ses2,False,,True,,9,1 2 3 4 5 6 7 8 9,True,False,False
-Group 14,14i,Group 14\Rater 14i\SUBC047_ses2_Rater14i_manual_seg.nii.gz,SUBC047_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 14,14i,Group 14\Rater 14i\SUBC048_ses2_Rater14i_manual_seg.nii.gz,SUBC048_ses2,True,True,True,,9,1 2 3 4 5 6 8 9 10,False,False,False
-Group 14,14i,Group 14\Rater 14i\SUBC049_ses2_Rater14i_manual_seg.nii.gz,SUBC049_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 14,14i,Group 14\Rater 14i\SUBC053_ses2_Rater14i_manual_seg.nii.gz,SUBC053_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 14,14i,Group 14\Rater 14i\SUBC055_ses2_Rater14i_manual_seg.nii.gz,SUBC055_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 14,14i,Group 14\Rater 14i\SUBG008_ses1_Rater14i_manual_seg.nii.gz,SUBG008_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 14,14i,Group 14\Rater 14i\SUBG009_ses2_Rater14i_manual_seg.nii.gz,SUBG009_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 14,14k,Group 14\Rater 14k\SUBC047_ses2_Rater14k_manual_seg.nii.gz,SUBC047_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 14,14k,Group 14\Rater 14k\SUBC048_ses2_Rater14k_manual_seg.nii.gz,SUBC048_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 14,14k,Group 14\Rater 14k\SUBC049_ses2_Rater14k_manual_seg.nii.gz,SUBC049_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 14,14k,Group 14\Rater 14k\SUBC053_ses2_Rater14k_manual_seg(INCOMPLETE).nii,SUBC053_ses2,False,,False,extension,5,1 2 6 7 8,False,False,False
-Group 14,14k,Group 14\Rater 14k\SUBC055_ses2_Rater14k_manual_seg.nii.gz,SUBC055_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 14,14k,Group 14\Rater 14k\SUBG008_ses1_Rater14k_manual_seg.nii.gz,SUBG008_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 14,14k,Group 14\Rater 14k\SUBG009_Ses2_Rater14k_manual_seg.nii.gz,SUBG009_ses2,False,,True,,9,1 2 3 4 5 6 7 8 9,True,False,False
-Group 15,15a,Group 15\Rater 15a\SUBG009_ses1_Rater15a_manual_seg.nii,SUBG009_ses1,False,,False,extension,9,1 2 3 4 5 6 7 8 9,True,True,False
-Group 15,15a,Group 15\Rater 15a\SUBG009_ses1_Rater15a_manual_seg.nii.gz,SUBG009_ses1,True,True,True,,1,5,False,True,False
-Group 15,15a,Group 15\Rater 15a\SUBG010_ses1_Rater15a_manual_seg 2.nii,SUBG010_ses1,False,,False,extension,9,1 2 3 4 5 6 7 8 9,True,True,False
-Group 15,15a,Group 15\Rater 15a\SUBG010_ses1_Rater15a_manual_seg.nii.gz,SUBG010_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,True,False
-Group 15,15a,Group 15\Rater 15a\SUBG012_ses1_Rater15a_manual_seg.nii,SUBG012_ses1,False,,False,extension,9,1 2 3 4 5 6 7 8 9,True,True,False
-Group 15,15a,Group 15\Rater 15a\SUBG012_ses1_Rater15a_manual_seg.nii.gz,SUBG012_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,True,False
-Group 15,15a,Group 15\Rater 15a\SUBG013_ses1_Rater15a_manual_ses.nii,SUBG013_ses1,False,,False,extension,9,1 2 3 4 5 6 7 8 9,True,True,False
-Group 15,15a,Group 15\Rater 15a\SUBG013_ses1_Rater15a_manual_ses.nii.gz,SUBG013_ses1,False,,True,,3,1 5 6,False,True,False
-Group 15,15a,Group 15\Rater 15a\SUBG014_ses1_Rater15a_manual_seg.nii,SUBG014_ses1,False,,False,extension,9,1 2 3 4 5 6 7 8 9,True,True,False
-Group 15,15a,Group 15\Rater 15a\SUBG014_ses1_Rater15a_manual_seg.nii.gz,SUBG014_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,True,False
-Group 15,15a,Group 15\Rater 15a\SUBG015_ses1_Rater15a_manual_seg.nii,SUBG015_ses1,False,,False,extension,9,1 2 3 4 5 6 7 8 9,True,True,False
-Group 15,15a,Group 15\Rater 15a\SUBG015_ses1_Rater15a_manual_seg.nii.gz,SUBG015_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,True,False
-Group 15,15a,Group 15\Rater 15a\SUBG016_ses1_Rater15a_manual_seg.nii,SUBG016_ses1,False,,False,extension,9,1 2 3 4 5 6 7 8 9,True,True,False
-Group 15,15a,Group 15\Rater 15a\SUBG016_ses1_Rater15a_manual_seg.nii.gz,SUBG016_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,True,False
-Group 15,15d,Group 15\Rater 15d\SUBG009_ses01_Rater15d_manual_seg.nii.gz,SUBG009_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 15,15d,Group 15\Rater 15d\SUBG010_ses01_Rater15d_manual_seg.nii.gz,SUBG010_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 15,15d,Group 15\Rater 15d\SUBG012_ses01_Rater15d_manual_seg.nii.gz,SUBG012_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 15,15d,Group 15\Rater 15d\SUBG013_ses01_Rater15d_manual_seg.nii.gz,SUBG013_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 15,15d,Group 15\Rater 15d\SUBG014_ses01_Rater15d_manual_seg.nii.gz,SUBG014_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 15,15d,Group 15\Rater 15d\SUBG015_ses01_Rater15d_manual_seg.nii.gz,SUBG015_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 15,15d,Group 15\Rater 15d\SUBG016_ses01_Rater15d_manual_seg.nii.gz,SUBG016_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,True,False
-Group 15,15d,Group 15\Rater 15d\SUBG016_ses01_Rater15d_manual_seg.nii.zip,SUBG016_ses1,False,,False,extension,,,False,True,False
-Group 15,15f,Group 15\Rater 15f\SUBG009_ses1_Rater15f_manual_seg.nii.gz,SUBG009_ses1,True,True,False,pas compressé,,,False,False,False
-Group 15,15f,Group 15\Rater 15f\SUBG010_ses1_Rater15f_manual_seg.nii.gz,SUBG010_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 15,15f,Group 15\Rater 15f\SUBG012_ses1_Rater15f_manual_seg.nii.gz,SUBG012_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 15,15f,Group 15\Rater 15f\SUBG013_ses1_Rater15f_manual_seg.nii.gz,SUBG013_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 15,15f,Group 15\Rater 15f\SUBG014_ses1_Rater15f_manual_seg.nii.gz,SUBG014_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 15,15f,Group 15\Rater 15f\SUBG015_ses1_Rater15f_manual_seg.nii.gz,SUBG015_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 15,15f,Group 15\Rater 15f\SUBG016_ses1_Rater15f_manual_seg.nii.gz,SUBG016_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 15,15g,Group 15\Rater 15g\SUBG009_ses1_Rater15g_manual_seg.nii.gz,SUBG009_ses1,True,True,False,IRM au lieu du masque,,,False,False,False
-Group 15,15g,Group 15\Rater 15g\SUBG010_ses1_Rater15g_manual_seg.nii (1).gz,SUBG010_ses1,False,,False,extension,,,False,True,False
-Group 15,15g,Group 15\Rater 15g\SUBG010_ses1_Rater15g_manual_seg.nii.gz,SUBG010_ses1,True,True,False,IRM au lieu du masque,,,False,True,False
-Group 15,15g,Group 15\Rater 15g\SUBG012_ses1_Rater15g_manual_seg.nii.gz,SUBG012_ses1,True,True,False,IRM au lieu du masque,,,False,False,False
-Group 15,15i,Group 15\Rater 15i\SUBG09_ses1_Rater15i_manual_seg.nii.gz,SUBG009_ses1,False,,True,,9,1 2 3 4 5 6 7 8 9,True,False,False
-Group 15,15i,Group 15\Rater 15i\SUBG10_ses01_Rater15i_manual_seg.nii.gz,SUBG010_ses1,False,,True,,9,1 2 3 4 5 6 7 8 9,True,False,False
-Group 15,15i,Group 15\Rater 15i\SUBG12_ses01_Rater15i_manual_seg.nii.gz,SUBG012_ses1,False,,True,,9,1 2 3 4 5 6 7 8 9,True,False,False
-Group 15,15i,Group 15\Rater 15i\SUBG13_ses01_Rater15i_manual_seg.nii.gz,SUBG013_ses1,False,,True,,9,1 2 3 4 5 6 7 8 9,True,False,False
-Group 15,15i,Group 15\Rater 15i\SUBG14_ses01_Rater15i_manual_seg_.nii.gz,SUBG014_ses1,False,,True,,9,1 2 3 4 5 6 7 8 9,True,False,False
-Group 15,15i,Group 15\Rater 15i\SUBG15_ses01_Rater15i_manual_seg.nii.gz,SUBG015_ses1,False,,True,,7,1 2 3 4 5 6 9,False,False,False
-Group 15,15i,Group 15\Rater 15i\SUBG16_ses01_Rater15i_manual_seg_nii.gz,SUBG016_ses1,False,,False,extension,,,False,False,False
-Group 16,16h,Group 16\Rater 16h\SUBG017_ses1_Rater16h_manual_seg.nii.gz,SUBG017_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 16,16i,Group 16\Rater 16i\SUBC002_ses2_RATER16i_manual_seg.nii.gz,SUBC002_ses2,False,,True,,9,1 2 3 4 5 6 7 8 9,True,False,False
-Group 16,16i,Group 16\Rater 16i\SUBC003_ses2_RATER16i_manual_seg.nii.gz,SUBC003_ses2,False,,True,,9,1 2 3 4 5 6 7 8 9,True,False,False
-Group 16,16i,Group 16\Rater 16i\SUBC004_ses2_RATER16i_manual_seg.nii.gz,SUBC004_ses2,False,,True,,9,1 2 3 4 5 6 7 8 9,True,False,False
-Group 16,16i,Group 16\Rater 16i\SUBC017_ses1_RATER16i_manual_seg.nii.gz,SUBC017_ses1,False,,True,,9,1 2 3 4 5 6 7 8 9,True,False,False
-Group 16,16i,Group 16\Rater 16i\SUBG18_ses1_RATER16i_manual_seg.nii.gz,SUBG018_ses1,False,,True,,9,1 2 3 4 5 6 7 8 9,True,False,False
-Group 16,16i,Group 16\Rater 16i\SUBG19_ses1_RATER16i_manual_seg.nii.gz,SUBG019_ses1,False,,True,,9,1 2 3 4 5 6 7 8 9,True,False,False
-Group 16,16j,Group 16\Rater 16j\SUBG017_ses1_Rater16j_manual_seg.nii.gz,SUBG017_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 16,16j,Group 16\Rater 16j\SUBG018_ses1_Rater16j_manual_seg.nii.gz,SUBG018_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 16,16j,Group 16\Rater 16j\SUBG019_ses1_Rater16j_manual_seg.docx,SUBG019_ses1,False,,False,extension,,,False,True,False
-Group 16,16j,Group 16\Rater 16j\SUBG019_ses1_Rater16j_manual_seg.nii.gz,SUBG019_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,True,False
-Group 16,16j,Group 16\Rater 16j\SUBG01_ses02_Rater16j_manual_seg.nii.gz,SUBG001_ses2,False,,True,,9,1 2 3 4 5 6 9 10 11,False,False,False
-Group 16,16j,Group 16\Rater 16j\SUBG02_ses02_Rater16j_manual_seg.nii.gz,SUBG002_ses2,False,,True,,9,1 2 3 4 5 6 7 8 9,True,False,False
-Group 16,16j,Group 16\Rater 16j\SUBG03_ses02_Rater16j_manual_seg.nii.gz,SUBG003_ses2,False,,True,,9,1 2 3 4 5 6 7 8 9,True,False,False
-Group 16,16j,Group 16\Rater 16j\SUBG04_ses2_Rater16j_manual_seg.nii.gz,SUBG004_ses2,False,,True,,9,1 2 3 4 5 6 7 8 9,True,False,False
-Group 2,2b,Group 2\Rater 2b\SUBC008_ses1_Rater2b_manual_seg.nii.gz,SUBC008_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 2,2b,Group 2\Rater 2b\SUBC009_ses1_Rater2b_manual_seg.nii.gz,SUBC009_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 2,2b,Group 2\Rater 2b\SUBC010_ses1_Rater2b_manual_seg.nii.gz,SUBC010_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 2,2b,Group 2\Rater 2b\SUBC011_ses1_Rater2b_manual_seg.nii.gz,SUBC011_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 2,2b,Group 2\Rater 2b\SUBC012_ses1_Rater2b_manual_seg.nii.gz,SUBC012_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 2,2b,Group 2\Rater 2b\SUBC013_ses1_Rater2b_manual_seg.nii.gz,SUBC013_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 2,2b,Group 2\Rater 2b\SUBC014_ses1_Rater2b_manual_seg.nii.gz,SUBC014_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 2,2j,Group 2\Rater 2j\SUBC008_ses1_Rater2j_manual_seg.nii.gz,SUBC008_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 2,2j,Group 2\Rater 2j\SUBC009_ses1_Rater2j_manual_seg.nii.gz,SUBC009_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 2,2j,Group 2\Rater 2j\SUBC010_ses1_Rater2j_manual_seg.nii.gz,SUBC010_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 2,2j,Group 2\Rater 2j\SUBC011_ses1_Rater2j_manual_seg.nii.gz,SUBC011_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 2,2j,Group 2\Rater 2j\SUBC012_ses1_Rater2j_manual_seg.nii.gz,SUBC012_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 2,2j,Group 2\Rater 2j\SUBC013_ses1_Rater2j_manual_seg.nii.gz,SUBC013_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 2,2j,Group 2\Rater 2j\SUBC014_ses1_Rater2j_manual_seg.nii.gz,SUBC014_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 3,3a,Group 3\Rater 3a\delineated\.DS_Store,,False,,False,extension,,,False,False,False
-Group 3,3a,Group 3\Rater 3a\delineated\SUBC015_ses01_Rater3a.nii.gz,SUBC015_ses1,False,,True,,9,1 2 3 4 5 6 7 8 9,True,True,False
-Group 3,3a,Group 3\Rater 3a\delineated\SUBC016_ses1_Rater3a.nii.gz,SUBC016_ses1,False,,True,,8,1 2 3 4 5 6 8 9,False,True,False
-Group 3,3a,Group 3\Rater 3a\delineated\SUBC017_ses01_Rater3a.nii.gz,SUBC017_ses1,False,,True,,9,1 2 3 4 5 6 7 8 9,True,True,False
-Group 3,3a,Group 3\Rater 3a\delineated\SUBC020_ses01_Rater3a.nii.gz,SUBC020_ses1,False,,True,,9,1 2 3 4 5 6 7 8 9,True,True,False
-Group 3,3a,Group 3\Rater 3a\delineated\SUBC021_ses01_Rater3a.nii.gz,SUBC021_ses1,False,,True,,9,1 2 3 4 5 6 7 8 9,True,True,False
-Group 3,3a,Group 3\Rater 3a\delineated\SUBC024_ses01_Rater3a.nii.gz,SUBC024_ses1,False,,True,,9,1 2 3 4 5 6 7 8 9,True,True,False
-Group 3,3a,Group 3\Rater 3a\SUBC015_ses01_Rater3a.nii,SUBC015_ses1,False,,False,extension,9,1 2 3 4 5 6 7 8 9,True,True,False
-Group 3,3a,Group 3\Rater 3a\SUBC016_ses1_Rater3a.nii,SUBC016_ses1,False,,False,extension,8,1 2 3 4 5 6 8 9,False,True,False
-Group 3,3a,Group 3\Rater 3a\SUBC017_ses01_Rater3a.nii,SUBC017_ses1,False,,False,extension,9,1 2 3 4 5 6 7 8 9,True,True,False
-Group 3,3a,Group 3\Rater 3a\SUBC020_ses01_Rater3a.nii,SUBC020_ses1,False,,False,extension,9,1 2 3 4 5 6 7 8 9,True,True,False
-Group 3,3a,Group 3\Rater 3a\SUBC021_ses01_Rater3a.nii,SUBC021_ses1,False,,False,extension,9,1 2 3 4 5 6 7 8 9,True,True,False
-Group 3,3a,Group 3\Rater 3a\SUBC024_ses01_Rater3a.nii,SUBC024_ses1,False,,False,extension,9,1 2 3 4 5 6 7 8 9,True,True,False
-Group 3,3b,Group 3\Rater 3b\SUBC15_ses01_Rater3b_manual_seg.nii.gz,SUBC015_ses1,False,,True,,9,1 2 3 4 5 6 7 8 9,True,False,False
-Group 3,3d,Group 3\Rater 3d\SUBC15_ses01_Rater3d_manual_seg.nii,SUBC015_ses1,False,,False,extension,9,1 2 3 4 5 6 7 8 9,True,False,False
-Group 3,3d,Group 3\Rater 3d\SUBC16_ses01_Rater3d_manual_seg.nii.gz,SUBC016_ses1,False,,True,,9,1 2 3 4 5 6 7 8 9,True,False,False
-Group 3,3d,Group 3\Rater 3d\SUBC17_ses01_Rater3d_manual_seg.nii,SUBC017_ses1,False,,False,extension,9,1 2 3 4 5 6 7 8 9,True,False,False
-Group 3,3d,Group 3\Rater 3d\SUBC20_ses01_Rater3d_manual_seg.nii.gz,SUBC020_ses1,False,,True,,9,1 2 3 4 5 6 7 8 9,True,False,False
-Group 3,3d,Group 3\Rater 3d\SUBC21_ses01_Rater3d_manual_seg.nii.gz,SUBC021_ses1,False,,True,,9,1 2 3 4 5 6 7 8 9,True,False,False
-Group 3,3d,Group 3\Rater 3d\SUBC22_ses01_Rater3d_manual_seg.nii.gz,SUBC022_ses1,False,,True,,9,1 2 3 4 5 6 7 8 9,True,False,False
-Group 3,3d,Group 3\Rater 3d\SUBC24_ses01_Rater3d_manual_seg.nii.gz,SUBC024_ses1,False,,True,,9,1 2 3 4 5 6 7 8 9,True,False,False
-Group 3,3g,Group 3\Rater 3g\SUBC015_Session1_Rater3g_manual_seg.nii.gz,SUBC015_ses1,False,,True,,10,1 2 3 4 5 6 7 8 9 10,False,False,False
-Group 3,3g,Group 3\Rater 3g\SUBC016_Session1_Rater3g_manual_seg.nii.gz,SUBC016_ses1,False,,True,,9,1 2 3 4 5 6 7 8 9,True,False,False
-Group 3,3g,Group 3\Rater 3g\SUBC017_Session1_Rater3g_manual_seg.nii.gz,SUBC017_ses1,False,,True,,10,1 2 3 4 5 6 8 9 12 13,False,False,False
-Group 3,3g,Group 3\Rater 3g\SUBC020_Session1_Rater3g_manual_seg.nii.gz,SUBC020_ses1,False,,True,,9,1 2 3 4 5 6 7 8 9,True,False,False
-Group 3,3g,Group 3\Rater 3g\SUBC021_Session1_Rater3g_manual_seg.nii.gz,SUBC021_ses1,False,,True,,9,1 2 3 4 5 6 7 8 9,True,False,False
-Group 3,3g,Group 3\Rater 3g\SUBC022_Session1_Rater3g_manual_seg.nii.gz,SUBC022_ses1,False,,True,,9,1 2 3 4 6 7 9 10 11,False,False,False
-Group 3,3g,Group 3\Rater 3g\SUBC024_Session1_Rater3g_manual_seg.nii.gz,SUBC024_ses1,False,,True,,9,1 2 3 4 5 6 7 8 9,True,False,False
-Group 4,4b,Group 4\Rater 4b\SUBC026_ses1_Rater4b_manual_seg.nii.gz,SUBC026_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 4,4b,Group 4\Rater 4b\SUBC027_ses1_Rater4b_manual_seg.nii.gz,SUBC027_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 4,4b,Group 4\Rater 4b\SUBC028_ses1_Rater4b_manual_seg.nii.gz,SUBC028_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 4,4b,Group 4\Rater 4b\SUBC029_ses1_Rater4b_manual_seg.nii.gz,SUBC029_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 4,4b,Group 4\Rater 4b\SUBC030_ses1_Rater4b_manual_seg.nii.gz,SUBC030_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 4,4b,Group 4\Rater 4b\SUBC031_ses1_Rater4b_manual_seg.nii.gz,SUBC031_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 4,4h,Group 4\Rater 4h\SUBC025_ses1_Rater4h_manual_seg.nii,SUBC025_ses1,False,,False,extension,9,1 2 3 4 5 6 7 8 9,True,True,False
-Group 4,4h,Group 4\Rater 4h\SUBC025_ses1_Rater4h_manual_seg.nii.gz,SUBC025_ses1,True,True,False,pas compressé,,,False,True,False
-Group 4,4h,Group 4\Rater 4h\SUBC026_ses1_Rater4h_manual_seg.nii.gz,SUBC026_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 4,4h,Group 4\Rater 4h\SUBC027_ses1_Rater4h_manual_seg.nii.gz,SUBC027_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 4,4h,Group 4\Rater 4h\SUBC028_ses1_Rater4h_manual_seg.nii.gz,SUBC028_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 4,4h,Group 4\Rater 4h\SUBC029_ses1_Rater4h_manual_seg.nii.gz,SUBC029_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 4,4h,Group 4\Rater 4h\SUBC030_ses1_Rater4h_manual_seg.nii.gz,SUBC030_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 4,4h,Group 4\Rater 4h\SUBC031_ses1_Rater4h_manual_seg.nii.gz,SUBC031_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 4,4i,Group 4\Rater 4i\SUBC025_ses1_Rater4i_manual_seg.nii.gz,SUBC025_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 4,4i,Group 4\Rater 4i\SUBC026_ses1_Rater4i_manual_seg.nii.gz,SUBC026_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 4,4i,Group 4\Rater 4i\SUBC027_ses1_Rater4i_manual_seg.nii.gz,SUBC027_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 4,4i,Group 4\Rater 4i\SUBC028_ses1_Rater4i_manual_seg.nii.gz,SUBC028_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 4,4i,Group 4\Rater 4i\SUBC029_ses1_Rater4i_manual_seg.nii.gz,SUBC029_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 4,4i,Group 4\Rater 4i\SUBC030_ses1_Rater4i_manual_seg.nii.gz,SUBC030_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 4,4i,Group 4\Rater 4i\SUBC031_ses1_Rater4i_manual_seg.nii.gz,SUBC031_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 4,4j,Group 4\Rater 4j\SUBC025_ses1_rater4j_manual_seg.nii.gz,SUBC025_ses1,False,,True,,9,1 2 3 4 5 6 7 8 9,True,False,False
-Group 4,4j,Group 4\Rater 4j\SUBC026_ses1_Rater4j_manual_seg.nii.gz,SUBC026_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 4,4j,Group 4\Rater 4j\SUBC027_ses1_Rater4j_manual_seg.nii.gz,SUBC027_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 4,4j,Group 4\Rater 4j\SUBC028_ses1_Rater4j_manual_seg.nii.gz,SUBC028_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 4,4j,Group 4\Rater 4j\SUBC029_ses1_Rater4j_manual_seg.nii.gz,SUBC029_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 4,4j,Group 4\Rater 4j\SUBC030_ses1_Rater4j_manual_seg.nii.gz,SUBC030_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 4,4j,Group 4\Rater 4j\SUBC031_ses1_Rater4j_manual_seg.nii.gz,SUBC031_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 5,5a,Group 5\Rater 5a\Sub 32- Final.nii.gz,,False,,True,,9,1 2 3 4 5 6 7 8 9,True,False,False
-Group 5,5b,Group 5\Rater 5b\SUBC32_ses01_Rater5b_manual_seg.nii.gz,SUBC032_ses1,False,,True,,9,1 2 3 4 5 6 7 8 9,True,False,False
-Group 5,5d,Group 5\Rater 5d\SUBC032_ses1_Rater5d_manual_seg.nii.gz,SUBC032_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 5,5d,Group 5\Rater 5d\SUBC033_ses1_Rater5d_manual_seg.nii.gz,SUBC033_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 5,5d,Group 5\Rater 5d\SUBC035_ses1_Rater5d_manual_seg.nii.gz,SUBC035_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 5,5d,Group 5\Rater 5d\SUBC036_ses1_Rater5d_manual_seg.nii.gz,SUBC036_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 5,5d,Group 5\Rater 5d\SUBC037_ses1_Rater5d_manual_seg.nii.gz,SUBC037_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 5,5d,Group 5\Rater 5d\SUBC038_ses1_Rater5d_manual_seg.nii.gz,SUBC038_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 5,5d,Group 5\Rater 5d\SUBC039_ses1_Rater5d_manual_seg.nii.gz,SUBC039_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 5,5e,Group 5\Rater 5e\SUBC032_ses1_Rater5e_manual_seg.nii.gz,SUBC032_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 35,False,False,False
-Group 5,5e,Group 5\Rater 5e\SUBC033_ses1_Rater5e_manual_seg.nii.gz,SUBC033_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 5,5f,Group 5\Rater 5f\SUBC032_ses1_Rater5f_manual_seg.nii.gz,SUBC032_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 5,5f,Group 5\Rater 5f\SUBC033_ses1_Rater5f_manual_seg.nii.gz,SUBC033_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 5,5f,Group 5\Rater 5f\SUBC038_ses1_Rater5f_manual_seg.nii.gz,SUBC038_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 5,5f,Group 5\Rater 5f\SUBC039_ses1_Rater5f_manual_seg.nii.gz,SUBC039_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 5,5f,Group 5\Rater 5f\SUBJEC35_ses1_rater5f_manual_seg.nii.gz,SUB?035_ses1,False,,True,,9,1 2 3 4 5 6 7 8 9,True,False,False
-Group 5,5f,Group 5\Rater 5f\SUBJEC36_ses1_rater5f_manual_seg.nii.gz,SUB?036_ses1,False,,True,,9,1 2 3 4 5 6 7 8 9,True,False,False
-Group 5,5f,Group 5\Rater 5f\SUBJEC37_ses1_rater5f_manual_seg.nii.gz,SUB?037_ses1,False,,True,,9,1 2 3 4 5 6 7 8 9,True,False,False
-Group 5,5g,Group 5\Rater 5g\SUBC032_ses1_Rater5g_manual_seg.nii,SUBC032_ses1,False,,False,extension,9,1 2 3 4 5 6 7 8 9,True,False,False
-Group 5,5h,Group 5\Rater 5h\SUBC032_ses1_Rater5h_manual_seg.nii.gz,SUBC032_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 5,5h,Group 5\Rater 5h\SUBC033_ses1_rater5h_manual_seg.nii.gz,SUBC033_ses1,False,,True,,9,1 2 3 4 5 6 7 8 9,True,False,False
-Group 5,5h,Group 5\Rater 5h\SUBC035_ses1_rater5h_manual_seg.nii.gz,SUBC035_ses1,False,,True,,9,1 2 3 4 5 6 7 8 9,True,False,False
-Group 5,5h,Group 5\Rater 5h\SUBC036_ses1_Rater5h_manual_seg.nii.gz,SUBC036_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 5,5k,Group 5\Rater 5k\SUBC032_ses01_Rater5k_manual_seg.nii.gz,SUBC032_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 5,5k,Group 5\Rater 5k\SUBC033_ses01_Rater5k_manual_seg.nii.gz,SUBC033_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 5,5k,Group 5\Rater 5k\SUBC035_ses01_Rater5k_manual_seg.nii.gz,SUBC035_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 5,5k,Group 5\Rater 5k\SUBC036_ses01_Rater5k_manual_seg.nii.gz,SUBC036_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 6,6b,Group 6\Rater 6b\SUBC040_ses1_Rater6b_manual_seg.nii,SUBC040_ses1,False,,False,extension,9,1 2 3 4 5 6 7 8 9,True,False,False
-Group 6,6b,Group 6\Rater 6b\SUBC041_ses1_Rater6b_manual_seg.nii,SUBC041_ses1,False,,False,extension,9,1 2 3 4 5 6 7 8 9,True,False,False
-Group 6,6b,Group 6\Rater 6b\SUBC042_ses1_Rater6b_manual_seg.nii,SUBC042_ses1,False,,False,extension,9,1 2 3 4 5 6 7 8 9,True,False,False
-Group 6,6b,Group 6\Rater 6b\SUBC043_ses1_Rater6b_manual_seg.nii,SUBC043_ses1,False,,False,extension,9,1 2 3 4 5 6 7 8 9,True,False,False
-Group 6,6j,Group 6\Rater 6j\SUBC040_ses1_Rater6j_manual_seg.nii.gz,SUBC040_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 6,6j,Group 6\Rater 6j\SUBC041_ses2_Rater6j_manual_seg.nii.gz,SUBC041_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 6,6j,Group 6\Rater 6j\SUBC042_ses3_Rater6j_manual_seg.nii.gz,SUBC042_ses3,False,,True,,9,1 2 3 4 5 6 7 8 9,True,False,False
-Group 6,6j,Group 6\Rater 6j\SUBC043_ses4_Rater6j_manual_seg.nii.gz,SUBC043_ses4,False,,True,,9,1 2 3 4 5 6 7 8 9,True,False,False
-Group 6,6j,Group 6\Rater 6j\SUBC045_ses5_Rater6j_manual_seg.nii.gz,SUBC045_ses5,False,,True,,9,1 2 3 4 5 6 7 8 9,True,False,False
-Group 6,6j,Group 6\Rater 6j\SUBC047_ses6_Rater6j_manual_seg.nii.gz,SUBC047_ses6,False,,True,,9,1 2 3 4 5 6 7 8 9,True,False,False
-Group 6,6j,Group 6\Rater 6j\SUBC048_ses7_Rater6j_manual_seg.nii.gz,SUBC048_ses7,False,,True,,9,1 2 3 4 5 6 7 8 9,True,False,False
-Group 6,6k,Group 6\Rater 6k\SUBC040_ses1_rater6k_manual_seg.nii.gz,SUBC040_ses1,False,,True,,9,1 2 3 4 5 6 7 8 9,True,False,False
-Group 6,6k,Group 6\Rater 6k\SUBC041_ses1_rater6k_manual_seg.nii.gz,SUBC041_ses1,False,,True,,9,1 2 3 4 5 6 7 8 9,True,False,False
-Group 6,6k,Group 6\Rater 6k\SUBC042_ses1_rater6k_manual_seg.nii.gz,SUBC042_ses1,False,,True,,9,1 2 3 4 5 6 7 8 9,True,False,False
-Group 6,6k,Group 6\Rater 6k\SUBC043_ses1_rater6k_manual_seg.nii.gz,SUBC043_ses1,False,,True,,9,1 2 3 4 5 6 7 8 9,True,False,False
-Group 6,6k,Group 6\Rater 6k\SUBC045_ses1_rater6k_manual_seg.nii.gz,SUBC045_ses1,False,,True,,9,1 2 3 4 5 6 7 8 9,True,False,False
-Group 6,6k,Group 6\Rater 6k\SUBC047_ses1_rater6k_manual_seg.nii.gz,SUBC047_ses1,False,,True,,9,1 2 3 4 5 6 7 8 9,True,False,False
-Group 6,6k,Group 6\Rater 6k\SUBC048_ses1_rater6k_manual_seg.nii.gz,SUBC048_ses1,False,,True,,9,1 2 3 4 5 6 7 8 9,True,False,False
-Group 7,7a,Group 7\Rater 7a\SUBC001_ses2_Rater7a_manual_seg.nii.gz,SUBC001_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 7,7a,Group 7\Rater 7a\SUBC002_ses2_Rater7a_manual_seg.nii.gz,SUBC002_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 7,7a,Group 7\Rater 7a\SUBC049_ses1_Rater7a_manual_seg.nii.gz,SUBC049_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 7,7a,Group 7\Rater 7a\SUBC050_ses1_Rater7a_manual_seg.nii.gz,SUBC050_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 7,7a,Group 7\Rater 7a\SUBC051_ses1_Rater7a_manual_seg.nii.gz,SUBC051_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 7,7a,Group 7\Rater 7a\SUBC052_ses1_Rater7a_manual_seg.nii.gz,SUBC052_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 7,7a,Group 7\Rater 7a\SUBC054_ses1_Rater7a_manual_seg.nii.gz,SUBC054_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 7,7c,Group 7\Rater 7c\SUBC001_ses2_Rater 7c_WMn_manual.nii.gz,SUBC001_ses2,False,,True,,9,1 2 3 4 5 6 7 8 9,True,False,False
-Group 7,7c,Group 7\Rater 7c\SUBC002_ses2_Rater 7c_WMn_manual.nii.gz,SUBC002_ses2,False,,True,,9,1 2 3 4 5 6 7 8 9,True,False,False
-Group 7,7c,Group 7\Rater 7c\SUBC049_ses1_Rater 7c_WMn_manual.nii.gz,SUBC049_ses1,False,,True,,9,1 2 3 4 5 6 7 8 9,True,False,False
-Group 7,7c,Group 7\Rater 7c\SUBC050_ses1_Rater 7c_WMn_manual.nii.gz,SUBC050_ses1,False,,True,,9,1 2 3 4 5 6 7 8 9,True,False,False
-Group 7,7c,Group 7\Rater 7c\SUBC051_ses1_Rater 7c_WMn_manual.nii.gz,SUBC051_ses1,False,,True,,9,1 2 3 4 5 6 7 8 9,True,False,False
-Group 7,7c,Group 7\Rater 7c\SUBC052_ses1_Rater 7c_WMn_manual.nii.gz,SUBC052_ses1,False,,True,,9,1 2 3 4 5 6 7 8 9,True,False,False
-Group 7,7c,Group 7\Rater 7c\SUBC054_ses1_Rater 7c_WMn_manual.nii.gz,SUBC054_ses1,False,,True,,9,1 2 3 4 5 6 7 8 9,True,False,False
-Group 7,7d,Group 7\Rater 7d\SUBC49_ses1_Rater7d_manual_seg.nii.gz,SUBC049_ses1,False,,True,,9,1 2 3 4 5 6 7 8 9,True,False,False
-Group 7,7d,Group 7\Rater 7d\SUBC50_ses01_Rater7d_manual_seg.nii.gz,SUBC050_ses1,False,,False,IRM au lieu du masque,,,False,False,False
-Group 7,7d,Group 7\Rater 7d\SUBC51_ses01_Rater7d_manual_seg.nii.gz,SUBC051_ses1,False,,False,IRM au lieu du masque,,,False,False,False
-Group 7,7d,Group 7\Rater 7d\SUBC52_ses01_Rater7d_manual_seg.nii.gz,SUBC052_ses1,False,,False,IRM au lieu du masque,,,False,False,False
-Group 7,7f,Group 7\Rater 7f\SUBC049_ses01_Rater7f_manual_seg.nii.gz,SUBC049_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 7,7f,Group 7\Rater 7f\SUBC050_ses2_Rater7f_manual_seg.nii.gz,SUBC050_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 7,7h,Group 7\Rater 7h\SUBC001_ses2_Rater7h_manual_seg.nii.gz,SUBC001_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 7,7h,Group 7\Rater 7h\SUBC002_SESSION2_7h_manual_seg.nii.gz,SUBC002_ses2,False,,True,,9,1 2 3 4 5 6 7 8 9,True,False,False
-Group 7,7h,Group 7\Rater 7h\SUBC049_SESSION01_7h_manual_seg.nii.gz,SUBC049_ses1,False,,True,,9,1 2 3 4 5 6 7 8 9,True,False,False
-Group 7,7h,Group 7\Rater 7h\SUBC050_ses01_7h_manual_seg.nii.gz,SUBC050_ses1,False,,True,,9,1 2 3 4 5 6 7 8 9,True,False,False
-Group 7,7h,Group 7\Rater 7h\SUBC051_SESSION01_7h_manual_seg.nii.gz,SUBC051_ses1,False,,True,,9,1 2 3 4 5 6 7 8 9,True,False,False
-Group 7,7h,Group 7\Rater 7h\SUBC052_SESSION01_7h_manual_seg.nii.gz,SUBC052_ses1,False,,True,,9,1 2 3 4 5 6 7 8 9,True,False,False
-Group 7,7h,Group 7\Rater 7h\SUBC054_SESSION01_7h_manual_seg.nii.gz,SUBC054_ses1,False,,True,,9,1 2 3 4 5 6 7 8 9,True,False,False
-Group 7,7j,Group 7\Rater 7j\SUBC002_ses2_manual_seg.nii.gz,SUBC002_ses2,False,,True,,9,1 2 3 4 5 6 7 8 9,True,False,False
-Group 7,7j,Group 7\Rater 7j\SUBC01_ses2_Rater7j_manual_seg.nii.gz,SUBC001_ses2,False,,True,,9,1 2 3 4 5 6 7 8 9,True,False,False
-Group 7,7j,Group 7\Rater 7j\SUBC049_ses1_Rater7j_manual_seg.nii.gz,SUBC049_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 7,7j,Group 7\Rater 7j\SUBC050_ses1_Rater7j_manual_seg.nii.gz,SUBC050_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 7,7j,Group 7\Rater 7j\SUBC051_ses1_Rater7j_manual_seg.nii.gz,SUBC051_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 7,7j,Group 7\Rater 7j\SUBC052_ses1_Rater7j_manual_seg.nii.gz,SUBC052_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 7,7j,Group 7\Rater 7j\SUBC054_ses1_Rater7j_manual_seg.nii.gz,SUBC054_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 8,8a,Group 8\Rater 8a\SUBC003_ses2_Rater8a_manual_seg.nii.gz,SUBC003_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 8,8a,Group 8\Rater 8a\SUBC004_ses2_Rater8a_manual_seg.nii.gz,SUBC004_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 8,8a,Group 8\Rater 8a\SUBC005_ses2_Rater8a_manual_seg.nii.gz,SUBC005_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 8,8a,Group 8\Rater 8a\SUBC006_ses2_Rater8a_manual_seg.nii.gz,SUBC006_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 8,8a,Group 8\Rater 8a\SUBC007_ses2_Rater8a_manual_seg.nii.gz,SUBC007_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 8,8a,Group 8\Rater 8a\SUBC008_ses2_Rater8a_manual_seg.nii.gz,SUBC008_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 8,8b,Group 8\Rater 8b\SUB008_ses2_Rater8b_manual_seg.nii.gz,SUB?008_ses2,False,,True,,9,1 2 3 4 5 6 7 8 9,True,False,False
-Group 8,8b,Group 8\Rater 8b\SUBC003_ses2_Rater8b_manual_seg.nii.gz,SUBC003_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 8,8b,Group 8\Rater 8b\SUBC004_ses2_Rate8b_manual_seg.nii.gz,SUBC004_ses2,False,,True,,9,1 2 3 4 5 6 7 8 9,True,False,False
-Group 8,8b,Group 8\Rater 8b\SUBC005_ses2_Rater8b_manual_seg.nii.gz,SUBC005_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 8,8b,Group 8\Rater 8b\SUBC006_ses2_Rater8b_manual_seg.nii.gz,SUBC006_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 8,8b,Group 8\Rater 8b\SUBC007_ses2_Rater8b_manual_seg.nii.gz,SUBC007_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 8,8c,Group 8\Rater 8c\SUBC03_ses2_RATER8C_manual_seg.nii.gz,SUBC003_ses2,False,,True,,9,1 2 3 4 5 6 7 8 9,True,False,False
-Group 8,8c,Group 8\Rater 8c\SUBC04_ses02_Rater8C_manual_.nii.gz,SUBC004_ses2,False,,True,,9,1 2 3 4 5 6 7 8 9,True,False,False
-Group 8,8d,Group 8\Rater 8d\SUBC003_ses2_Rater8d_manual_seg.nii.gz,SUBC003_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 8,8d,Group 8\Rater 8d\SUBC004_ses2_Rater8d_manual_seg.nii.gz,SUBC004_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 8,8d,Group 8\Rater 8d\SUBC005_ses2_Rater8d_manual_seg.nii.gz,SUBC005_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 8,8d,Group 8\Rater 8d\SUBC006_ses2_Rater8d_manual_seg.nii.gz,SUBC006_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 8,8d,Group 8\Rater 8d\SUBC007_ses2_Rater8d_manual_seg.nii.gz,SUBC007_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 8,8d,Group 8\Rater 8d\SUBC008_ses2_Rater8d_manual_seg.nii.gz,SUBC008_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 8,8e,Group 8\Rater 8e\SUBC003_ses2_Rater8e_manual_seg.nii.gz,SUBC003_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 8,8e,Group 8\Rater 8e\SUBC004_ses2_Rater8e_manual_seg.nii.gz,SUBC004_ses2,True,True,True,,7,1 2 3 4 5 6 9,False,False,False
-Group 8,8g,Group 8\Rater 8g\SUBC003_ses2_Rater8g_manual_seg.nii.gz,SUBC003_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 8,8g,Group 8\Rater 8g\SUBC004_ses2_Rater8g_manual_seg.nii.gz,SUBC004_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 8,8g,Group 8\Rater 8g\SUBC005_ses2_Rater8g_manual_seg.nii.gz,SUBC005_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 8,8g,Group 8\Rater 8g\SUBC006_ses2_Rater8g_manual_seg.nii.gz,SUBC006_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 8,8g,Group 8\Rater 8g\SUBC007_ses2_Rater8g_manual_seg.nii.gz,SUBC007_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 8,8g,Group 8\Rater 8g\SUBC008_ses2_rater8g_manual_seg.nii.gz,SUBC008_ses2,False,,True,,9,1 2 3 4 5 6 7 8 9,True,False,False
-Group 8,8i,Group 8\Rater 8i\SUBC003_ses2_Rater8i_manual_seg.nii.gz,SUBC003_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 8,8i,Group 8\Rater 8i\SUBC004_ses2_Rater8i_manual_seg.nii.gz,SUBC004_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 8,8i,Group 8\Rater 8i\SUBC005_ses2_Rater8i_manual_seg.nii.gz,SUBC005_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 8,8i,Group 8\Rater 8i\SUBC006_ses2_Rater8i_manual_seg.nii.gz,SUBC006_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 8,8i,Group 8\Rater 8i\SUBC007_ses2_Rater8i_manual_seg.nii.gz,SUBC007_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 8,8i,Group 8\Rater 8i\SUBC008_ses2_Rater8i_manual_seg.nii.gz,SUBC008_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 8,8k,Group 8\Rater 8k\SUBC003_ses2_Rater8k_manual_seg.nii.gz,SUBC003_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 8,8k,Group 8\Rater 8k\SUBC004_ses2_Rater8k_manual_seg.nii.gz,SUBC004_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 8,8k,Group 8\Rater 8k\SUBC005_ses2_Rater8k_manual_seg.nii.gz,SUBC005_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 9,9b,Group 9\Rater 9b\SUBC009_ses9_RATER9b_manual_seg.nii.gz,SUBC009_ses9,False,,True,,9,1 2 3 4 5 6 7 8 9,True,False,False
-Group 9,9f,Group 9\Rater 9f\SUBC009_ses2_Rater9f_manual_seg.nii.gz,SUBC009_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 9,9f,Group 9\Rater 9f\SUBC011_ses2_Rater9f_manual_seg.nii.gz,SUBC011_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 9,9f,Group 9\Rater 9f\SUBC012_ses2_Rater9f_manual_seg.nii.gz,SUBC012_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 9,9f,Group 9\Rater 9f\SUBC016_ses2_Rater9f_manual_seg.nii.gz,SUBC016_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 9,9f,Group 9\Rater 9f\SUBC017_ses2_Rater9f_manual_seg.nii.gz,SUBC017_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 9,9f,Group 9\Rater 9f\SUBC15_ses2_Rater9f_manual_seg.nii.gz,SUBC015_ses2,False,,True,,9,1 2 3 4 5 6 7 8 9,True,False,False
-Group 9,9f,Group 9\Rater 9f\SUBG002_ses1_Rater9f.manual_seg.nii.gz,SUBG002_ses1,False,,True,,9,1 2 3 4 5 6 7 8 9,True,False,False
-Group 9,9g,Group 9\Rater 9g\SUBC009_ses2_Rater9g_manual_seg.nii.gz,SUBC009_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 9,9g,Group 9\Rater 9g\SUBC011_ses2_Rater9g_manual_seg.nii.gz,SUBC011_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 9,9g,Group 9\Rater 9g\SUBC012_ses2_Rater9g_manual_seg.nii.gz,SUBC012_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 9,9g,Group 9\Rater 9g\SUBC015_ses2_Rater9g_manual_seg.nii.gz,SUBC015_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 9,9g,Group 9\Rater 9g\SUBC016_ses2_Rater9g_manual_seg.nii.gz,SUBC016_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 9,9g,Group 9\Rater 9g\SUBC017_ses2_Rater9g_manual_seg.nii.gz,SUBC017_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 9,9g,Group 9\Rater 9g\SUBG002_ses1_Rater9g_manual_seg.nii.gz,SUBG002_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 9,9h,Group 9\Rater 9h\SUBC016_ses2_Rater9h_manual_seg.nii.gz,SUBC016_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
-Group 9,9h,Group 9\Rater 9h\SUBC09_ses2_Rater9h_manual_seg.nii,SUBC009_ses2,False,,False,extension,11,1 2 3 4 5 6 7 8 9 11 12,False,False,False
-Group 9,9h,Group 9\Rater 9h\SUBC11_ses2_Rater9h_manual_seg_.nii.gz,SUBC011_ses2,False,,True,,9,1 2 3 4 5 6 7 8 9,True,False,False
-Group 9,9h,Group 9\Rater 9h\SUBC12_ses2_Rater9h_manual_seg.nii.gz,SUBC012_ses2,False,,True,,9,1 2 3 4 5 6 7 8 9,True,False,False
-Group 9,9h,Group 9\Rater 9h\SUBC15_ses2_Rater9h_manual_seg.nii.gz,SUBC015_ses2,False,,True,,9,1 2 3 4 5 6 7 8 9,True,False,False
-Group 9,9h,Group 9\Rater 9h\SUBC17_ses2_Rater9h_manual_seg.nii.gz,SUBC017_ses2,False,,True,,9,1 2 3 4 5 6 7 8 9,True,False,False
-Group 9,9h,Group 9\Rater 9h\SUBG002_ses1_Rater9h_manual_seg.nii.gz,SUBG002_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,False,True
+group,rater,file,scan,name_ok,rater_match_folder,format_ok,format_issue,n_labels,labels,labels_ok,shape,voxel_mm,size_ok,orientation,orientation_ok,dice_vs_others,dice_flipped_vs_others,lr_flip_suspect,duplicate,all_ok
+Group 1,1a,Group 1\Rater 1a\SUBC001_ses1_Rater1a_manual_seg.nii.gz,SUBC001_ses1,True,True,True,,2,4 5,False,192x224x224,1.0x1.0x1.0,True,RAS,True,0.0,0.0,False,False,False
+Group 1,1a,Group 1\Rater 1a\SUBC001_ses2_Rater1a_manual_seg.nii,SUBC001_ses2,False,,False,extension,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.021,0.029,False,False,False
+Group 1,1b,Group 1\Rater 1b\SUBC001_ses01_Rater1b_manual_seg.nii.gz,SUBC001_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.0,0.0,False,False,True
+Group 1,1c,Group 1\Rater 1c\SUBC001_ses1_Rater1c_manual_seg.nii.gz,SUBC001_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.0,0.0,False,False,True
+Group 1,1c,Group 1\Rater 1c\SUBC002_ses1_Rater1c_manual_seg.nii.gz,SUBC002_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,,,,False,True
+Group 1,1c,Group 1\Rater 1c\SUBC003_ses1_Rater1c_manual_seg.nii.gz,SUBC003_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,,,,False,True
+Group 1,1c,Group 1\Rater 1c\SUBC004_ses1_Rater1c_manual_seg.nii.gz,SUBC004_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,,,,False,True
+Group 1,1c,Group 1\Rater 1c\SUBC005_ses1_Rater1c_manual_seg.nii.gz,SUBC005_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,,,,False,True
+Group 1,1c,Group 1\Rater 1c\SUBC006_ses1_Rater1c_manual_seg.nii.gz,SUBC006_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,,,,False,True
+Group 1,1c,Group 1\Rater 1c\SUBC007_ses1_Rater1c_manual_seg.nii.gz,SUBC007_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,,,,False,True
+Group 1,1d,Group 1\Rater 1d\SUBC002_ses1_Rater1d_manual_seg.nii.gz,SUBC002_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,,,,False,True
+Group 1,1d,Group 1\Rater 1d\SUBC003_ses1_Rater1d_manual_seg.nii.gz,SUBC003_ses1,True,True,True,,9,1 2 3 4 5 6 7 9 10,False,192x224x224,1.0x1.0x1.0,True,RAS,True,,,,False,False
+Group 10,10b,Group 10\Rater 10b\SUBC020_ses2_Rater10b_manual_seg.nii.gz,SUBC020_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.883,0.827,False,False,True
+Group 10,10b,Group 10\Rater 10b\SUBC022_ses2_Rater10b_manual.nii.gz,SUBC022_ses2,False,,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.841,0.787,False,False,False
+Group 10,10b,Group 10\Rater 10b\SUBG003_ses1_Rater10b_manual_seg.nii.gz,SUBG003_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.836,0.469,False,False,True
+Group 10,10c,Group 10\Rater 10c\SUBC020_ses2_Rater10c_manual_seg.nii.gz,SUBC020_ses2,True,True,True,,9,2 3 4 5 6 8 9 10 11,False,192x224x224,1.0x1.0x1.0,True,RAS,True,0.849,0.81,False,False,False
+Group 10,10c,Group 10\Rater 10c\SUBC022_ses2_RATER10c_manual_seg.nii.gz,SUBC022_ses2,False,,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.844,0.78,False,False,False
+Group 10,10c,Group 10\Rater 10c\SUBC023_ses2_Rater10c_manual_seg.nii.gz,SUBC023_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.802,0.631,False,False,True
+Group 10,10c,Group 10\Rater 10c\SUBC024_ses2_RATER10c_manual_seg.nii.gz,SUBC024_ses2,False,,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.781,0.704,False,False,False
+Group 10,10c,Group 10\Rater 10c\SUBC025_ses2_RATER10c_Manual_seg.nii.gz,SUBC025_ses2,False,,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.805,0.532,False,False,False
+Group 10,10c,Group 10\Rater 10c\SUBC026_ses2_RATER10c_Manual_seg.nii.gz,SUBC026_ses2,False,,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.801,0.735,False,False,False
+Group 10,10c,Group 10\Rater 10c\SUBG003_ses1_RATER10c_manual_seg.nii.gz,SUBG003_ses1,False,,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.819,0.534,False,False,False
+Group 10,10d,Group 10\Rater 10d\SUBC022_ses2_Rater10d_manual_seg.nii.gz,SUBC022_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.892,0.793,False,False,True
+Group 10,10d,Group 10\Rater 10d\SUBC025_ses2_Rater10d_manual_seg.nii.gz,SUBC025_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.934,0.502,False,False,True
+Group 10,10d,Group 10\Rater 10d\SUBCO20_ses2_Rater10d_manual_seg.nii.gz,SUBC020_ses2,False,,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.877,0.829,False,False,False
+Group 10,10d,Group 10\Rater 10d\SUBCO23_ses2_Rater10d_manual_seg.nii.gz,SUBC023_ses2,False,,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.878,0.582,False,False,False
+Group 10,10d,Group 10\Rater 10d\SUBCO24_ses2_Rater10d_manual_seg.nii.gz,SUBC024_ses2,False,,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.921,0.733,False,False,False
+Group 10,10d,Group 10\Rater 10d\SUBCO26_ses2_Rater10d_manual_seg.nii.gz,SUBC026_ses2,False,,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.937,0.797,False,False,False
+Group 10,10d,Group 10\Rater 10d\SUBG003_ses1_Rater10d_manual_seg.nii.gz,SUBG003_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.924,0.49,False,False,True
+Group 10,10e,Group 10\Rater 10e\SUBC020_ses2_Rater10e_manual_seg.nii.gz,SUBC020_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.935,0.859,False,False,True
+Group 10,10e,Group 10\Rater 10e\SUBC022_ses2_Rater10e_manual_seg.nii.gz,SUBC022_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.918,0.815,False,False,True
+Group 10,10e,Group 10\Rater 10e\SUBC023_ses2_Rater10e_manual_seg.nii.gz,SUBC023_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.907,0.629,False,False,True
+Group 10,10e,Group 10\Rater 10e\SUBC024_ses2_Rater10e_manual_seg.nii.gz,SUBC024_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.926,0.726,False,False,True
+Group 10,10e,Group 10\Rater 10e\SUBC025_ses2_Rater10e_manual_seg.nii.gz,SUBC025_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.935,0.504,False,False,True
+Group 10,10e,Group 10\Rater 10e\SUBC026_ses2_Rater10e_manual_seg.nii.gz,SUBC026_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.937,0.793,False,False,True
+Group 10,10e,Group 10\Rater 10e\SUBG003_ses1_Rater10e_manual_seg.nii.gz,SUBG003_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.927,0.492,False,False,True
+Group 10,10i,Group 10\Rater 10i\SUBC020_ses2_10i_manual_seg.nii.gz,SUBC020_ses2,False,,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.89,0.835,False,False,False
+Group 10,10i,Group 10\Rater 10i\SUBC022_ses2_i10_manual_seg.nii.gz,SUBC022_ses2,False,,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.889,0.801,False,False,False
+Group 10,10i,Group 10\Rater 10i\SUBC023_ses2_10i_manual_seg.nii.gz,SUBC023_ses2,False,,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.894,0.63,False,False,False
+Group 10,10i,Group 10\Rater 10i\SUBC024_ses2_10i_manual_seg.nii.gz,SUBC024_ses2,False,,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.849,0.694,False,False,False
+Group 10,10i,Group 10\Rater 10i\SUBC025_ses2_10i_manual_seg.nii.gz,SUBC025_ses2,False,,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.871,0.485,False,False,False
+Group 10,10i,Group 10\Rater 10i\SUBC026_ses2_10i_manual_seg.nii.gz,SUBC026_ses2,False,,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.867,0.801,False,False,False
+Group 10,10i,Group 10\Rater 10i\SUBG003_ses1_10i_manual_seg.nii.gz,SUBG003_ses1,False,,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.877,0.501,False,False,False
+Group 10,10j,Group 10\Rater 10j\SUBC001_ses2_Rater10j_manual_seg.nii.gz,SUBC001_ses2,True,True,False,IRM au lieu du masque,,,False,192x224x224,1.0x1.0x1.0,True,RAS,True,,,,False,False
+Group 10,10k,Group 10\Rater 10k\SUBC20_ses2_Rater10k_manual_seg.nii.gz,SUBC020_ses2,False,,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.92,0.857,False,False,False
+Group 10,10k,Group 10\Rater 10k\SUBC22_ses2_Rater10k_manual_seg.nii.gz,SUBC022_ses2,False,,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.906,0.799,False,False,False
+Group 10,10k,Group 10\Rater 10k\SUBC23_ses2_Rater10k_manual_seg.nii.gz,SUBC023_ses2,False,,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.909,0.609,False,False,False
+Group 10,10k,Group 10\Rater 10k\SUBC24_ses2_Rater10k_manual_seg.nii.gz,SUBC024_ses2,False,,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.894,0.725,False,False,False
+Group 10,10k,Group 10\Rater 10k\SUBC25_ses2_Rater10k_manual_seg.nii.gz,SUBC025_ses2,False,,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.909,0.486,False,False,False
+Group 10,10k,Group 10\Rater 10k\SUBC26_ses2_Rater10k_manual_seg.nii.gz,SUBC026_ses2,False,,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.899,0.777,False,False,False
+Group 10,10k,Group 10\Rater 10k\SUBG03_ses1_Rater10k_manual_seg.nii.gz,SUBG003_ses1,False,,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.899,0.517,False,False,False
+Group 11,11b,Group 11\Rater 11b\SUBC027_ses2_Rater11b_manual_seg.nii.gz,SUBC027_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 10,False,192x224x224,1.0x1.0x1.0,True,RAS,True,0.902,0.303,False,False,False
+Group 11,11b,Group 11\Rater 11b\SUBC028_ses2_Rater11b_manual_seg.nii.gz,SUBC028_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.904,0.589,False,False,True
+Group 11,11b,Group 11\Rater 11b\SUBC029_ses2_Rater11b_manual_seg.nii.gz,SUBC029_ses2,True,True,True,,9,1 4 5 6 7 8 9 10 11,False,192x224x224,1.0x1.0x1.0,True,RAS,True,0.897,0.844,False,False,False
+Group 11,11b,Group 11\Rater 11b\SUBC030_ses2_Rater11b_manual_seg.nii.gz,SUBC030_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.917,0.743,False,False,True
+Group 11,11b,Group 11\Rater 11b\SUBC031_ses2_Rater11b_manual_seg.nii.gz,SUBC031_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.918,0.766,False,False,True
+Group 11,11b,Group 11\Rater 11b\SUBC032_ses2_Rater11b_manual.seg.nii.gz,SUBC032_ses2,False,,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.909,0.342,False,False,False
+Group 11,11b,Group 11\Rater 11b\SUBG04_ses1_Rater11b_manual_seg.nii.gz,SUBG004_ses1,False,,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.922,0.793,False,False,False
+Group 11,11d,Group 11\Rater 11d\SUBC027_ses2_Rater11d_manual_seg 2.nii,SUBC027_ses2,False,,False,extension,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.906,0.302,False,False,False
+Group 11,11d,Group 11\Rater 11d\SUBC028_ses2_Rater11d_manual_seg.nii.gz,SUBC028_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.905,0.584,False,False,True
+Group 11,11d,Group 11\Rater 11d\SUBC029_ses2_Rater11d_manual_seg.nii.gz,SUBC029_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.892,0.843,False,False,True
+Group 11,11d,Group 11\Rater 11d\SUBC030_ses2_Rater11d_manual_seg.nii.gz,SUBC030_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.9,0.723,False,False,True
+Group 11,11d,Group 11\Rater 11d\SUBC031_ses2_Rater11d_manual_seg.nii.gz,SUBC031_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.89,0.766,False,False,True
+Group 11,11e,Group 11\Rater 11e\SUBCO27_ses2_Rater11e_manual_seg.nii.gz,SUBC027_ses2,False,,True,,0,,False,192x224x224,1.0x1.0x1.0,True,RAS,True,,,,False,False
+Group 11,11e,Group 11\Rater 11e\SUBCO28_ses2_Rater11e_manual_seg.nii.gz,SUBC028_ses2,False,,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.811,0.573,False,False,False
+Group 11,11e,Group 11\Rater 11e\SUBCO29_ses2_Rater11e_manual_seg.nii.gz,SUBC029_ses2,False,,False,IRM au lieu du masque,,,False,192x224x224,1.0x1.0x1.0,True,RAS,True,,,,False,False
+Group 11,11e,Group 11\Rater 11e\SUBCO30_ses2_Rater11e_manual_seg.nii.gz,SUBC030_ses2,False,,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.815,0.679,False,False,False
+Group 11,11e,Group 11\Rater 11e\SUBCO31_ses2_Rater11e_manual_seg.nii.gz,SUBC031_ses2,False,,False,IRM au lieu du masque,,,False,192x224x224,1.0x1.0x1.0,True,RAS,True,,,,False,False
+Group 11,11e,Group 11\Rater 11e\SUBCO32_ses2_Rater11e_manual_seg.nii.gz,SUBC032_ses2,False,,False,IRM au lieu du masque,,,False,192x224x224,1.0x1.0x1.0,True,RAS,True,,,,False,False
+Group 11,11e,Group 11\Rater 11e\SUBG004_ses1_Rater11e_manual_seg.nii.gz,SUBG004_ses1,True,True,False,IRM au lieu du masque,,,False,192x224x224,1.0x1.0x1.0,True,RAS,True,,,,False,False
+Group 11,11f,Group 11\Rater 11f\SUBC027_ses2_Rater11f_manual_seg.nii.gz,SUBC027_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.905,0.304,False,False,True
+Group 11,11f,Group 11\Rater 11f\SUBC028_ses2_Rater11f_manual_seg.nii.gz,SUBC028_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.901,0.602,False,False,True
+Group 11,11f,Group 11\Rater 11f\SUBC029_ses2_Rater11f_manual_seg.nii.gz,SUBC029_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.871,0.832,False,False,True
+Group 11,11f,Group 11\Rater 11f\SUBC030_ses2_Rater11f_manual_seg.nii.gz,SUBC030_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.881,0.717,False,False,True
+Group 11,11f,Group 11\Rater 11f\SUBC031_ses2_Rater11f_manual_seg.nii.gz,SUBC031_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.884,0.774,False,False,True
+Group 11,11f,Group 11\Rater 11f\SUBC032_ses2_Rater11f_manual_seg.nii.gz,SUBC032_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.864,0.359,False,False,True
+Group 11,11f,Group 11\Rater 11f\SUBG004_ses1_Rater11f_manual_seg.nii.gz,SUBG004_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.896,0.796,False,False,True
+Group 11,11g,Group 11\Rater 11g\SUBC27_Session 2_Rater11g.manual_seg.nii.gz,SUBC027_ses2,False,,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.873,0.305,False,False,False
+Group 11,11i,Group 11\Rater 11i\SUBC027_ses2_Rater11i.nii.gz,SUBC027_ses2,False,,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.887,0.28,False,False,False
+Group 11,11i,Group 11\Rater 11i\SUBC028_ses_2_Rater11i.nii,SUBC028_ses2,False,,False,extension,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.883,0.557,False,False,False
+Group 11,11i,Group 11\Rater 11i\SUBC029_ses2_Rater11i.nii.gz,SUBC029_ses2,False,,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.883,0.844,False,False,False
+Group 11,11i,Group 11\Rater 11i\SUBC030_ses2_Rater11i.nii,SUBC030_ses2,False,,False,extension,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.917,0.736,False,False,False
+Group 11,11i,Group 11\Rater 11i\SUBC031_ses2_Rater11i.nii,SUBC031_ses2,False,,False,extension,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.927,0.765,False,False,False
+Group 11,11i,Group 11\Rater 11i\SUBC032_ses2_Rater11i.nii.gz,SUBC032_ses2,False,,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.916,0.341,False,False,False
+Group 11,11i,Group 11\Rater 11i\SUBG004_ses1_Rater11i.nii,SUBG004_ses1,False,,False,extension,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.901,0.784,False,False,False
+Group 11,11j,Group 11\Rater 11j\SUBC027_ses2_Rater11j_manual_seg.nii.gz,SUBC027_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.894,0.282,False,False,True
+Group 11,11j,Group 11\Rater 11j\SUBC028_ses2_Rater11j_manual_seg.nii.gz,SUBC028_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.896,0.57,False,False,True
+Group 11,11j,Group 11\Rater 11j\SUBC029_ses2_Rater11j_manual_seg.nii.gz,SUBC029_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.903,0.85,False,False,True
+Group 11,11j,Group 11\Rater 11j\SUBC030_ses2_Rater11j_manual_seg.nii.gz,SUBC030_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.916,0.737,False,False,True
+Group 11,11j,Group 11\Rater 11j\SUBC031_ses2_Rater11j_manual_seg.nii.gz,SUBC031_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.93,0.779,False,False,True
+Group 11,11j,Group 11\Rater 11j\SUBC032_ses2_Rater11j_manual_seg.nii.gz,SUBC032_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.615,0.113,False,False,True
+Group 11,11j,Group 11\Rater 11j\SUBG004_ses1_Rater11j_manual_seg.nii.gz,SUBG004_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.877,0.781,False,False,True
+Group 12,12b,Group 12\Rater 12b\SUBC035_ses2_Rater12b_manual_seg.nii.gz,SUBC035_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.86,0.767,False,False,True
+Group 12,12b,Group 12\Rater 12b\SUBC036_ses2_Rater12b_manual_seg.nii.gz,SUBC036_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.875,0.712,False,False,True
+Group 12,12b,Group 12\Rater 12b\SUBC037_ses2_Rater12b_manual_seg.nii.gz,SUBC037_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.907,0.75,False,False,True
+Group 12,12b,Group 12\Rater 12b\SUBC039_ses2_Rater12b_manual_seg.nii.gz,SUBC039_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.918,0.818,False,False,True
+Group 12,12b,Group 12\Rater 12b\SUBC040_ses2_Rater12b_manual_seg.nii.gz,SUBC040_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.909,0.743,False,False,True
+Group 12,12b,Group 12\Rater 12b\SUBG006_ses1_Rater12b_manual_seg.nii.gz,SUBG006_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,,,,False,True
+Group 12,12b,Group 12\Rater 12b\SUBG007_ses2_Rater12b_manual_seg.nii.gz,SUBG007_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,,,,False,True
+Group 12,12d,Group 12\Rater 12d\SUBC035_ses2_Rater12d_manual_seg.nii.gz,SUBC035_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.82,0.752,False,False,True
+Group 12,12d,Group 12\Rater 12d\SUBC036_ses2_Rater12d_manual_seg.nii.gz,SUBC036_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.82,0.702,False,False,True
+Group 12,12d,Group 12\Rater 12d\SUBC037_ses2_Rater12d_manual_seg.nii.gz,SUBC037_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.858,0.74,False,False,True
+Group 12,12d,Group 12\Rater 12d\SUBC039_ses2_Rater12d_manual_seg.nii.gz,SUBC039_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.871,0.79,False,False,True
+Group 12,12d,Group 12\Rater 12d\SUBC040_ses2_Rater12d_manual_seg.nii.gz,SUBC040_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.85,0.731,False,False,True
+Group 12,12d,Group 12\Rater 12d\SUBG006_ses1_Rater12d_manual_seg.nii.gz,SUBG006_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,,,,False,True
+Group 12,12d,Group 12\Rater 12d\SUBG007_ses2_Rater12d_manual_seg.nii.gz,SUBG007_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,,,,False,True
+Group 12,12h,Group 12\Rater 12h\SUBC035_ses2_Rater12h_manual_seg.nii.gz.gz,SUBC035_ses2,False,,False,extension,,,False,,,False,,False,,,,False,False
+Group 12,12h,Group 12\Rater 12h\SUBC036_ses2_Rater12h_manual_seg.nii.gz.gz,SUBC036_ses2,False,,False,extension,,,False,,,False,,False,,,,False,False
+Group 12,12h,Group 12\Rater 12h\SUBC037_ses2_Rater12h_manual_seg.nii.gz.gz,SUBC037_ses2,False,,False,extension,,,False,,,False,,False,,,,False,False
+Group 12,12h,Group 12\Rater 12h\SUBC039_ses2_Rater12h_manual_seg.nii.gz.gz,SUBC039_ses2,False,,False,extension,,,False,,,False,,False,,,,False,False
+Group 12,12h,Group 12\Rater 12h\SUBC040_ses2_Rater12h_manual_seg.nii.gz.gz,SUBC040_ses2,False,,False,extension,,,False,,,False,,False,,,,False,False
+Group 12,12h,Group 12\Rater 12h\SUBG006_ses1_Rater12h_manual_seg.nii.gz.gz,SUBG006_ses1,False,,False,extension,,,False,,,False,,False,,,,False,False
+Group 12,12h,Group 12\Rater 12h\SUBG007_ses2_Rater12h_manual_seg.nii.gz.gz,SUBG007_ses2,False,,False,extension,,,False,,,False,,False,,,,False,False
+Group 12,12k,Group 12\Rater 12k\SUBC035_ses2_Rater12k_manual_seg.nii,SUBC035_ses2,False,,False,extension,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.87,0.78,False,False,False
+Group 12,12k,Group 12\Rater 12k\SUBC036_ses2_Rater12k_manual_seg.nii,SUBC036_ses2,False,,False,extension,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.882,0.71,False,False,False
+Group 12,12k,Group 12\Rater 12k\SUBC037_ses2_Rater12k_manual_seg.nii,SUBC037_ses2,False,,False,extension,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.902,0.756,False,False,False
+Group 12,12k,Group 12\Rater 12k\SUBC039_ses2_Rater12k_manual_seg.nii,SUBC039_ses2,False,,False,extension,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.923,0.819,False,False,False
+Group 12,12k,Group 12\Rater 12k\SUBC040_ses2_rater12k_manual_seg.nii,SUBC040_ses2,False,,False,extension,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.914,0.747,False,False,False
+Group 13,13a,Group 13\Rater 13a\SUBC041_ses2_Rater13a_manual_seg.nii.gz,SUBC041_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.242,0.193,False,False,True
+Group 13,13a,Group 13\Rater 13a\SUBC042_ses02_Rater13a_manuel_seg.nii.gz,SUBC042_ses2,False,,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.877,0.384,False,False,False
+Group 13,13a,Group 13\Rater 13a\SUBC045_ses2_Rater13a_manual_seg.nii.gz,SUBC045_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.871,0.664,False,False,True
+Group 13,13a,Group 13\Rater 13a\SUBG007_ses1_Rater13a_manual_seg.nii.gz,SUBG007_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.904,0.622,False,False,True
+Group 13,13a,Group 13\Rater 13a\SUBG008_ses02_Rater13a_manual_.nii.gz,SUBG008_ses2,False,,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.83,0.283,False,False,False
+Group 13,13d,Group 13\Rater 13d\SUBC042_ses2_Rater13d_manual_seg.nii.gz,SUBC042_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.89,0.402,False,False,True
+Group 13,13d,Group 13\Rater 13d\SUBC045_ses2_Rater13d_manual_seg.nii.gz,SUBC045_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.862,0.658,False,False,True
+Group 13,13d,Group 13\Rater 13d\SUBCO41_ses2_Rater13d_manual_seg.nii.gz,SUBC041_ses2,False,,False,pas compressé,,,False,,,False,,False,,,,False,False
+Group 13,13d,Group 13\Rater 13d\SUBG007_ses1_Rater13d_manual_seg.nii.gz,SUBG007_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.897,0.623,False,False,True
+Group 13,13d,Group 13\Rater 13d\SUBG008_ses2_Rater13d_manual_seg.nii.gz,SUBG008_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.847,0.281,False,False,True
+Group 13,13e,Group 13\Rater 13e\SUBG007_ses1_Rater13e_manual_seg.nii,SUBG007_ses1,False,,False,extension,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.855,0.646,False,False,False
+Group 13,13f,Group 13\Rater 13f\SUBC041_ses2_WMn_Rater 13f_manual_seg.nii.gz,SUBC041_ses2,False,,False,IRM au lieu du masque,,,False,192x224x224,1.0x1.0x1.0,True,RAS,True,,,,False,False
+Group 13,13f,Group 13\Rater 13f\SUBC042_ses2_WMn_Rater_ 13f_manual_seg.nii.gz,SUBC042_ses2,False,,False,IRM au lieu du masque,,,False,192x224x224,1.0x1.0x1.0,True,RAS,True,,,,False,False
+Group 13,13f,Group 13\Rater 13f\SUBG007_ses1_WMn_Rater_ 13f_manual_seg.nii.gz,SUBG007_ses1,False,,False,IRM au lieu du masque,,,False,192x224x224,1.0x1.0x1.0,True,RAS,True,,,,False,False
+Group 13,13f,Group 13\Rater 13f\SUBG008_ses2_WMn_Rater 13f_manual_seg.nii.gz,SUBG008_ses2,False,,False,IRM au lieu du masque,,,False,192x224x224,1.0x1.0x1.0,True,RAS,True,,,,False,False
+Group 13,13j,Group 13\Rater 13j\SUBC041-S2rater13JMANUAL.nii.gz,SUBC041_ses?,False,,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,,,,False,False
+Group 13,13j,Group 13\Rater 13j\SUBC042_S2_13J_manual_seg.nii.gz,SUBC042_ses2,False,,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.863,0.401,False,False,False
+Group 13,13k,Group 13\Rater 13k\SUBC041_ses2_WMn_manual.nii.gz,SUBC041_ses2,False,,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.241,0.209,False,False,False
+Group 13,13k,Group 13\Rater 13k\SUBC042_ses2_WMn_manual.nii.gz,SUBC042_ses2,False,,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.888,0.404,False,False,False
+Group 13,13k,Group 13\Rater 13k\SUBC45_Session02_manual.nii.gz,SUBC045_ses2,False,,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.876,0.666,False,False,False
+Group 13,13k,Group 13\Rater 13k\SUBG007_ses1_WMn_manual.nii.gz,SUBG007_ses1,False,,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.897,0.617,False,False,False
+Group 13,13k,Group 13\Rater 13k\SUBG08_Session02_manual.nii.gz,SUBG008_ses2,False,,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.869,0.279,False,False,False
+Group 14,14c,Group 14\Rater 14c\SUBC047_ses2_Rater14c_manual_seg.nii.gz,SUBC047_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.889,0.734,False,False,True
+Group 14,14c,Group 14\Rater 14c\SUBC048_ses2_Rater14c_manual_seg.nii.gz,SUBC048_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.909,0.508,False,False,True
+Group 14,14c,Group 14\Rater 14c\SUBC049_ses2_Rater14c_manual_seg.nii.gz,SUBC049_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.872,0.803,False,False,True
+Group 14,14c,Group 14\Rater 14c\SUBC053_ses2_Rater14c_manual_seg.nii.gz,SUBC053_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.846,0.795,False,False,True
+Group 14,14c,Group 14\Rater 14c\SUBC055_ses2_Rater14c_manual_seg.nii.gz,SUBC055_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.842,0.788,False,False,True
+Group 14,14c,Group 14\Rater 14c\SUBG008_ses1_Rater14c_manual_seg.nii.gz,SUBG008_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.91,0.689,False,False,True
+Group 14,14c,Group 14\Rater 14c\SUBG009_ses2_Rater14c_manual_seg.nii.gz,SUBG009_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.952,0.393,False,False,True
+Group 14,14e,Group 14\Rater 14e\SUBC047_ses2_Rater14e_manual_seg.nii.gz,SUBC047_ses2,True,True,True,,9,1 2 3 4 5 6 7 9 10,False,192x224x224,1.0x1.0x1.0,True,RAS,True,0.888,0.733,False,False,False
+Group 14,14e,Group 14\Rater 14e\SUBC048_ses2_Rater14e_manual_seg.nii.gz,SUBC048_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.907,0.503,False,False,True
+Group 14,14e,Group 14\Rater 14e\SUBC049_ses2_Rater14e_manual_seg.nii.gz,SUBC049_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.85,0.792,False,False,True
+Group 14,14e,Group 14\Rater 14e\SUBC053_ses2_Rater14e_manual.seg.nii.gz,SUBC053_ses2,False,,True,,10,1 2 3 4 5 6 7 8 9 10,False,192x224x224,1.0x1.0x1.0,True,RAS,True,0.838,0.793,False,False,False
+Group 14,14e,Group 14\Rater 14e\SUBC055_ses2_Rater14e_manual_seg.nii.gz,SUBC055_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.842,0.805,False,False,True
+Group 14,14e,Group 14\Rater 14e\subg008_ses1_rater14e_manual_seg.nii.gz,SUBG008_ses1,False,,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.91,0.689,False,False,False
+Group 14,14e,Group 14\Rater 14e\SUBG009_ses2_Rater14e_manual_seg.nii.gz,SUBG009_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.879,0.376,False,False,True
+Group 14,14f,Group 14\Rater 14f\SUBG009_ses2_RATER14F_manual_seg.nii.gz,SUBG009_ses2,False,,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.842,0.372,False,False,False
+Group 14,14f,Group 14\Rater 14f\SUBG08_ses01_RATER14F_manual_seg.nii.gz,SUBG008_ses1,False,,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.868,0.665,False,False,False
+Group 14,14h,Group 14\Rater 14h\SUBC47_ses2_Rater14h_manual_seg.nii.gz,SUBC047_ses2,False,,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.854,0.733,False,False,False
+Group 14,14h,Group 14\Rater 14h\SUBC48_ses2_Rater14h_manual-seg.nii.gz,SUBC048_ses2,False,,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.824,0.517,False,False,False
+Group 14,14h,Group 14\Rater 14h\SUBC49_ses2_Rater14h_manual_seg.nii.gz,SUBC049_ses2,False,,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.831,0.79,False,False,False
+Group 14,14h,Group 14\Rater 14h\SUBC53_ses2_Rater14h_manual_seg.nii.gz,SUBC053_ses2,False,,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.837,0.792,False,False,False
+Group 14,14h,Group 14\Rater 14h\SUBC55_ses2_Rater14h_manual_seg.nii.gz,SUBC055_ses2,False,,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.802,0.773,False,False,False
+Group 14,14h,Group 14\Rater 14h\SUBG08_ses1_Rater14h_manual_seg.nii.gz,SUBG008_ses1,False,,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.877,0.697,False,False,False
+Group 14,14h,Group 14\Rater 14h\SUBG09_ses2_Rater14h_manual_seg.nii.gz,SUBG009_ses2,False,,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.911,0.395,False,False,False
+Group 14,14i,Group 14\Rater 14i\SUBC047_ses2_Rater14i_manual_seg.nii.gz,SUBC047_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.884,0.731,False,False,True
+Group 14,14i,Group 14\Rater 14i\SUBC048_ses2_Rater14i_manual_seg.nii.gz,SUBC048_ses2,True,True,True,,9,1 2 3 4 5 6 8 9 10,False,192x224x224,1.0x1.0x1.0,True,RAS,True,0.846,0.508,False,False,False
+Group 14,14i,Group 14\Rater 14i\SUBC049_ses2_Rater14i_manual_seg.nii.gz,SUBC049_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.888,0.809,False,False,True
+Group 14,14i,Group 14\Rater 14i\SUBC053_ses2_Rater14i_manual_seg.nii.gz,SUBC053_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.864,0.802,False,False,True
+Group 14,14i,Group 14\Rater 14i\SUBC055_ses2_Rater14i_manual_seg.nii.gz,SUBC055_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.868,0.817,False,False,True
+Group 14,14i,Group 14\Rater 14i\SUBG008_ses1_Rater14i_manual_seg.nii.gz,SUBG008_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.909,0.688,False,False,True
+Group 14,14i,Group 14\Rater 14i\SUBG009_ses2_Rater14i_manual_seg.nii.gz,SUBG009_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.952,0.393,False,False,True
+Group 14,14k,Group 14\Rater 14k\SUBC047_ses2_Rater14k_manual_seg.nii.gz,SUBC047_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.846,0.699,False,False,True
+Group 14,14k,Group 14\Rater 14k\SUBC048_ses2_Rater14k_manual_seg.nii.gz,SUBC048_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.776,0.45,False,False,True
+Group 14,14k,Group 14\Rater 14k\SUBC049_ses2_Rater14k_manual_seg.nii.gz,SUBC049_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.849,0.753,False,False,True
+Group 14,14k,Group 14\Rater 14k\SUBC053_ses2_Rater14k_manual_seg(INCOMPLETE).nii,SUBC053_ses2,False,,False,extension,5,1 2 6 7 8,False,192x224x224,1.0x1.0x1.0,True,RAS,True,0.445,0.426,False,False,False
+Group 14,14k,Group 14\Rater 14k\SUBC055_ses2_Rater14k_manual_seg.nii.gz,SUBC055_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.875,0.816,False,False,True
+Group 14,14k,Group 14\Rater 14k\SUBG008_ses1_Rater14k_manual_seg.nii.gz,SUBG008_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.878,0.685,False,False,True
+Group 14,14k,Group 14\Rater 14k\SUBG009_Ses2_Rater14k_manual_seg.nii.gz,SUBG009_ses2,False,,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.875,0.379,False,False,False
+Group 15,15a,Group 15\Rater 15a\SUBG009_ses1_Rater15a_manual_seg.nii,SUBG009_ses1,False,,False,extension,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.864,0.582,False,True,False
+Group 15,15a,Group 15\Rater 15a\SUBG009_ses1_Rater15a_manual_seg.nii.gz,SUBG009_ses1,True,True,True,,1,5,False,192x224x224,1.0x1.0x1.0,True,RAS,True,0.047,0.01,False,True,False
+Group 15,15a,Group 15\Rater 15a\SUBG010_ses1_Rater15a_manual_seg 2.nii,SUBG010_ses1,False,,False,extension,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.898,0.67,False,True,False
+Group 15,15a,Group 15\Rater 15a\SUBG010_ses1_Rater15a_manual_seg.nii.gz,SUBG010_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.898,0.67,False,True,False
+Group 15,15a,Group 15\Rater 15a\SUBG012_ses1_Rater15a_manual_seg.nii,SUBG012_ses1,False,,False,extension,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.902,0.721,False,True,False
+Group 15,15a,Group 15\Rater 15a\SUBG012_ses1_Rater15a_manual_seg.nii.gz,SUBG012_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.902,0.721,False,True,False
+Group 15,15a,Group 15\Rater 15a\SUBG013_ses1_Rater15a_manual_ses.nii,SUBG013_ses1,False,,False,extension,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.833,0.496,False,True,False
+Group 15,15a,Group 15\Rater 15a\SUBG013_ses1_Rater15a_manual_ses.nii.gz,SUBG013_ses1,False,,True,,3,1 5 6,False,192x224x224,1.0x1.0x1.0,True,RAS,True,0.105,0.018,False,True,False
+Group 15,15a,Group 15\Rater 15a\SUBG014_ses1_Rater15a_manual_seg.nii,SUBG014_ses1,False,,False,extension,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.843,0.244,False,True,False
+Group 15,15a,Group 15\Rater 15a\SUBG014_ses1_Rater15a_manual_seg.nii.gz,SUBG014_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.843,0.244,False,True,False
+Group 15,15a,Group 15\Rater 15a\SUBG015_ses1_Rater15a_manual_seg.nii,SUBG015_ses1,False,,False,extension,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.901,0.35,False,True,False
+Group 15,15a,Group 15\Rater 15a\SUBG015_ses1_Rater15a_manual_seg.nii.gz,SUBG015_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.901,0.35,False,True,False
+Group 15,15a,Group 15\Rater 15a\SUBG016_ses1_Rater15a_manual_seg.nii,SUBG016_ses1,False,,False,extension,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.822,0.464,False,True,False
+Group 15,15a,Group 15\Rater 15a\SUBG016_ses1_Rater15a_manual_seg.nii.gz,SUBG016_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.822,0.464,False,True,False
+Group 15,15d,Group 15\Rater 15d\SUBG009_ses01_Rater15d_manual_seg.nii.gz,SUBG009_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.847,0.583,False,False,True
+Group 15,15d,Group 15\Rater 15d\SUBG010_ses01_Rater15d_manual_seg.nii.gz,SUBG010_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.851,0.656,False,False,True
+Group 15,15d,Group 15\Rater 15d\SUBG012_ses01_Rater15d_manual_seg.nii.gz,SUBG012_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.851,0.714,False,False,True
+Group 15,15d,Group 15\Rater 15d\SUBG013_ses01_Rater15d_manual_seg.nii.gz,SUBG013_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.786,0.503,False,False,True
+Group 15,15d,Group 15\Rater 15d\SUBG014_ses01_Rater15d_manual_seg.nii.gz,SUBG014_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.76,0.24,False,False,True
+Group 15,15d,Group 15\Rater 15d\SUBG015_ses01_Rater15d_manual_seg.nii.gz,SUBG015_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.801,0.36,False,False,True
+Group 15,15d,Group 15\Rater 15d\SUBG016_ses01_Rater15d_manual_seg.nii.gz,SUBG016_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.771,0.444,False,True,False
+Group 15,15d,Group 15\Rater 15d\SUBG016_ses01_Rater15d_manual_seg.nii.zip,SUBG016_ses1,False,,False,extension,,,False,,,False,,False,,,,True,False
+Group 15,15f,Group 15\Rater 15f\SUBG009_ses1_Rater15f_manual_seg.nii.gz,SUBG009_ses1,True,True,False,pas compressé,,,False,,,False,,False,,,,False,False
+Group 15,15f,Group 15\Rater 15f\SUBG010_ses1_Rater15f_manual_seg.nii.gz,SUBG010_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.812,0.642,False,False,True
+Group 15,15f,Group 15\Rater 15f\SUBG012_ses1_Rater15f_manual_seg.nii.gz,SUBG012_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.805,0.683,False,False,True
+Group 15,15f,Group 15\Rater 15f\SUBG013_ses1_Rater15f_manual_seg.nii.gz,SUBG013_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.727,0.498,False,False,True
+Group 15,15f,Group 15\Rater 15f\SUBG014_ses1_Rater15f_manual_seg.nii.gz,SUBG014_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.72,0.236,False,False,True
+Group 15,15f,Group 15\Rater 15f\SUBG015_ses1_Rater15f_manual_seg.nii.gz,SUBG015_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.777,0.38,False,False,True
+Group 15,15f,Group 15\Rater 15f\SUBG016_ses1_Rater15f_manual_seg.nii.gz,SUBG016_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.721,0.486,False,False,True
+Group 15,15g,Group 15\Rater 15g\SUBG009_ses1_Rater15g_manual_seg.nii.gz,SUBG009_ses1,True,True,False,IRM au lieu du masque,,,False,192x224x224,1.0x1.0x1.0,True,RAS,True,,,,False,False
+Group 15,15g,Group 15\Rater 15g\SUBG010_ses1_Rater15g_manual_seg.nii (1).gz,SUBG010_ses1,False,,False,extension,,,False,,,False,,False,,,,True,False
+Group 15,15g,Group 15\Rater 15g\SUBG010_ses1_Rater15g_manual_seg.nii.gz,SUBG010_ses1,True,True,False,IRM au lieu du masque,,,False,192x224x224,1.0x1.0x1.0,True,RAS,True,,,,True,False
+Group 15,15g,Group 15\Rater 15g\SUBG012_ses1_Rater15g_manual_seg.nii.gz,SUBG012_ses1,True,True,False,IRM au lieu du masque,,,False,192x224x224,1.0x1.0x1.0,True,RAS,True,,,,False,False
+Group 15,15i,Group 15\Rater 15i\SUBG09_ses1_Rater15i_manual_seg.nii.gz,SUBG009_ses1,False,,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.84,0.589,False,False,False
+Group 15,15i,Group 15\Rater 15i\SUBG10_ses01_Rater15i_manual_seg.nii.gz,SUBG010_ses1,False,,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.834,0.654,False,False,False
+Group 15,15i,Group 15\Rater 15i\SUBG12_ses01_Rater15i_manual_seg.nii.gz,SUBG012_ses1,False,,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.822,0.689,False,False,False
+Group 15,15i,Group 15\Rater 15i\SUBG13_ses01_Rater15i_manual_seg.nii.gz,SUBG013_ses1,False,,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.751,0.485,False,False,False
+Group 15,15i,Group 15\Rater 15i\SUBG14_ses01_Rater15i_manual_seg_.nii.gz,SUBG014_ses1,False,,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.731,0.236,False,False,False
+Group 15,15i,Group 15\Rater 15i\SUBG15_ses01_Rater15i_manual_seg.nii.gz,SUBG015_ses1,False,,True,,7,1 2 3 4 5 6 9,False,192x224x224,1.0x1.0x1.0,True,RAS,True,0.721,0.253,False,False,False
+Group 15,15i,Group 15\Rater 15i\SUBG16_ses01_Rater15i_manual_seg_nii.gz,SUBG016_ses1,False,,False,extension,,,False,,,False,,False,,,,False,False
+Group 16,16h,Group 16\Rater 16h\SUBG017_ses1_Rater16h_manual_seg.nii.gz,SUBG017_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,,,,False,True
+Group 16,16i,Group 16\Rater 16i\SUBC002_ses2_RATER16i_manual_seg.nii.gz,SUBC002_ses2,False,,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.373,0.502,True,False,False
+Group 16,16i,Group 16\Rater 16i\SUBC003_ses2_RATER16i_manual_seg.nii.gz,SUBC003_ses2,False,,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.273,0.296,False,False,False
+Group 16,16i,Group 16\Rater 16i\SUBC004_ses2_RATER16i_manual_seg.nii.gz,SUBC004_ses2,False,,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.241,0.269,False,False,False
+Group 16,16i,Group 16\Rater 16i\SUBC017_ses1_RATER16i_manual_seg.nii.gz,SUBC017_ses1,False,,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.101,0.098,False,False,False
+Group 16,16i,Group 16\Rater 16i\SUBG18_ses1_RATER16i_manual_seg.nii.gz,SUBG018_ses1,False,,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,,,,False,False
+Group 16,16i,Group 16\Rater 16i\SUBG19_ses1_RATER16i_manual_seg.nii.gz,SUBG019_ses1,False,,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,,,,False,False
+Group 16,16j,Group 16\Rater 16j\SUBG017_ses1_Rater16j_manual_seg.nii.gz,SUBG017_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,,,,False,True
+Group 16,16j,Group 16\Rater 16j\SUBG018_ses1_Rater16j_manual_seg.nii.gz,SUBG018_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,,,,False,True
+Group 16,16j,Group 16\Rater 16j\SUBG019_ses1_Rater16j_manual_seg.docx,SUBG019_ses1,False,,False,extension,,,False,,,False,,False,,,,True,False
+Group 16,16j,Group 16\Rater 16j\SUBG019_ses1_Rater16j_manual_seg.nii.gz,SUBG019_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,,,,True,False
+Group 16,16j,Group 16\Rater 16j\SUBG01_ses02_Rater16j_manual_seg.nii.gz,SUBG001_ses2,False,,True,,9,1 2 3 4 5 6 9 10 11,False,192x224x224,1.0x1.0x1.0,True,RAS,True,,,,False,False
+Group 16,16j,Group 16\Rater 16j\SUBG02_ses02_Rater16j_manual_seg.nii.gz,SUBG002_ses2,False,,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,,,,False,False
+Group 16,16j,Group 16\Rater 16j\SUBG03_ses02_Rater16j_manual_seg.nii.gz,SUBG003_ses2,False,,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,,,,False,False
+Group 16,16j,Group 16\Rater 16j\SUBG04_ses2_Rater16j_manual_seg.nii.gz,SUBG004_ses2,False,,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,,,,False,False
+Group 2,2b,Group 2\Rater 2b\SUBC008_ses1_Rater2b_manual_seg.nii.gz,SUBC008_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,,,,False,True
+Group 2,2b,Group 2\Rater 2b\SUBC009_ses1_Rater2b_manual_seg.nii.gz,SUBC009_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,,,,False,True
+Group 2,2b,Group 2\Rater 2b\SUBC010_ses1_Rater2b_manual_seg.nii.gz,SUBC010_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,,,,False,True
+Group 2,2b,Group 2\Rater 2b\SUBC011_ses1_Rater2b_manual_seg.nii.gz,SUBC011_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,,,,False,True
+Group 2,2b,Group 2\Rater 2b\SUBC012_ses1_Rater2b_manual_seg.nii.gz,SUBC012_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,,,,False,True
+Group 2,2b,Group 2\Rater 2b\SUBC013_ses1_Rater2b_manual_seg.nii.gz,SUBC013_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,,,,False,True
+Group 2,2b,Group 2\Rater 2b\SUBC014_ses1_Rater2b_manual_seg.nii.gz,SUBC014_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,,,,False,True
+Group 2,2j,Group 2\Rater 2j\SUBC008_ses1_Rater2j_manual_seg.nii.gz,SUBC008_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,,,,False,True
+Group 2,2j,Group 2\Rater 2j\SUBC009_ses1_Rater2j_manual_seg.nii.gz,SUBC009_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,,,,False,True
+Group 2,2j,Group 2\Rater 2j\SUBC010_ses1_Rater2j_manual_seg.nii.gz,SUBC010_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,,,,False,True
+Group 2,2j,Group 2\Rater 2j\SUBC011_ses1_Rater2j_manual_seg.nii.gz,SUBC011_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,,,,False,True
+Group 2,2j,Group 2\Rater 2j\SUBC012_ses1_Rater2j_manual_seg.nii.gz,SUBC012_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,,,,False,True
+Group 2,2j,Group 2\Rater 2j\SUBC013_ses1_Rater2j_manual_seg.nii.gz,SUBC013_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,,,,False,True
+Group 2,2j,Group 2\Rater 2j\SUBC014_ses1_Rater2j_manual_seg.nii.gz,SUBC014_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,,,,False,True
+Group 3,3a,Group 3\Rater 3a\delineated\.DS_Store,,False,,False,extension,,,False,,,False,,False,,,,False,False
+Group 3,3a,Group 3\Rater 3a\delineated\SUBC015_ses01_Rater3a.nii.gz,SUBC015_ses1,False,,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.904,0.784,False,True,False
+Group 3,3a,Group 3\Rater 3a\delineated\SUBC016_ses1_Rater3a.nii.gz,SUBC016_ses1,False,,True,,8,1 2 3 4 5 6 8 9,False,192x224x224,1.0x1.0x1.0,True,RAS,True,0.884,0.712,False,True,False
+Group 3,3a,Group 3\Rater 3a\delineated\SUBC017_ses01_Rater3a.nii.gz,SUBC017_ses1,False,,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.887,0.596,False,True,False
+Group 3,3a,Group 3\Rater 3a\delineated\SUBC020_ses01_Rater3a.nii.gz,SUBC020_ses1,False,,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.937,0.658,False,True,False
+Group 3,3a,Group 3\Rater 3a\delineated\SUBC021_ses01_Rater3a.nii.gz,SUBC021_ses1,False,,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.895,0.586,False,True,False
+Group 3,3a,Group 3\Rater 3a\delineated\SUBC024_ses01_Rater3a.nii.gz,SUBC024_ses1,False,,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.918,0.703,False,True,False
+Group 3,3a,Group 3\Rater 3a\SUBC015_ses01_Rater3a.nii,SUBC015_ses1,False,,False,extension,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.904,0.784,False,True,False
+Group 3,3a,Group 3\Rater 3a\SUBC016_ses1_Rater3a.nii,SUBC016_ses1,False,,False,extension,8,1 2 3 4 5 6 8 9,False,192x224x224,1.0x1.0x1.0,True,RAS,True,0.884,0.712,False,True,False
+Group 3,3a,Group 3\Rater 3a\SUBC017_ses01_Rater3a.nii,SUBC017_ses1,False,,False,extension,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.887,0.596,False,True,False
+Group 3,3a,Group 3\Rater 3a\SUBC020_ses01_Rater3a.nii,SUBC020_ses1,False,,False,extension,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.937,0.658,False,True,False
+Group 3,3a,Group 3\Rater 3a\SUBC021_ses01_Rater3a.nii,SUBC021_ses1,False,,False,extension,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.895,0.586,False,True,False
+Group 3,3a,Group 3\Rater 3a\SUBC024_ses01_Rater3a.nii,SUBC024_ses1,False,,False,extension,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.918,0.703,False,True,False
+Group 3,3b,Group 3\Rater 3b\SUBC15_ses01_Rater3b_manual_seg.nii.gz,SUBC015_ses1,False,,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.868,0.763,False,False,False
+Group 3,3d,Group 3\Rater 3d\SUBC15_ses01_Rater3d_manual_seg.nii,SUBC015_ses1,False,,False,extension,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.885,0.777,False,False,False
+Group 3,3d,Group 3\Rater 3d\SUBC16_ses01_Rater3d_manual_seg.nii.gz,SUBC016_ses1,False,,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.836,0.695,False,False,False
+Group 3,3d,Group 3\Rater 3d\SUBC17_ses01_Rater3d_manual_seg.nii,SUBC017_ses1,False,,False,extension,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.907,0.597,False,False,False
+Group 3,3d,Group 3\Rater 3d\SUBC20_ses01_Rater3d_manual_seg.nii.gz,SUBC020_ses1,False,,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.899,0.65,False,False,False
+Group 3,3d,Group 3\Rater 3d\SUBC21_ses01_Rater3d_manual_seg.nii.gz,SUBC021_ses1,False,,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.86,0.594,False,False,False
+Group 3,3d,Group 3\Rater 3d\SUBC22_ses01_Rater3d_manual_seg.nii.gz,SUBC022_ses1,False,,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,,,,False,False
+Group 3,3d,Group 3\Rater 3d\SUBC24_ses01_Rater3d_manual_seg.nii.gz,SUBC024_ses1,False,,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.863,0.683,False,False,False
+Group 3,3g,Group 3\Rater 3g\SUBC015_Session1_Rater3g_manual_seg.nii.gz,SUBC015_ses1,False,,True,,10,1 2 3 4 5 6 7 8 9 10,False,192x224x224,1.0x1.0x1.0,True,RAS,True,0.862,0.762,False,False,False
+Group 3,3g,Group 3\Rater 3g\SUBC016_Session1_Rater3g_manual_seg.nii.gz,SUBC016_ses1,False,,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.822,0.695,False,False,False
+Group 3,3g,Group 3\Rater 3g\SUBC017_Session1_Rater3g_manual_seg.nii.gz,SUBC017_ses1,False,,True,,10,1 2 3 4 5 6 8 9 12 13,False,192x224x224,1.0x1.0x1.0,True,RAS,True,0.892,0.599,False,False,False
+Group 3,3g,Group 3\Rater 3g\SUBC020_Session1_Rater3g_manual_seg.nii.gz,SUBC020_ses1,False,,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.883,0.649,False,False,False
+Group 3,3g,Group 3\Rater 3g\SUBC021_Session1_Rater3g_manual_seg.nii.gz,SUBC021_ses1,False,,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.837,0.569,False,False,False
+Group 3,3g,Group 3\Rater 3g\SUBC022_Session1_Rater3g_manual_seg.nii.gz,SUBC022_ses1,False,,True,,9,1 2 3 4 6 7 9 10 11,False,192x224x224,1.0x1.0x1.0,True,RAS,True,,,,False,False
+Group 3,3g,Group 3\Rater 3g\SUBC024_Session1_Rater3g_manual_seg.nii.gz,SUBC024_ses1,False,,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.869,0.692,False,False,False
+Group 4,4b,Group 4\Rater 4b\SUBC026_ses1_Rater4b_manual_seg.nii.gz,SUBC026_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.909,0.835,False,False,True
+Group 4,4b,Group 4\Rater 4b\SUBC027_ses1_Rater4b_manual_seg.nii.gz,SUBC027_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.918,0.533,False,False,True
+Group 4,4b,Group 4\Rater 4b\SUBC028_ses1_Rater4b_manual_seg.nii.gz,SUBC028_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.909,0.819,False,False,True
+Group 4,4b,Group 4\Rater 4b\SUBC029_ses1_Rater4b_manual_seg.nii.gz,SUBC029_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.901,0.783,False,False,True
+Group 4,4b,Group 4\Rater 4b\SUBC030_ses1_Rater4b_manual_seg.nii.gz,SUBC030_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.864,0.684,False,False,True
+Group 4,4b,Group 4\Rater 4b\SUBC031_ses1_Rater4b_manual_seg.nii.gz,SUBC031_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.883,0.554,False,False,True
+Group 4,4h,Group 4\Rater 4h\SUBC025_ses1_Rater4h_manual_seg.nii,SUBC025_ses1,False,,False,extension,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.86,0.665,False,True,False
+Group 4,4h,Group 4\Rater 4h\SUBC025_ses1_Rater4h_manual_seg.nii.gz,SUBC025_ses1,True,True,False,pas compressé,,,False,,,False,,False,,,,True,False
+Group 4,4h,Group 4\Rater 4h\SUBC026_ses1_Rater4h_manual_seg.nii.gz,SUBC026_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.897,0.819,False,False,True
+Group 4,4h,Group 4\Rater 4h\SUBC027_ses1_Rater4h_manual_seg.nii.gz,SUBC027_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.92,0.541,False,False,True
+Group 4,4h,Group 4\Rater 4h\SUBC028_ses1_Rater4h_manual_seg.nii.gz,SUBC028_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.906,0.818,False,False,True
+Group 4,4h,Group 4\Rater 4h\SUBC029_ses1_Rater4h_manual_seg.nii.gz,SUBC029_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.908,0.788,False,False,True
+Group 4,4h,Group 4\Rater 4h\SUBC030_ses1_Rater4h_manual_seg.nii.gz,SUBC030_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.888,0.699,False,False,True
+Group 4,4h,Group 4\Rater 4h\SUBC031_ses1_Rater4h_manual_seg.nii.gz,SUBC031_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.899,0.569,False,False,True
+Group 4,4i,Group 4\Rater 4i\SUBC025_ses1_Rater4i_manual_seg.nii.gz,SUBC025_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.899,0.678,False,False,True
+Group 4,4i,Group 4\Rater 4i\SUBC026_ses1_Rater4i_manual_seg.nii.gz,SUBC026_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.912,0.828,False,False,True
+Group 4,4i,Group 4\Rater 4i\SUBC027_ses1_Rater4i_manual_seg.nii.gz,SUBC027_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.899,0.527,False,False,True
+Group 4,4i,Group 4\Rater 4i\SUBC028_ses1_Rater4i_manual_seg.nii.gz,SUBC028_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.924,0.83,False,False,True
+Group 4,4i,Group 4\Rater 4i\SUBC029_ses1_Rater4i_manual_seg.nii.gz,SUBC029_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.905,0.791,False,False,True
+Group 4,4i,Group 4\Rater 4i\SUBC030_ses1_Rater4i_manual_seg.nii.gz,SUBC030_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.861,0.68,False,False,True
+Group 4,4i,Group 4\Rater 4i\SUBC031_ses1_Rater4i_manual_seg.nii.gz,SUBC031_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.889,0.558,False,False,True
+Group 4,4j,Group 4\Rater 4j\SUBC025_ses1_rater4j_manual_seg.nii.gz,SUBC025_ses1,False,,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.836,0.67,False,False,False
+Group 4,4j,Group 4\Rater 4j\SUBC026_ses1_Rater4j_manual_seg.nii.gz,SUBC026_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.819,0.776,False,False,True
+Group 4,4j,Group 4\Rater 4j\SUBC027_ses1_Rater4j_manual_seg.nii.gz,SUBC027_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.847,0.539,False,False,True
+Group 4,4j,Group 4\Rater 4j\SUBC028_ses1_Rater4j_manual_seg.nii.gz,SUBC028_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.845,0.79,False,False,True
+Group 4,4j,Group 4\Rater 4j\SUBC029_ses1_Rater4j_manual_seg.nii.gz,SUBC029_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.862,0.779,False,False,True
+Group 4,4j,Group 4\Rater 4j\SUBC030_ses1_Rater4j_manual_seg.nii.gz,SUBC030_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.841,0.671,False,False,True
+Group 4,4j,Group 4\Rater 4j\SUBC031_ses1_Rater4j_manual_seg.nii.gz,SUBC031_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.839,0.551,False,False,True
+Group 5,5a,Group 5\Rater 5a\Sub 32- Final.nii.gz,,False,,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,,,,False,False
+Group 5,5b,Group 5\Rater 5b\SUBC32_ses01_Rater5b_manual_seg.nii.gz,SUBC032_ses1,False,,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.887,0.82,False,False,False
+Group 5,5d,Group 5\Rater 5d\SUBC032_ses1_Rater5d_manual_seg.nii.gz,SUBC032_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.908,0.847,False,False,True
+Group 5,5d,Group 5\Rater 5d\SUBC033_ses1_Rater5d_manual_seg.nii.gz,SUBC033_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.92,0.8,False,False,True
+Group 5,5d,Group 5\Rater 5d\SUBC035_ses1_Rater5d_manual_seg.nii.gz,SUBC035_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.824,0.608,False,False,True
+Group 5,5d,Group 5\Rater 5d\SUBC036_ses1_Rater5d_manual_seg.nii.gz,SUBC036_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.891,0.634,False,False,True
+Group 5,5d,Group 5\Rater 5d\SUBC037_ses1_Rater5d_manual_seg.nii.gz,SUBC037_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,,,,False,True
+Group 5,5d,Group 5\Rater 5d\SUBC038_ses1_Rater5d_manual_seg.nii.gz,SUBC038_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,,,,False,True
+Group 5,5d,Group 5\Rater 5d\SUBC039_ses1_Rater5d_manual_seg.nii.gz,SUBC039_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,,,,False,True
+Group 5,5e,Group 5\Rater 5e\SUBC032_ses1_Rater5e_manual_seg.nii.gz,SUBC032_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 35,False,192x224x224,1.0x1.0x1.0,True,RAS,True,0.882,0.833,False,False,False
+Group 5,5e,Group 5\Rater 5e\SUBC033_ses1_Rater5e_manual_seg.nii.gz,SUBC033_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.896,0.792,False,False,True
+Group 5,5f,Group 5\Rater 5f\SUBC032_ses1_Rater5f_manual_seg.nii.gz,SUBC032_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.903,0.832,False,False,True
+Group 5,5f,Group 5\Rater 5f\SUBC033_ses1_Rater5f_manual_seg.nii.gz,SUBC033_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.901,0.772,False,False,True
+Group 5,5f,Group 5\Rater 5f\SUBC038_ses1_Rater5f_manual_seg.nii.gz,SUBC038_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,,,,False,True
+Group 5,5f,Group 5\Rater 5f\SUBC039_ses1_Rater5f_manual_seg.nii.gz,SUBC039_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,,,,False,True
+Group 5,5f,Group 5\Rater 5f\SUBJEC35_ses1_rater5f_manual_seg.nii.gz,SUB?035_ses1,False,,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,,,,False,False
+Group 5,5f,Group 5\Rater 5f\SUBJEC36_ses1_rater5f_manual_seg.nii.gz,SUB?036_ses1,False,,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,,,,False,False
+Group 5,5f,Group 5\Rater 5f\SUBJEC37_ses1_rater5f_manual_seg.nii.gz,SUB?037_ses1,False,,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,,,,False,False
+Group 5,5g,Group 5\Rater 5g\SUBC032_ses1_Rater5g_manual_seg.nii,SUBC032_ses1,False,,False,extension,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.891,0.837,False,False,False
+Group 5,5h,Group 5\Rater 5h\SUBC032_ses1_Rater5h_manual_seg.nii.gz,SUBC032_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.864,0.841,False,False,True
+Group 5,5h,Group 5\Rater 5h\SUBC033_ses1_rater5h_manual_seg.nii.gz,SUBC033_ses1,False,,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.808,0.724,False,False,False
+Group 5,5h,Group 5\Rater 5h\SUBC035_ses1_rater5h_manual_seg.nii.gz,SUBC035_ses1,False,,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.834,0.609,False,False,False
+Group 5,5h,Group 5\Rater 5h\SUBC036_ses1_Rater5h_manual_seg.nii.gz,SUBC036_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.855,0.637,False,False,True
+Group 5,5k,Group 5\Rater 5k\SUBC032_ses01_Rater5k_manual_seg.nii.gz,SUBC032_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.888,0.847,False,False,True
+Group 5,5k,Group 5\Rater 5k\SUBC033_ses01_Rater5k_manual_seg.nii.gz,SUBC033_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.915,0.798,False,False,True
+Group 5,5k,Group 5\Rater 5k\SUBC035_ses01_Rater5k_manual_seg.nii.gz,SUBC035_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.837,0.621,False,False,True
+Group 5,5k,Group 5\Rater 5k\SUBC036_ses01_Rater5k_manual_seg.nii.gz,SUBC036_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.889,0.637,False,False,True
+Group 6,6b,Group 6\Rater 6b\SUBC040_ses1_Rater6b_manual_seg.nii,SUBC040_ses1,False,,False,extension,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.835,0.73,False,False,False
+Group 6,6b,Group 6\Rater 6b\SUBC041_ses1_Rater6b_manual_seg.nii,SUBC041_ses1,False,,False,extension,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,,,,False,False
+Group 6,6b,Group 6\Rater 6b\SUBC042_ses1_Rater6b_manual_seg.nii,SUBC042_ses1,False,,False,extension,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,,,,False,False
+Group 6,6b,Group 6\Rater 6b\SUBC043_ses1_Rater6b_manual_seg.nii,SUBC043_ses1,False,,False,extension,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,,,,False,False
+Group 6,6j,Group 6\Rater 6j\SUBC040_ses1_Rater6j_manual_seg.nii.gz,SUBC040_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.822,0.739,False,False,True
+Group 6,6j,Group 6\Rater 6j\SUBC041_ses2_Rater6j_manual_seg.nii.gz,SUBC041_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.159,0.153,False,False,True
+Group 6,6j,Group 6\Rater 6j\SUBC042_ses3_Rater6j_manual_seg.nii.gz,SUBC042_ses3,False,,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,,,,False,False
+Group 6,6j,Group 6\Rater 6j\SUBC043_ses4_Rater6j_manual_seg.nii.gz,SUBC043_ses4,False,,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,,,,False,False
+Group 6,6j,Group 6\Rater 6j\SUBC045_ses5_Rater6j_manual_seg.nii.gz,SUBC045_ses5,False,,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,,,,False,False
+Group 6,6j,Group 6\Rater 6j\SUBC047_ses6_Rater6j_manual_seg.nii.gz,SUBC047_ses6,False,,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,,,,False,False
+Group 6,6j,Group 6\Rater 6j\SUBC048_ses7_Rater6j_manual_seg.nii.gz,SUBC048_ses7,False,,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,,,,False,False
+Group 6,6k,Group 6\Rater 6k\SUBC040_ses1_rater6k_manual_seg.nii.gz,SUBC040_ses1,False,,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.828,0.736,False,False,False
+Group 6,6k,Group 6\Rater 6k\SUBC041_ses1_rater6k_manual_seg.nii.gz,SUBC041_ses1,False,,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,,,,False,False
+Group 6,6k,Group 6\Rater 6k\SUBC042_ses1_rater6k_manual_seg.nii.gz,SUBC042_ses1,False,,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,,,,False,False
+Group 6,6k,Group 6\Rater 6k\SUBC043_ses1_rater6k_manual_seg.nii.gz,SUBC043_ses1,False,,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,,,,False,False
+Group 6,6k,Group 6\Rater 6k\SUBC045_ses1_rater6k_manual_seg.nii.gz,SUBC045_ses1,False,,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,,,,False,False
+Group 6,6k,Group 6\Rater 6k\SUBC047_ses1_rater6k_manual_seg.nii.gz,SUBC047_ses1,False,,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,,,,False,False
+Group 6,6k,Group 6\Rater 6k\SUBC048_ses1_rater6k_manual_seg.nii.gz,SUBC048_ses1,False,,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,,,,False,False
+Group 7,7a,Group 7\Rater 7a\SUBC001_ses2_Rater7a_manual_seg.nii.gz,SUBC001_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.808,0.333,False,False,True
+Group 7,7a,Group 7\Rater 7a\SUBC002_ses2_Rater7a_manual_seg.nii.gz,SUBC002_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.831,0.359,False,False,True
+Group 7,7a,Group 7\Rater 7a\SUBC049_ses1_Rater7a_manual_seg.nii.gz,SUBC049_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.887,0.579,False,False,True
+Group 7,7a,Group 7\Rater 7a\SUBC050_ses1_Rater7a_manual_seg.nii.gz,SUBC050_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.865,0.552,False,False,True
+Group 7,7a,Group 7\Rater 7a\SUBC051_ses1_Rater7a_manual_seg.nii.gz,SUBC051_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.893,0.668,False,False,True
+Group 7,7a,Group 7\Rater 7a\SUBC052_ses1_Rater7a_manual_seg.nii.gz,SUBC052_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.875,0.607,False,False,True
+Group 7,7a,Group 7\Rater 7a\SUBC054_ses1_Rater7a_manual_seg.nii.gz,SUBC054_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.858,0.602,False,False,True
+Group 7,7c,Group 7\Rater 7c\SUBC001_ses2_Rater 7c_WMn_manual.nii.gz,SUBC001_ses2,False,,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.82,0.336,False,False,False
+Group 7,7c,Group 7\Rater 7c\SUBC002_ses2_Rater 7c_WMn_manual.nii.gz,SUBC002_ses2,False,,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.828,0.348,False,False,False
+Group 7,7c,Group 7\Rater 7c\SUBC049_ses1_Rater 7c_WMn_manual.nii.gz,SUBC049_ses1,False,,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.855,0.574,False,False,False
+Group 7,7c,Group 7\Rater 7c\SUBC050_ses1_Rater 7c_WMn_manual.nii.gz,SUBC050_ses1,False,,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.864,0.53,False,False,False
+Group 7,7c,Group 7\Rater 7c\SUBC051_ses1_Rater 7c_WMn_manual.nii.gz,SUBC051_ses1,False,,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.863,0.649,False,False,False
+Group 7,7c,Group 7\Rater 7c\SUBC052_ses1_Rater 7c_WMn_manual.nii.gz,SUBC052_ses1,False,,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.837,0.553,False,False,False
+Group 7,7c,Group 7\Rater 7c\SUBC054_ses1_Rater 7c_WMn_manual.nii.gz,SUBC054_ses1,False,,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.842,0.562,False,False,False
+Group 7,7d,Group 7\Rater 7d\SUBC49_ses1_Rater7d_manual_seg.nii.gz,SUBC049_ses1,False,,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.845,0.589,False,False,False
+Group 7,7d,Group 7\Rater 7d\SUBC50_ses01_Rater7d_manual_seg.nii.gz,SUBC050_ses1,False,,False,IRM au lieu du masque,,,False,192x224x224,1.0x1.0x1.0,True,RAS,True,,,,False,False
+Group 7,7d,Group 7\Rater 7d\SUBC51_ses01_Rater7d_manual_seg.nii.gz,SUBC051_ses1,False,,False,IRM au lieu du masque,,,False,192x224x224,1.0x1.0x1.0,True,RAS,True,,,,False,False
+Group 7,7d,Group 7\Rater 7d\SUBC52_ses01_Rater7d_manual_seg.nii.gz,SUBC052_ses1,False,,False,IRM au lieu du masque,,,False,192x224x224,1.0x1.0x1.0,True,RAS,True,,,,False,False
+Group 7,7f,Group 7\Rater 7f\SUBC049_ses01_Rater7f_manual_seg.nii.gz,SUBC049_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.881,0.593,False,False,True
+Group 7,7f,Group 7\Rater 7f\SUBC050_ses2_Rater7f_manual_seg.nii.gz,SUBC050_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,,,,False,True
+Group 7,7h,Group 7\Rater 7h\SUBC001_ses2_Rater7h_manual_seg.nii.gz,SUBC001_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.802,0.346,False,False,True
+Group 7,7h,Group 7\Rater 7h\SUBC002_SESSION2_7h_manual_seg.nii.gz,SUBC002_ses2,False,,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.834,0.38,False,False,False
+Group 7,7h,Group 7\Rater 7h\SUBC049_SESSION01_7h_manual_seg.nii.gz,SUBC049_ses1,False,,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.809,0.568,False,False,False
+Group 7,7h,Group 7\Rater 7h\SUBC050_ses01_7h_manual_seg.nii.gz,SUBC050_ses1,False,,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.818,0.521,False,False,False
+Group 7,7h,Group 7\Rater 7h\SUBC051_SESSION01_7h_manual_seg.nii.gz,SUBC051_ses1,False,,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.84,0.646,False,False,False
+Group 7,7h,Group 7\Rater 7h\SUBC052_SESSION01_7h_manual_seg.nii.gz,SUBC052_ses1,False,,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.859,0.572,False,False,False
+Group 7,7h,Group 7\Rater 7h\SUBC054_SESSION01_7h_manual_seg.nii.gz,SUBC054_ses1,False,,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.823,0.593,False,False,False
+Group 7,7j,Group 7\Rater 7j\SUBC002_ses2_manual_seg.nii.gz,SUBC002_ses2,False,,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.846,0.364,False,False,False
+Group 7,7j,Group 7\Rater 7j\SUBC01_ses2_Rater7j_manual_seg.nii.gz,SUBC001_ses2,False,,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.812,0.335,False,False,False
+Group 7,7j,Group 7\Rater 7j\SUBC049_ses1_Rater7j_manual_seg.nii.gz,SUBC049_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.896,0.579,False,False,True
+Group 7,7j,Group 7\Rater 7j\SUBC050_ses1_Rater7j_manual_seg.nii.gz,SUBC050_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.885,0.554,False,False,True
+Group 7,7j,Group 7\Rater 7j\SUBC051_ses1_Rater7j_manual_seg.nii.gz,SUBC051_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.882,0.657,False,False,True
+Group 7,7j,Group 7\Rater 7j\SUBC052_ses1_Rater7j_manual_seg.nii.gz,SUBC052_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.881,0.599,False,False,True
+Group 7,7j,Group 7\Rater 7j\SUBC054_ses1_Rater7j_manual_seg.nii.gz,SUBC054_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.862,0.591,False,False,True
+Group 8,8a,Group 8\Rater 8a\SUBC003_ses2_Rater8a_manual_seg.nii.gz,SUBC003_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.899,0.799,False,False,True
+Group 8,8a,Group 8\Rater 8a\SUBC004_ses2_Rater8a_manual_seg.nii.gz,SUBC004_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.929,0.219,False,False,True
+Group 8,8a,Group 8\Rater 8a\SUBC005_ses2_Rater8a_manual_seg.nii.gz,SUBC005_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.937,0.405,False,False,True
+Group 8,8a,Group 8\Rater 8a\SUBC006_ses2_Rater8a_manual_seg.nii.gz,SUBC006_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.906,0.462,False,False,True
+Group 8,8a,Group 8\Rater 8a\SUBC007_ses2_Rater8a_manual_seg.nii.gz,SUBC007_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.917,0.782,False,False,True
+Group 8,8a,Group 8\Rater 8a\SUBC008_ses2_Rater8a_manual_seg.nii.gz,SUBC008_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.933,0.617,False,False,True
+Group 8,8b,Group 8\Rater 8b\SUB008_ses2_Rater8b_manual_seg.nii.gz,SUB?008_ses2,False,,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,,,,False,False
+Group 8,8b,Group 8\Rater 8b\SUBC003_ses2_Rater8b_manual_seg.nii.gz,SUBC003_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.901,0.802,False,False,True
+Group 8,8b,Group 8\Rater 8b\SUBC004_ses2_Rate8b_manual_seg.nii.gz,SUBC004_ses2,False,,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.922,0.228,False,False,False
+Group 8,8b,Group 8\Rater 8b\SUBC005_ses2_Rater8b_manual_seg.nii.gz,SUBC005_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.898,0.397,False,False,True
+Group 8,8b,Group 8\Rater 8b\SUBC006_ses2_Rater8b_manual_seg.nii.gz,SUBC006_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.915,0.456,False,False,True
+Group 8,8b,Group 8\Rater 8b\SUBC007_ses2_Rater8b_manual_seg.nii.gz,SUBC007_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.916,0.77,False,False,True
+Group 8,8c,Group 8\Rater 8c\SUBC03_ses2_RATER8C_manual_seg.nii.gz,SUBC003_ses2,False,,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.877,0.79,False,False,False
+Group 8,8c,Group 8\Rater 8c\SUBC04_ses02_Rater8C_manual_.nii.gz,SUBC004_ses2,False,,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.87,0.23,False,False,False
+Group 8,8d,Group 8\Rater 8d\SUBC003_ses2_Rater8d_manual_seg.nii.gz,SUBC003_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.912,0.81,False,False,True
+Group 8,8d,Group 8\Rater 8d\SUBC004_ses2_Rater8d_manual_seg.nii.gz,SUBC004_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.937,0.224,False,False,True
+Group 8,8d,Group 8\Rater 8d\SUBC005_ses2_Rater8d_manual_seg.nii.gz,SUBC005_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.904,0.396,False,False,True
+Group 8,8d,Group 8\Rater 8d\SUBC006_ses2_Rater8d_manual_seg.nii.gz,SUBC006_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.92,0.446,False,False,True
+Group 8,8d,Group 8\Rater 8d\SUBC007_ses2_Rater8d_manual_seg.nii.gz,SUBC007_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.93,0.775,False,False,True
+Group 8,8d,Group 8\Rater 8d\SUBC008_ses2_Rater8d_manual_seg.nii.gz,SUBC008_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.925,0.601,False,False,True
+Group 8,8e,Group 8\Rater 8e\SUBC003_ses2_Rater8e_manual_seg.nii.gz,SUBC003_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.888,0.805,False,False,True
+Group 8,8e,Group 8\Rater 8e\SUBC004_ses2_Rater8e_manual_seg.nii.gz,SUBC004_ses2,True,True,True,,7,1 2 3 4 5 6 9,False,192x224x224,1.0x1.0x1.0,True,RAS,True,0.845,0.132,False,False,False
+Group 8,8g,Group 8\Rater 8g\SUBC003_ses2_Rater8g_manual_seg.nii.gz,SUBC003_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.906,0.803,False,False,True
+Group 8,8g,Group 8\Rater 8g\SUBC004_ses2_Rater8g_manual_seg.nii.gz,SUBC004_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.929,0.227,False,False,True
+Group 8,8g,Group 8\Rater 8g\SUBC005_ses2_Rater8g_manual_seg.nii.gz,SUBC005_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.933,0.405,False,False,True
+Group 8,8g,Group 8\Rater 8g\SUBC006_ses2_Rater8g_manual_seg.nii.gz,SUBC006_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.901,0.45,False,False,True
+Group 8,8g,Group 8\Rater 8g\SUBC007_ses2_Rater8g_manual_seg.nii.gz,SUBC007_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.906,0.769,False,False,True
+Group 8,8g,Group 8\Rater 8g\SUBC008_ses2_rater8g_manual_seg.nii.gz,SUBC008_ses2,False,,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.921,0.614,False,False,False
+Group 8,8i,Group 8\Rater 8i\SUBC003_ses2_Rater8i_manual_seg.nii.gz,SUBC003_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.856,0.766,False,False,True
+Group 8,8i,Group 8\Rater 8i\SUBC004_ses2_Rater8i_manual_seg.nii.gz,SUBC004_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.872,0.235,False,False,True
+Group 8,8i,Group 8\Rater 8i\SUBC005_ses2_Rater8i_manual_seg.nii.gz,SUBC005_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.848,0.409,False,False,True
+Group 8,8i,Group 8\Rater 8i\SUBC006_ses2_Rater8i_manual_seg.nii.gz,SUBC006_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.802,0.426,False,False,True
+Group 8,8i,Group 8\Rater 8i\SUBC007_ses2_Rater8i_manual_seg.nii.gz,SUBC007_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.837,0.739,False,False,True
+Group 8,8i,Group 8\Rater 8i\SUBC008_ses2_Rater8i_manual_seg.nii.gz,SUBC008_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.843,0.58,False,False,True
+Group 8,8k,Group 8\Rater 8k\SUBC003_ses2_Rater8k_manual_seg.nii.gz,SUBC003_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.885,0.804,False,False,True
+Group 8,8k,Group 8\Rater 8k\SUBC004_ses2_Rater8k_manual_seg.nii.gz,SUBC004_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.894,0.24,False,False,True
+Group 8,8k,Group 8\Rater 8k\SUBC005_ses2_Rater8k_manual_seg.nii.gz,SUBC005_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.886,0.422,False,False,True
+Group 9,9b,Group 9\Rater 9b\SUBC009_ses9_RATER9b_manual_seg.nii.gz,SUBC009_ses9,False,,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,,,,False,False
+Group 9,9f,Group 9\Rater 9f\SUBC009_ses2_Rater9f_manual_seg.nii.gz,SUBC009_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.815,0.782,False,False,True
+Group 9,9f,Group 9\Rater 9f\SUBC011_ses2_Rater9f_manual_seg.nii.gz,SUBC011_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.828,0.707,False,False,True
+Group 9,9f,Group 9\Rater 9f\SUBC012_ses2_Rater9f_manual_seg.nii.gz,SUBC012_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.821,0.413,False,False,True
+Group 9,9f,Group 9\Rater 9f\SUBC016_ses2_Rater9f_manual_seg.nii.gz,SUBC016_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.835,0.741,False,False,True
+Group 9,9f,Group 9\Rater 9f\SUBC017_ses2_Rater9f_manual_seg.nii.gz,SUBC017_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.857,0.499,False,False,True
+Group 9,9f,Group 9\Rater 9f\SUBC15_ses2_Rater9f_manual_seg.nii.gz,SUBC015_ses2,False,,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.805,0.401,False,False,False
+Group 9,9f,Group 9\Rater 9f\SUBG002_ses1_Rater9f.manual_seg.nii.gz,SUBG002_ses1,False,,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.846,0.798,False,False,False
+Group 9,9g,Group 9\Rater 9g\SUBC009_ses2_Rater9g_manual_seg.nii.gz,SUBC009_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.843,0.81,False,False,True
+Group 9,9g,Group 9\Rater 9g\SUBC011_ses2_Rater9g_manual_seg.nii.gz,SUBC011_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.861,0.719,False,False,True
+Group 9,9g,Group 9\Rater 9g\SUBC012_ses2_Rater9g_manual_seg.nii.gz,SUBC012_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.81,0.427,False,False,True
+Group 9,9g,Group 9\Rater 9g\SUBC015_ses2_Rater9g_manual_seg.nii.gz,SUBC015_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.842,0.409,False,False,True
+Group 9,9g,Group 9\Rater 9g\SUBC016_ses2_Rater9g_manual_seg.nii.gz,SUBC016_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.865,0.77,False,False,True
+Group 9,9g,Group 9\Rater 9g\SUBC017_ses2_Rater9g_manual_seg.nii.gz,SUBC017_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.863,0.508,False,False,True
+Group 9,9g,Group 9\Rater 9g\SUBG002_ses1_Rater9g_manual_seg.nii.gz,SUBG002_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.858,0.799,False,False,True
+Group 9,9h,Group 9\Rater 9h\SUBC016_ses2_Rater9h_manual_seg.nii.gz,SUBC016_ses2,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.851,0.765,False,False,True
+Group 9,9h,Group 9\Rater 9h\SUBC09_ses2_Rater9h_manual_seg.nii,SUBC009_ses2,False,,False,extension,11,1 2 3 4 5 6 7 8 9 11 12,False,192x224x224,1.0x1.0x1.0,True,RAS,True,0.826,0.798,False,False,False
+Group 9,9h,Group 9\Rater 9h\SUBC11_ses2_Rater9h_manual_seg_.nii.gz,SUBC011_ses2,False,,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.837,0.704,False,False,False
+Group 9,9h,Group 9\Rater 9h\SUBC12_ses2_Rater9h_manual_seg.nii.gz,SUBC012_ses2,False,,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.792,0.426,False,False,False
+Group 9,9h,Group 9\Rater 9h\SUBC15_ses2_Rater9h_manual_seg.nii.gz,SUBC015_ses2,False,,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.821,0.404,False,False,False
+Group 9,9h,Group 9\Rater 9h\SUBC17_ses2_Rater9h_manual_seg.nii.gz,SUBC017_ses2,False,,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.851,0.508,False,False,False
+Group 9,9h,Group 9\Rater 9h\SUBG002_ses1_Rater9h_manual_seg.nii.gz,SUBG002_ses1,True,True,True,,9,1 2 3 4 5 6 7 8 9,True,192x224x224,1.0x1.0x1.0,True,RAS,True,0.835,0.788,False,False,True

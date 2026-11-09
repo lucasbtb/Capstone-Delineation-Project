@@ -1,0 +1,3 @@
+# Environnement Python du viewer (ANALYSIS/viewer/) — voir DOCUMENTATION/viewer.md
+nibabel==5.5.0
+numpy==2.5.4

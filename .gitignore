@@ -16,3 +16,6 @@ __pycache__/
 .venv/
 venv/
 .ipynb_checkpoints/
+
+# Viewer : données générées par ANALYSIS/viewer/build_viewer.py (régénérables)
+RESULTS/viewer/data/
