@@ -20,4 +20,4 @@
 ## Suivi
 - Questions ouvertes : `DOCUMENTATION/questions.md`
 - Problèmes des données : `ANALYSIS/docs/potential_problem.md`
-- Scripts : `ANALYSIS/` (numérotés, ex. `01_inventory.py`) — fonctionnement : `ANALYSIS/docs/pipeline_analyse.md`
+- Scripts : `ANALYSIS/` (numérotés, ex. `01_inventory.py`) — fonctionnement : `ANALYSIS/docs/pipeline_analyse.md`, viewer : `ANALYSIS/docs/viewer.md`

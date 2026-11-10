@@ -102,8 +102,8 @@ for target, r in kept.items():
     e = log[r["file"]]
     e["status"], e["new_file"] = "gardé", target
     fixes = []
-    if Path(r["file"]).name != Path(target).name:
-        fixes.append("renommé")
+    if r["naming_ok"] is not True:                                   # problème 1
+        fixes.append("renommé")  # un nom déjà conforme (ses1 -> ses01) est juste harmonisé
     if r["extension_ok"] is not True:                                # problème 2
         fixes.append(f"converti en .nii.gz ({r['extension_detail']})")
     if r["duplicate_ok"] is not True:

@@ -11,6 +11,8 @@ DATA/DELINEATION_DATA  (brut, jamais modifié)
         │
         └── 02_easy_clean.py ──► DATA/CLEAN_DELINEATION     (problèmes 1–5 corrigés)
                              └─► RESULTS/02_easy_clean.csv  (journal : gardé / exclu, pourquoi)
+                                        │
+        viewer/build_viewer.py ◄────────┘  ──► RESULTS/viewer/index.html  (comparaison visuelle)
 ```
 
 Les deux scripts utilisent les **mêmes tests**, définis une seule fois dans `checks.py`.
@@ -53,12 +55,20 @@ Corrige les problèmes 1 à 5 et écrit `DATA/CLEAN_DELINEATION` (vidé puis rec
 
 Pour finir, le script relance les 5 tests sur `CLEAN_DELINEATION` et vérifie que chaque masque copié a exactement les mêmes voxels que l'original.
 
+## `viewer/` — visualisation
+
+Page web locale pour superposer les délinéations d'un sujet, filtrer *propres / exclues*, et voir le Dice.
+Elle lit les fichiers avec `checks.py`, les erreurs dans `01_inventory.csv` et le statut dans `02_easy_clean.csv`.
+Détail : `viewer.md`.
+
 ## Utilisation
 
 ```
-python ANALYSIS/01_inventory.py           # état des lieux
-python ANALYSIS/02_easy_clean.py          # simulation : journal seulement
-python ANALYSIS/02_easy_clean.py --apply  # crée CLEAN_DELINEATION + vérification
+pip install -r requirements.txt                 # une fois
+python ANALYSIS/01_inventory.py                 # état des lieux
+python ANALYSIS/02_easy_clean.py                # simulation : journal seulement
+python ANALYSIS/02_easy_clean.py --apply        # crée CLEAN_DELINEATION + vérification
+python ANALYSIS/viewer/build_viewer.py          # puis ouvrir RESULTS/viewer/index.html
 ```
 
 ## Pas encore traité (étapes futures)
