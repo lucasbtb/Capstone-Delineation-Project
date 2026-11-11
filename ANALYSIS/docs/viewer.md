@@ -21,6 +21,8 @@ le panneau *Contrôles* → bouton **aller** pour voir le problème sur les coup
 | `ANALYSIS/viewer/build_viewer.py` | Lit les masques (avec `ANALYSIS/checks.py`, comme l'analyse), prépare les données de la page |
 | `ANALYSIS/viewer/index.html` | Code de la page (modèle, recopié à chaque build) |
 | `RESULTS/viewer/index.html` | **La page à ouvrir** (générée) |
+| `ANALYSIS/viewer/build_tables.py` | Recopie tous les `RESULTS/**/*.csv` dans `RESULTS/viewer/data/tables.js` (quelques secondes ; aussi lancé par `build_viewer.py`). À relancer après `01_inventory.py` / `02_easy_clean.py` |
+| `ANALYSIS/viewer/tables.html` → `RESULTS/viewer/tables.html` | Lecteur de CSV (lien « Tableaux CSV » dans le viewer) : un onglet par CSV de `RESULTS/` ; tri, recherche, filtre par colonne. « + Autre CSV… » pour un fichier hors `RESULTS` (ex. `notes_viewer.csv`) |
 | `RESULTS/viewer/data/*.js` | Données générées, un fichier par sujet (~27 Mo, ignoré par git) |
 | `requirements.txt` | Paquets Python nécessaires |
 

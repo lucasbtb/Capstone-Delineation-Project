@@ -42,6 +42,7 @@ from scipy.spatial import cKDTree
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE.parent))  # checks.py est dans ANALYSIS/
 from checks import get_labels, load, scan_key  # noqa: E402
+import build_tables  # noqa: E402  (même dossier que ce script)
 
 ROOT = HERE.parents[1]
 DATA = ROOT / "DATA" / "DELINEATION_DATA"
@@ -246,6 +247,7 @@ def main(only):
 
     (OUT / "data").mkdir(parents=True, exist_ok=True)
     shutil.copy(HERE / "index.html", OUT / "index.html")
+    build_tables.main()  # lecteur de CSV : RESULTS/viewer/tables.html
 
     index_path = OUT / "data" / "index.js"
     index = {}
