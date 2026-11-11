@@ -1,0 +1,4 @@
+# Environnement Python du projet (ANALYSIS/, viewer compris) — voir ANALYSIS/docs/viewer.md
+nibabel==5.5.0
+numpy==2.5.4
+scipy==1.18.1
