@@ -1,6 +1,6 @@
 # Pipeline d'analyse
 
-Comment fonctionne la partie `ANALYSIS/`. Les règles à suivre sont dans `consigne_analyse.md` (rédigé par Lucas uniquement).
+Comment fonctionne la partie `ANALYSIS/`. Les règles à suivre sont dans `consigne_analyse.md`
 
 ## Vue d'ensemble
 
@@ -12,10 +12,13 @@ DATA/DELINEATION_DATA  (brut, jamais modifié)
         └── 02_easy_clean.py ──► DATA/CLEAN_DELINEATION     (problèmes 1–5 corrigés)
                              └─► RESULTS/02_easy_clean.csv  (journal : gardé / exclu, pourquoi)
                                         │
-        viewer/build_viewer.py ◄────────┘  ──► RESULTS/viewer/index.html  (comparaison visuelle)
+        viewer/build_viewer.py ◄────────┤  ──► RESULTS/viewer/index.html  (comparaison visuelle)
+                                        │
+        03_staple.py ◄──────────────────┘  ──► DATA/STAPLE                (délinéations de référence)
+                                          └─► RESULTS/03_staple_*         (rapport + CSV)
 ```
 
-Les deux scripts utilisent les **mêmes tests**, définis une seule fois dans `checks.py`.
+Les scripts utilisent les **mêmes tests**, définis une seule fois dans `checks.py`.
 
 ## `checks.py` — définition des problèmes
 
@@ -55,6 +58,33 @@ Corrige les problèmes 1 à 5 et écrit `DATA/CLEAN_DELINEATION` (vidé puis rec
 
 Pour finir, le script relance les 5 tests sur `CLEAN_DELINEATION` et vérifie que chaque masque copié a exactement les mêmes voxels que l'original.
 
+**Ce que 02 ne fait pas** : il ne touche jamais au contenu des masques. Les voxels isolés (points placés
+par erreur loin des noyaux), les fragments, les trous ou les délinéations arrêtées en cours restent tels quels
+dans `CLEAN_DELINEATION`. Le viewer les *repère* (fragments, voxels hors cadre) mais rien ne les *retire* encore
+(voir « Pas encore traité »).
+
+## `03_staple.py` — délinéations de référence
+
+Entrée : `CLEAN_DELINEATION` uniquement (un masque par rater et par scan, problèmes 1–5 déjà corrigés par 02).
+
+Pour chaque scan délinéé par **au moins 3 raters**, STAPLE (Warfield et al. 2004, version multi-labels, codé
+en numpy) estime à la fois la délinéation la plus probable (la *référence*) et la fiabilité de chaque rater
+(matrice de confusion : probabilité de donner le label *a* quand le vrai label est *b*). Contrairement à un
+vote majoritaire, un rater peu fiable pèse moins dans la référence. Le calcul se fait dans la boîte englobant
+tous les voxels non nuls du scan (+ 3 voxels), et la référence vaut 0 en dehors.
+
+Sorties (`DATA/STAPLE` vidé puis recréé à chaque exécution) :
+- `DATA/STAPLE/<SCAN>_staple.nii.gz` : la référence (labels 0–9), sur la grille du premier masque du scan ;
+- `RESULTS/03_staple_raters.csv` : une ligne par masque : Dice vs référence par noyau, Dice moyen 1–9,
+  Dice du thalamus entier, sensibilité STAPLE par noyau, spécificité du fond, volume ;
+- `RESULTS/03_staple_scans.csv` : une ligne par scan : nb de raters, itérations / convergence, volumes de la
+  référence par noyau, part des voxels unanimes, part des voxels incertains (probabilité < 0.9), rater le plus faible ;
+- `RESULTS/03_staple_report.md` : résumé chiffré (vue d'ensemble, accord par noyau, scans et masques
+  les moins en accord avec la référence).
+
+STAPLE atténue les voxels isolés d'un seul rater (mis en minorité), mais ne les retire pas des masques eux-mêmes :
+ils baissent le Dice de ce rater dans le rapport.
+
 ## `viewer/` — visualisation
 
 Page web locale pour superposer les délinéations d'un sujet, filtrer *propres / exclues*, et voir le Dice.
@@ -73,6 +103,7 @@ python ANALYSIS/01_inventory.py                 # état des lieux
 python ANALYSIS/02_easy_clean.py                # simulation : journal seulement
 python ANALYSIS/02_easy_clean.py --apply        # crée CLEAN_DELINEATION + vérification
 python ANALYSIS/viewer/build_viewer.py          # puis ouvrir RESULTS/viewer/index.html
+python ANALYSIS/03_staple.py                    # références STAPLE (après 02 --apply)
 ```
 
 ## Pas encore traité (étapes futures)
@@ -80,4 +111,7 @@ python ANALYSIS/viewer/build_viewer.py          # puis ouvrir RESULTS/viewer/ind
 Problèmes connus que les tests 1–5 ne voient pas (détail dans `potential_problem.md`) :
 - scans mal assignés, repérables par l'origine du header (16i SUBC002–004_ses2 = SUBG002–004_ses2, 6j, 9b, 10j, 7c) ;
 - masque identique chez deux raters différents (14c / 14i, SUBG009_ses2) ;
-- labels probablement permutés (8 ↔ 9), contrôles anatomiques (volumes, hémisphères, composantes).
+- labels probablement permutés (8 ↔ 9), contrôles anatomiques (volumes, hémisphères, composantes) ;
+- nettoyage du contenu des masques : retirer les voxels isolés / fragments loin des noyaux, repérer les
+  délinéations arrêtées en cours ou les coupes manquantes (« problèmes potentiels » de la consigne).
+  Ces masques sont aujourd'hui gardés tels quels par 02 et utilisés par 03.
