@@ -1,8 +1,16 @@
 # Viewer de délinéations
 
-Page web **locale** pour comparer visuellement les délinéations d'un même sujet :
-superposer, masquer, isoler les raters, filtrer par noyau, et voir l'accord (Dice).
+Page web **locale** avec deux usages :
+1. **Comparer les raters** d'un même sujet : superposer, masquer, isoler, filtrer par label, voir l'accord (Dice).
+2. **Détecter des erreurs** pas encore couvertes par l'analyse (points parasites, délinéation incomplète,
+   coupes manquantes, volumes anormaux), les **noter**, puis exporter les notes pour les reporter dans la consigne
+   et les corriger ensuite dans `checks.py` / `02_easy_clean.py`.
+
 Tout tourne dans le navigateur, sans serveur. Aucune donnée n'est envoyée en ligne.
+
+**Usage rapide** : choisir un sujet → cliquer sur une délinéation à gauche → lire ses alertes dans
+le panneau *Contrôles* → bouton **aller** pour voir le problème sur les coupes → écrire une note →
+**Exporter les notes** en haut à droite.
 
 ---
 
@@ -46,9 +54,11 @@ Ordre complet, à refaire quand les données ou le nettoyage changent :
 ```bash
 .venv/bin/python ANALYSIS/01_inventory.py          # 5 tests par fichier       -> RESULTS/01_inventory.csv
 .venv/bin/python ANALYSIS/02_easy_clean.py --apply # statut gardé / exclu       -> RESULTS/02_easy_clean.csv
-.venv/bin/python ANALYSIS/viewer/build_viewer.py   # données de la page (~1 min 30)
+.venv/bin/python ANALYSIS/viewer/build_viewer.py   # données de la page + contrôles (~1 min 30 Mac, ~5 min Windows)
 open RESULTS/viewer/index.html                 # ou double-clic dans le Finder
 ```
+
+Sur Windows (PowerShell) : `.venv\Scripts\python ANALYSIS\viewer\build_viewer.py` puis `start RESULTS\viewer\index.html`.
 
 - Si seuls les statuts ont changé, il suffit de relancer `build_viewer.py`.
 - Pour mettre à jour quelques sujets seulement : `build_viewer.py SUBC001 SUBG009`. Les autres sujets sont conservés.
@@ -67,10 +77,12 @@ open RESULTS/viewer/index.html                 # ou double-clic dans le Finder
   - *Toutes* : tous les fichiers bruts lisibles.
 - **Sujet** : n'affiche que les sujets qui ont au moins une délinéation sous le filtre, avec leur nombre.
 - **Session** : ses1 / ses2 / toutes. Par défaut, la session qui a le plus de délinéations.
-- **Affichage** : remplissage, contours, ou les deux.
-- **Couleur** : *par délinéation* (une couleur par rater, le plus lisible pour comparer)
-  ou *par noyau* (couleurs de `colors.md`).
-- **Opacité**, **Zoom**, **Réticule**.
+- **Exporter les notes** : télécharge `notes_viewer.csv` (toutes les notes, tous sujets).
+- **Réglages** (menu) :
+  - *Affichage* : remplissage, contours, ou les deux ;
+  - *Couleur* : *par délinéation* (une couleur par rater, le plus lisible pour comparer)
+    ou *par label* (couleurs de `colors.md`) ;
+  - *Opacité*, *Zoom*, *Réticule*.
 
 **Coupes**
 Trois vues : axiale, coronale, sagittale.
@@ -79,16 +91,31 @@ Trois vues : axiale, coronale, sagittale.
 - Les coordonnées affichées sont celles du volume d'origine (voxels).
 
 **Panneau de gauche**
-- Une case par délinéation pour l'afficher ou la masquer. **solo** n'affiche qu'elle.
+- **Case** : afficher / masquer la délinéation. **solo** n'affiche qu'elle.
+- **Clic sur la ligne** : la sélectionne (cadre bleu) et affiche ses contrôles dans le panneau *Contrôles*.
+- Chaque ligne résume ses alertes : ⚠ orange = erreurs de `01_inventory.csv`, ● rouge = contrôles du viewer
+  (● vert = aucune alerte). 📝 = une note existe.
 - Clavier : touches **1–9** pour basculer la n-ième délinéation, **Espace** pour inverser les visibles
   (utile pour alterner entre deux raters).
-- **Noyaux** : n'afficher que certains labels. Le filtre s'applique aussi au Dice.
+- **Labels** : n'afficher que certains labels (affichés par numéro **L1–L9** ; le nom de noyau supposé
+  apparaît au survol). Le filtre s'applique aussi au Dice.
+
+**Panneau *Contrôles*** (délinéation sélectionnée)
+- Tableau par label et par côté : voxels, médiane des autres raters, fragments isolés / détachés, trous.
+  Les cases en rouge sont à regarder.
+- Liste des **fragments** et des **trous** : le bouton **aller** place le curseur dessus et l'entoure en jaune.
+- **Note** : texte libre, enregistré automatiquement (voir § 5c).
+
+**Vue d'ensemble** : les délinéations visibles projetées sur le **volume entier**. Le cadre en pointillés
+correspond aux coupes du haut ; les voxels hors de ce cadre sont dessinés en **rouge** (agrandis pour rester visibles).
+Un clic dans le cadre déplace le curseur.
 
 **Panneaux du bas**
 - *Sous le curseur* : le label de chaque délinéation visible au voxel survolé.
-- *Accord (Dice)* : avec 2 délinéations visibles, le Dice par noyau et la moyenne.
+- *Accord (Dice)* : avec 2 délinéations visibles, le Dice par label et la moyenne.
   Avec plus de 2, la matrice des Dice moyens.
-  Le Dice compare **le même label** : si un rater a permuté deux labels, le Dice de ces noyaux tombe à ~0.
+  Le Dice compare **le même label** : si un rater a permuté deux labels, le Dice de ces labels tombe à ~0.
+  Un Dice à 0 partout = délinéations décalées (mauvais scan, header différent).
 
 ---
 
@@ -110,16 +137,40 @@ Chaque délinéation porte un **badge**, un texte à côté et parfois des ligne
 - Les erreurs du fichier **brut**, telles que dans la colonne `errors` de `RESULTS/01_inventory.csv`
   (`naming: …`, `extension: …`, `labels: …`, `duplicate: …`, `orientation: …`).
   Pour un fichier *corrigé*, ce sont donc les erreurs d'origine, réparées dans `CLEAN_DELINEATION`.
-- `N voxels loin du thalamus (non affichés)` : seul contrôle calculé par `build_viewer.py` (ci-dessous).
+### c. Contrôles du viewer (● rouge) : calculés par `build_viewer.py`
 
-**« Voxels loin du thalamus »** : pour chaque sujet, on regroupe les voxels de **toutes** ses délinéations
-(tous raters, toutes sessions). Sur chaque axe, on garde l'intervalle entre les percentiles 0,1 % et 99,9 %,
-élargi de **12 voxels (12 mm)**. Les voxels hors de cette boîte sont comptés et **ne sont pas dessinés**.
-- Au départ, cette boîte sert à recadrer l'affichage. Ce n'est pas un contrôle validé.
-- Le compte est un **minimum** : un voxel parasite à l'intérieur de la boîte (entre les deux thalamus,
-  dans un coin) n'est pas détecté.
-- Ce contrôle n'existe ni dans `01_inventory` ni dans `02_easy_clean`.
-- Une méthode plus fiable serait les composantes connexes par label (`scipy.ndimage.label`).
+Contrôles **exploratoires**, pour repérer des problèmes. Ils n'existent ni dans `01_inventory` ni dans
+`02_easy_clean` : un problème confirmé à l'œil est à reporter dans la consigne, puis à ajouter à `checks.py`.
+
+Chaque label est **bilatéral** : normalement un bloc à gauche et un bloc à droite. Pour chaque label :
+1. On sépare le masque en **morceaux** (composantes connexes, 26-connexité : deux voxels qui se touchent
+   même par un coin font partie du même morceau).
+2. Chaque morceau est attribué à un **côté** selon sa position par rapport au centre gauche-droite de la délinéation.
+3. Sur chaque côté, le plus gros morceau est le **bloc principal** ; les autres sont des **fragments** :
+   - **isolé** : à plus de 3 mm du bloc principal → point parasite probable (compté dans l'alerte) ;
+   - **détaché** : à 3 mm ou moins → souvent une coupe sautée ou un coup de pinceau (détail seulement).
+4. **Trous entre coupes** : sur chaque axe, coupe vide entre la première et la dernière coupe du label
+   (bloc principal + fragments détachés). Signe probable d'une **coupe oubliée** (« frame manquante »).
+5. **Volume anormal** : voxels du label sur ce côté < 50 % ou > 200 % de la **médiane** des délinéations
+   de la même session sous le filtre courant (au moins 3 délinéations). Signe possible d'une délinéation
+   **arrêtée en cours**, d'un label oublié ou de labels permutés.
+6. **Hors cadre** : le cadre des coupes est calculé pour chaque sujet sur **toutes** ses délinéations
+   (percentiles 0,1 %–99,9 % sur chaque axe, + 12 mm). Les voxels hors cadre ne peuvent pas être montrés sur
+   les coupes : ils apparaissent **en rouge dans la vue d'ensemble**.
+
+Limites :
+- Le côté est estimé par position : un fragment qui déborde la ligne médiane peut être compté du mauvais côté.
+- Un label délinéé d'un seul côté donne un volume « absent » de l'autre côté (c'est voulu).
+- Sur les premières données (373 délinéations propres) : 162 ont au moins un fragment isolé, 127 un trou
+  et 86 des voxels hors cadre. Beaucoup de fragments isolés font 1 voxel : à trier à l'œil avant d'en faire une règle.
+
+### d. Notes
+
+- Une note par délinéation (panneau *Contrôles*), enregistrée automatiquement **dans ce navigateur**
+  (`localStorage`) : elle n'est pas dans le projet et peut être perdue (navigation privée, cache vidé,
+  autre navigateur ou autre ordinateur).
+- **Exporter les notes** régulièrement : `notes_viewer.csv` (sujet, session, groupe, rater, fichier, statut, note, date).
+- Les notes restent après un nouveau build : elles sont rattachées au chemin du fichier brut.
 
 ---
 
@@ -129,7 +180,7 @@ Chaque délinéation porte un **badge**, un texte à côté et parfois des ligne
    On suppose label 1 = LGN, 2 = MGN, 3 = Pulvinar, 4 = AV, 5 = VA, 6 = VLA/VLP, 7 = VPL, 8 = MD, 9 = CM,
    d'après l'ordre de `given_documents/colors.md`. Or dans SUBC049 (rater 7a), le label 3 est
    ~15 mm **en avant** du label 4, alors que le pulvinar est postérieur et l'AV antérieur.
-   Les noms de noyaux du viewer ne sont donc pas fiables. Les numéros de labels, eux, sont exacts.
+   C'est pourquoi le viewer affiche les labels par **numéro** (L1–L9) ; le nom supposé n'apparaît qu'au survol.
 2. **Orientation RAS, affichage en espace voxel.**
    Tous les fichiers déclarent RAS et font 192×224×224 à 1 mm. Les masques sont superposés
    **voxel à voxel**, sans tenir compte de l'origine du header. Convention neurologique :
@@ -169,9 +220,10 @@ Chaque délinéation porte un **badge**, un texte à côté et parfois des ligne
 
 | Symptôme | Cause / solution |
 |---|---|
-| `ModuleNotFoundError: nibabel` | Script lancé avec le mauvais Python : utiliser `.venv/bin/python` |
+| `ModuleNotFoundError: nibabel` ou `scipy` | Script lancé avec le mauvais Python : utiliser `.venv/bin/python`, ou relancer `pip install -r requirements.txt` |
 | Page « Aucune donnée » | `build_viewer.py` pas encore lancé |
-| « Données obsolètes pour … » | Fichier généré par une ancienne version : relancer `build_viewer.py`, puis Cmd+Shift+R |
+| « Données obsolètes pour … » | Fichier généré par une ancienne version : relancer `build_viewer.py`, puis Cmd+Shift+R (Ctrl+Shift+R sous Windows) |
+| Notes disparues | Autre navigateur, navigation privée ou cache vidé : les notes sont dans le navigateur, d'où l'export CSV |
 | Sujet vide + avertissement de sessions | Ancien cache : Cmd+Shift+R |
 | Tout est « ✗ hors journal » | `RESULTS/02_easy_clean.csv` absent : lancer `02_easy_clean.py` |
 | Un sujet manque dans la liste | Aucune délinéation sous le filtre choisi : passer à *Toutes* |

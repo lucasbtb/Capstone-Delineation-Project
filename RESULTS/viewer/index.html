@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Comparateur de délinéations</title>
 <!-- Page générée par ANALYSIS/viewer/build_viewer.py : ouvrir RESULTS/viewer/index.html.
-     100 % local : aucune requête réseau. -->
+     100 % local : aucune requête réseau. Les notes restent dans ce navigateur (bouton Exporter). -->
 <style>
 :root {
   color-scheme: dark;
@@ -18,40 +18,54 @@
   --muted: #8d8c84;
   --accent: #3987e5;
   --warn: #c98500;
+  --bad: #e66767;
+  --good: #4fb286;
   --canvas-bg: #000;
 }
 * { box-sizing: border-box; }
 body { margin: 0; background: var(--bg); color: var(--text);
   font: 13px/1.4 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
-header { display: flex; flex-wrap: wrap; gap: 12px 20px; align-items: center;
+header { display: flex; flex-wrap: wrap; gap: 10px 18px; align-items: center;
   padding: 10px 16px; border-bottom: 1px solid var(--line); background: var(--panel); }
 header h1 { font-size: 15px; margin: 0; font-weight: 600; }
+header .spacer { flex: 1; }
 .ctl { display: flex; align-items: center; gap: 6px; color: var(--text-2); }
 select, button { background: var(--panel-2); color: var(--text); border: 1px solid var(--line);
   border-radius: 6px; padding: 4px 8px; font: inherit; cursor: pointer; }
 button:hover, select:hover { border-color: var(--muted); }
+button:disabled { opacity: .45; cursor: default; }
 .seg { display: inline-flex; border: 1px solid var(--line); border-radius: 6px; overflow: hidden; }
 .seg button { border: 0; border-radius: 0; border-right: 1px solid var(--line); }
 .seg button:last-child { border-right: 0; }
 .seg button.on { background: var(--accent); color: #fff; }
 input[type=range] { accent-color: var(--accent); }
-main { display: grid; grid-template-columns: 300px 1fr; min-height: calc(100vh - 52px); }
+.settings { position: relative; }
+.settings summary { list-style: none; cursor: pointer; background: var(--panel-2); border: 1px solid var(--line);
+  border-radius: 6px; padding: 4px 10px; }
+.settings summary::-webkit-details-marker { display: none; }
+.settings .pop { position: absolute; right: 0; top: calc(100% + 6px); z-index: 10; background: var(--panel);
+  border: 1px solid var(--line); border-radius: 8px; padding: 12px; display: flex; flex-direction: column;
+  gap: 10px; min-width: 300px; box-shadow: 0 8px 24px rgba(0,0,0,.45); }
+main { display: grid; grid-template-columns: 320px 1fr; min-height: calc(100vh - 52px); }
 aside { border-right: 1px solid var(--line); background: var(--panel); padding: 12px; overflow-y: auto; }
 aside h2 { font-size: 11px; text-transform: uppercase; letter-spacing: .06em; color: var(--muted);
   margin: 14px 0 6px; font-weight: 600; }
 aside h2:first-child { margin-top: 0; }
 .row-btns { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 6px; }
 .del { display: grid; grid-template-columns: auto 14px 1fr auto; gap: 6px; align-items: start;
-  padding: 6px; border-radius: 6px; border: 1px solid transparent; }
+  padding: 6px; border-radius: 6px; border: 1px solid transparent; cursor: pointer; }
 .del:hover { background: var(--panel-2); }
 .del.on { border-color: var(--line); background: var(--panel-2); }
+.del.active { border-color: var(--accent); box-shadow: inset 3px 0 0 var(--accent); }
 .del .sw { width: 14px; height: 14px; border-radius: 3px; margin-top: 2px; }
 .del .name { font-weight: 600; }
 .del .meta { color: var(--muted); font-size: 11px; word-break: break-all; }
 .del .iss { color: var(--warn); font-size: 11px; }
+.del .alerts { color: var(--bad); font-size: 11px; }
+.del .okc { color: var(--good); font-size: 11px; }
 .badge { display: inline-block; font-size: 10px; font-weight: 600; padding: 0 5px; border-radius: 4px;
   border: 1px solid currentColor; margin: 2px 0; }
-.badge.ok { color: #4fb286; } .badge.fix { color: #6ea8f0; } .badge.ko { color: #e66767; }
+.badge.ok { color: var(--good); } .badge.fix { color: #6ea8f0; } .badge.ko { color: var(--bad); }
 .del .key { color: var(--muted); font-size: 11px; font-variant-numeric: tabular-nums; }
 .del .solo { font-size: 11px; padding: 1px 6px; }
 .nuc { display: flex; align-items: center; gap: 6px; padding: 2px 0; }
@@ -66,41 +80,62 @@ canvas { background: var(--canvas-bg); image-rendering: pixelated; cursor: cross
 .orient { position: absolute; top: 50%; color: var(--muted); font-size: 11px; transform: translateY(-50%); pointer-events: none; }
 .orient.l { left: 4px; } .orient.r { right: 4px; }
 .view input[type=range] { width: 100%; margin-top: 6px; }
-.panel { background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 10px 12px; }
+.panel { background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 10px 12px; min-width: 0; }
 .panel h3 { margin: 0 0 8px; font-size: 13px; font-weight: 600; }
+.panel h4 { margin: 10px 0 4px; font-size: 12px; font-weight: 600; color: var(--text-2); }
+.panel h4:first-child { margin-top: 0; }
 .bottom { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.ctl-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 18px; }
 table { border-collapse: collapse; font-variant-numeric: tabular-nums; }
 th, td { padding: 3px 8px; text-align: right; border-bottom: 1px solid var(--line); }
 th { color: var(--text-2); font-weight: 600; }
 td:first-child, th:first-child { text-align: left; }
+td.bad { color: var(--bad); font-weight: 600; }
+td.dim { color: var(--muted); }
+.list { max-height: 210px; overflow-y: auto; }
+.item { display: flex; gap: 8px; align-items: center; justify-content: space-between; padding: 2px 0;
+  border-bottom: 1px solid var(--line); }
+.item .go { font-size: 11px; padding: 0 8px; flex: none; }
+.item.iso { color: var(--bad); }
+textarea { width: 100%; min-height: 64px; background: var(--panel-2); color: var(--text); border: 1px solid var(--line);
+  border-radius: 6px; padding: 6px 8px; font: inherit; resize: vertical; }
 .note { color: var(--muted); font-size: 12px; }
 .warnbox { color: var(--warn); font-size: 12px; margin: 6px 0; }
 .chip { display: inline-block; width: 10px; height: 10px; border-radius: 2px; margin-right: 4px; vertical-align: -1px; }
 .empty { color: var(--muted); padding: 40px; text-align: center; }
-@media (max-width: 1100px) { .grid3 { grid-template-columns: 1fr; } .bottom { grid-template-columns: 1fr; } }
+.ov { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin-top: 8px; }
+.ov .vh { color: var(--text-2); margin-bottom: 4px; }
+.ov canvas { width: 100%; max-width: 340px; height: auto; display: block; }
+@media (max-width: 1100px) { .grid3, .ov { grid-template-columns: 1fr; } .bottom, .ctl-grid { grid-template-columns: 1fr; } }
 @media (max-width: 800px) { main { grid-template-columns: 1fr; } aside { border-right: 0; border-bottom: 1px solid var(--line); } }
 </style>
 </head>
 <body>
 <header>
-  <h1>Comparateur de délinéations</h1>
+  <h1>Délinéations</h1>
   <span class="ctl">Données
     <span class="seg" id="filter">
       <button data-v="clean" class="on" title="Gardées par 02_easy_clean (= DATA/CLEAN_DELINEATION)">Propres</button><button data-v="correct" title="Gardées sans aucune correction (passent les 5 tests de 01_inventory)">Sans correction</button><button data-v="rejected" title="Exclues par 02_easy_clean">Exclues</button><button data-v="all" title="Tous les fichiers bruts lisibles">Toutes</button>
     </span></span>
   <label class="ctl">Sujet <select id="subject"></select></label>
   <span class="ctl">Session <span class="seg" id="sessions"></span></span>
-  <span class="ctl">Affichage
-    <span class="seg" id="mode">
-      <button data-v="fill">Remplissage</button><button data-v="contour" class="on">Contours</button><button data-v="both">Les deux</button>
-    </span></span>
-  <span class="ctl">Couleur
-    <span class="seg" id="colorby">
-      <button data-v="label">par noyau</button><button data-v="del" class="on">par délinéation</button>
-    </span></span>
-  <label class="ctl">Opacité <input type="range" id="opacity" min="0.1" max="1" step="0.05" value="0.55"></label>
-  <label class="ctl">Zoom <input type="range" id="zoom" min="1" max="4" step="0.25" value="1"></label>
-  <label class="ctl"><input type="checkbox" id="cross" checked> Réticule</label>
+  <span class="spacer"></span>
+  <button id="exportNotes" title="Télécharger toutes les notes (tous sujets) en CSV">Exporter les notes (0)</button>
+  <details class="settings" id="settings"><summary>Réglages ▾</summary>
+    <div class="pop">
+      <span class="ctl">Affichage
+        <span class="seg" id="mode">
+          <button data-v="fill">Remplissage</button><button data-v="contour" class="on">Contours</button><button data-v="both">Les deux</button>
+        </span></span>
+      <span class="ctl">Couleur
+        <span class="seg" id="colorby">
+          <button data-v="label">par label</button><button data-v="del" class="on">par délinéation</button>
+        </span></span>
+      <label class="ctl">Opacité <input type="range" id="opacity" min="0.1" max="1" step="0.05" value="0.55"></label>
+      <label class="ctl">Zoom <input type="range" id="zoom" min="1" max="4" step="0.25" value="1"></label>
+      <label class="ctl"><input type="checkbox" id="cross" checked> Réticule</label>
+    </div>
+  </details>
 </header>
 <main>
   <aside>
@@ -108,16 +143,21 @@ td:first-child, th:first-child { text-align: left; }
     <div class="row-btns">
       <button id="all">Tout afficher</button><button id="none">Tout masquer</button><button id="swap" title="Touche Espace">Inverser (Espace)</button>
     </div>
-    <div class="note" style="margin-bottom:6px">Touches 1–9 : afficher/masquer · Espace : inverser les visibles</div>
+    <div class="note" style="margin-bottom:6px">Case : afficher / masquer · clic sur la ligne : voir ses contrôles · touches 1–9 · Espace : inverser</div>
     <div id="dels"></div>
-    <h2>Noyaux (labels)</h2>
+    <h2>Labels</h2>
     <div class="row-btns"><button id="nucAll">Tous</button><button id="nucNone">Aucun</button></div>
     <div id="nuclei"></div>
-    <div class="note" style="margin-top:6px">Correspondance label ↔ noyau supposée (ordre de colors.md), non confirmée.</div>
+    <div class="note" style="margin-top:6px">Labels affichés par numéro. Le nom de noyau (au survol) est une hypothèse non confirmée.</div>
   </aside>
   <section class="views">
     <div id="sesWarn" class="warnbox" hidden>⚠ Plusieurs sessions affichées : ce sont des IRM différentes, la superposition voxel à voxel n'a pas de sens anatomique.</div>
     <div class="grid3" id="grid"></div>
+    <div class="panel"><h3 id="ctlTitle">Contrôles</h3><div id="ctl" class="note">Cliquer sur une délinéation à gauche.</div></div>
+    <div class="panel"><h3>Vue d'ensemble : volume entier</h3>
+      <div class="note">Toutes les coupes des délinéations visibles, superposées. Pointillés = cadre des coupes du haut.
+        <b style="color:#ff3b3b">Rouge</b> = voxels hors de ce cadre (points parasites). Clic dans le cadre : déplacer le curseur.</div>
+      <div class="ov" id="ov"></div></div>
     <div class="bottom">
       <div class="panel"><h3>Sous le curseur</h3><div id="hover" class="note">Survoler une coupe.</div></div>
       <div class="panel"><h3>Accord (Dice) entre délinéations visibles</h3><div id="dice" class="note"></div></div>
@@ -129,11 +169,16 @@ td:first-child, th:first-child { text-align: left; }
 <script>document.write('<script src="data/index.js?t=' + Date.now() + '"><\/script>');</script>
 <script>
 "use strict";
-// Couleurs par délinéation : palette catégorielle (8 teintes, pas de dark mode).
+// Couleurs par délinéation : palette catégorielle (8 teintes).
 const DEL_COLORS = ["#3987e5", "#d95926", "#199e70", "#c98500", "#d55181", "#008300", "#9085e9", "#e66767"];
+const FAR_COLOR = "#ff3b3b", MARK_COLOR = "#ffe14d";
 const NUCLEI = window.VIEWER_NUCLEI || [];
 const NUC = {}; NUCLEI.forEach(n => NUC[n.label] = n);
 const INDEX = window.VIEWER_INDEX || [];
+const ISOLATED_MM = (window.VIEWER_PARAMS || {}).isolated_mm || 3;
+// Volume d'un label (par côté) comparé à la médiane des délinéations de la même session
+const VOL_LOW = 0.5, VOL_HIGH = 2, MIN_PEERS = 3;
+const SIDES = ["G", "D"], SIDE_NAME = { G: "gauche", D: "droite" };
 
 // Filtre sur le statut 02_easy_clean.csv (calculé par build_viewer.py) : propre, corrige, exclu, absent
 const FILTERS = {
@@ -151,11 +196,49 @@ const countFor = entry => entry.dels.filter(([, st]) => passes(st)).length;
 
 const S = {
   filter: "clean",
-  subject: null, data: null, session: null, dels: [], visible: new Set(),
+  subject: null, data: null, session: null, dels: [], visible: new Set(), active: null, mark: null,
   labelsOn: new Set(NUCLEI.map(n => n.label)), mode: "contour", colorBy: "del",
   opacity: 0.55, zoom: 1, cross: true, cur: [0, 0, 0],
 };
 const $ = id => document.getElementById(id);
+const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+const plural = (n, w) => `${n} ${w}${n > 1 ? "s" : ""}`;
+
+// ---------------------------------------------------------------- labels
+const labOn = l => S.labelsOn.has(l) || !NUC[l];  // labels hors 1–9 : toujours affichés (en blanc)
+const labColor = l => NUC[l] ? NUC[l].color : "#ffffff";
+const labTitle = l => NUC[l] ? `hypothèse non confirmée : ${NUC[l].name}` : "label hors 1–9";
+const labChip = l => `<span class="chip" style="background:${labColor(l)}"></span><span title="${labTitle(l)}">L${l}</span>`;
+
+// ---------------------------------------------------------------- notes (navigateur)
+const NOTES_KEY = "viewer.notes";
+let NOTES = {};
+try { NOTES = JSON.parse(localStorage.getItem(NOTES_KEY) || "{}") || {}; } catch (e) { NOTES = {}; }
+function saveNotes() {
+  let ok = true;
+  try { localStorage.setItem(NOTES_KEY, JSON.stringify(NOTES)); } catch (e) { ok = false; }
+  const m = $("noteMsg");
+  if (m) m.textContent = ok ? "Enregistrée dans ce navigateur." : "⚠ Enregistrement impossible ici : exporter les notes maintenant.";
+  refreshNoteCount();
+}
+function setNote(d, text) {
+  if (text.trim()) NOTES[d.file] = { text, date: new Date().toISOString().slice(0, 16).replace("T", " "),
+    subject: S.subject, session: d.session, group: d.group, rater: d.rater, step: d.step };
+  else delete NOTES[d.file];
+  saveNotes();
+}
+function refreshNoteCount() { $("exportNotes").textContent = `Exporter les notes (${Object.keys(NOTES).length})`; }
+function exportNotes() {
+  const q = v => `"${String(v == null ? "" : v).replace(/"/g, '""')}"`;
+  const rows = Object.entries(NOTES)
+    .sort((a, b) => (a[1].subject + a[0]).localeCompare(b[1].subject + b[0]))
+    .map(([f, n]) => [n.subject, n.session, n.group, n.rater, f, n.step, n.text, n.date].map(q).join(","));
+  const csv = "﻿" + ["sujet,session,groupe,rater,fichier,statut,note,date", ...rows].join("\r\n");
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(new Blob([csv], { type: "text/csv;charset=utf-8" }));
+  a.download = "notes_viewer.csv"; document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+}
 
 // ---------------------------------------------------------------- données
 function decode(b64, Type) {
@@ -167,27 +250,27 @@ function loadSubject(subject) {
   const entry = INDEX.find(s => s.subject === subject);
   const ready = () => {
     const d = window.VIEWER_DATA[subject], b = d.bbox, n = b.nx * b.ny * b.nz;
-    if (d.dels.some(m => !STEP_BADGE[m.step])) {  // fichier généré par une ancienne version du script
-      $("grid").innerHTML = '<div class="empty">Données obsolètes pour ' + subject +
-        ' : relancer build_viewer.py puis recharger la page (Cmd+Shift+R).</div>';
+    if (d.dels.some(m => !STEP_BADGE[m.step] || !m.stats)) {  // fichier généré par une ancienne version du script
+      $("grid").innerHTML = '<div class="empty">Données obsolètes pour ' + esc(subject) +
+        ' : relancer build_viewer.py puis recharger la page (Ctrl+Shift+R / Cmd+Shift+R).</div>';
       return;
     }
-    S.subject = subject; S.data = d;
+    S.subject = subject; S.data = d; S.mark = null;
     S.dels = d.dels.map((m, i) => {
       const vol = new Uint16Array(n), idx = decode(m.idx, Uint32Array), lab = decode(m.lab, Uint16Array);
       for (let k = 0; k < idx.length; k++) vol[idx[k]] = lab[k];
-      return { ...m, i, vol, color: DEL_COLORS[i % DEL_COLORS.length] };
+      return { ...m, i, vol, idxArr: idx, farPts: decode(m.far, Uint16Array), color: DEL_COLORS[i % DEL_COLORS.length] };
     });
     S.session = bestSession();
     S.cur = centerOfMass();
     resetVisible();
-    renderSessions(); renderDelList(); buildViews(); draw();
+    renderSessions(); renderDelList(); buildViews(); buildOverview(); renderCtl(); draw();
     try { localStorage.setItem("viewer.subject", subject); } catch (e) {}
   };
   if (window.VIEWER_DATA && window.VIEWER_DATA[subject]) return ready();
   const s = document.createElement("script");
   s.src = "data/" + entry.file + ".js?v=" + (window.VIEWER_BUILD || Date.now()); s.onload = ready;
-  s.onerror = () => { $("grid").innerHTML = '<div class="empty">Fichier data/' + entry.file + '.js introuvable — relancer build_viewer.py</div>'; };
+  s.onerror = () => { $("grid").innerHTML = '<div class="empty">Fichier data/' + esc(entry.file) + '.js introuvable : relancer build_viewer.py</div>'; };
   document.head.appendChild(s);
 }
 function sessionCounts() {
@@ -203,7 +286,11 @@ function bestSession() {
 function shown() {
   return S.dels.filter(d => passes(d.step) && (S.session === "all" || d.session === S.session));
 }
-function resetVisible() { S.visible = new Set(shown().slice(0, 2).map(d => d.i)); }
+function resetVisible() {
+  const list = shown();
+  S.visible = new Set(list.slice(0, 2).map(d => d.i));
+  S.active = list.length ? list[0].i : null;
+}
 function centerOfMass() {
   const b = S.data.bbox; let sx = 0, sy = 0, sz = 0, c = 0;
   const d = S.dels[0]; if (!d) return [b.nx >> 1, b.ny >> 1, b.nz >> 1];
@@ -215,6 +302,119 @@ function centerOfMass() {
   for (let z = 0; z < b.nz; z++) for (let y = 0; y < b.ny; y++) for (let x = 0; x < mx; x++)
     if (d.vol[x + b.nx * (y + b.ny * z)]) { lx += x; lc++; }
   return [lc ? Math.round(lx / lc) : mx, Math.round(sy / c), Math.round(sz / c)];
+}
+
+// ---------------------------------------------------------------- contrôles
+// Médiane du volume de chaque label/côté parmi les délinéations de la même session (filtre courant)
+function volRef(d) {
+  const peers = shown().filter(o => o.session === d.session);
+  if (peers.length < MIN_PEERS) return { n: peers.length, ref: null };
+  const keys = new Set();
+  peers.forEach(o => Object.keys(o.stats).forEach(l => SIDES.forEach(s => keys.add(l + s))));
+  const ref = {};
+  keys.forEach(k => {
+    const l = k.slice(0, -1), s = k.slice(-1);
+    const v = peers.map(o => (o.stats[l] && o.stats[l][s]) ? o.stats[l][s][0] : 0).sort((a, b) => a - b);
+    const h = v.length >> 1;
+    ref[k] = v.length % 2 ? v[h] : (v[h - 1] + v[h]) / 2;
+  });
+  return { n: peers.length, ref };
+}
+const vox = (d, l, s) => (d.stats[l] && d.stats[l][s]) ? d.stats[l][s][0] : 0;
+function volFlags(d, R) {
+  if (!R.ref) return {};
+  const out = {};
+  Object.entries(R.ref).forEach(([k, med]) => {
+    if (!med) return;
+    const n = vox(d, k.slice(0, -1), k.slice(-1));
+    const kind = !n ? "absent" : n < VOL_LOW * med ? "faible" : n > VOL_HIGH * med ? "élevé" : null;
+    if (kind) out[k] = kind;
+  });
+  return out;
+}
+function alertsOf(d, R) {
+  const a = [], nf = Object.keys(volFlags(d, R)).length;
+  if (d.nfrag[0]) a.push(`${plural(d.nfrag[0], "fragment")} isolé${d.nfrag[0] > 1 ? "s" : ""} (${d.nfrag[2]} vox)`);
+  if (d.gaps.length) a.push(plural(d.gaps.length, "trou") + " entre coupes");
+  if (nf) a.push(`${plural(nf, "volume")} anormal${nf > 1 ? "aux" : ""}`);
+  if (d.nfar) a.push(`${d.nfar} vox hors cadre`);
+  return a;
+}
+// Coordonnées du volume d'origine -> curseur (coordonnées du cadre)
+function goTo(p, d, l) {
+  const b = S.data.bbox, q = [p[0] - b.x0, p[1] - b.y0, p[2] - b.z0];
+  if (q.some((v, a) => v < 0 || v >= b[["nx", "ny", "nz"][a]])) {
+    const m = $("goMsg"); if (m) m.textContent = "Hors du cadre des coupes : visible en rouge dans la vue d'ensemble.";
+    return;
+  }
+  S.cur = q; S.mark = q; S.visible.add(d.i);
+  if (l != null && NUC[l] && !S.labelsOn.has(l)) { S.labelsOn.add(l); renderNuclei(); }
+  update();
+  $("grid").scrollIntoView({ behavior: "smooth", block: "start" });
+}
+function renderCtl() {
+  const d = S.dels[S.active], el = $("ctl");
+  if (!d || !shown().includes(d)) {
+    $("ctlTitle").textContent = "Contrôles";
+    el.className = "note"; el.innerHTML = "Cliquer sur une délinéation à gauche."; return;
+  }
+  el.className = "";
+  const R = volRef(d), flags = volFlags(d, R);
+  $("ctlTitle").innerHTML = `Contrôles : <span class="chip" style="background:${d.color}"></span>Rater ${esc(d.rater)} · groupe ${esc(d.group)} · ses${esc(d.session)}`;
+  const labels = new Set(Object.keys(d.stats)); if (R.ref) Object.keys(R.ref).forEach(k => labels.add(k.slice(0, -1)));
+  const fr = {}, gp = {};
+  d.frags.forEach(f => { const k = f[0] + f[1]; fr[k] = fr[k] || [0, 0]; fr[k][f[6] > ISOLATED_MM ? 0 : 1]++; });
+  d.gaps.forEach(g => { const k = g[0] + g[1]; gp[k] = (gp[k] || 0) + 1; });
+  const med = k => R.ref && R.ref[k] != null ? Math.round(R.ref[k]) : "—";
+  let tbl = `<table><tr><th>Label</th><th>Côté</th><th title="Nombre de voxels (1 voxel = 1 mm³)">Voxels</th>
+    <th title="Médiane des ${R.n} délinéations de ses${esc(d.session)} sous le filtre courant">Médiane</th>
+    <th title="Fragment à plus de ${ISOLATED_MM} mm du bloc principal">Isolés</th><th title="Fragment à ${ISOLATED_MM} mm ou moins">Détachés</th><th>Trous</th></tr>`;
+  [...labels].sort((a, b) => a - b).forEach(l => SIDES.forEach(s => {
+    const k = l + s, f = fr[k] || [0, 0], fl = flags[k];
+    tbl += `<tr><td>${labChip(+l)}</td><td>${SIDE_NAME[s]}</td>
+      <td class="${fl ? "bad" : ""}" title="${fl || ""}">${vox(d, l, s)}${fl ? " ⚠" : ""}</td><td class="dim">${med(k)}</td>
+      <td class="${f[0] ? "bad" : "dim"}">${f[0] || "·"}</td><td class="dim">${f[1] || "·"}</td>
+      <td class="${gp[k] ? "bad" : "dim"}">${gp[k] || "·"}</td></tr>`;
+  }));
+  tbl += "</table>";
+  const refNote = R.ref
+    ? `Volume en rouge : moins de ${VOL_LOW * 100} % ou plus de ${VOL_HIGH * 100} % de la médiane (${R.n} délinéations de ses${esc(d.session)}).`
+    : `Médiane non calculée : il faut au moins ${MIN_PEERS} délinéations dans ses${esc(d.session)} (${R.n} ici).`;
+  const capped = d.nfrag[0] + d.nfrag[1] > d.frags.length ? ` (les ${d.frags.length} premiers détaillés)` : "";
+
+  const frags = d.frags.map(f => `<div class="item ${f[6] > ISOLATED_MM ? "iso" : ""}">
+      <span>${labChip(f[0])} ${SIDE_NAME[f[1]]} · ${plural(f[2], "voxel")} · à ${f[6]} mm du bloc · (${f[3]}, ${f[4]}, ${f[5]})</span>
+      <button class="go" data-p="${f[3]},${f[4]},${f[5]}" data-l="${f[0]}">aller</button></div>`).join("");
+  const gaps = d.gaps.map(g => {
+    const st = d.stats[g[0]] && d.stats[g[0]][g[1]], p = st ? st.slice(1) : [0, 0, 0];
+    p[g[2]] = g[3];
+    const n = g[4] - g[3] + 1;
+    return `<div class="item iso"><span>${labChip(g[0])} ${SIDE_NAME[g[1]]} · ${"xyz"[g[2]]} = ${g[3]}${n > 1 ? "–" + g[4] : ""} vide (${plural(n, "coupe")})</span>
+      <button class="go" data-p="${p.join(",")}" data-l="${g[0]}">aller</button></div>`;
+  }).join("");
+
+  el.innerHTML = `<div class="ctl-grid">
+    <div><h4>Volumes, fragments et trous par label</h4>${tbl}<div class="note" style="margin-top:6px">${refNote}</div></div>
+    <div>
+      <h4>Fragments : ${d.nfrag[0]} isolés (${d.nfrag[2]} vox) · ${d.nfrag[1]} détachés (${d.nfrag[3]} vox)${capped}</h4>
+      <div class="list">${frags || '<div class="note">Aucun : chaque label forme un seul bloc par côté.</div>'}</div>
+      <h4>Trous entre coupes (coupes manquantes probables)</h4>
+      <div class="list">${gaps || '<div class="note">Aucun.</div>'}</div>
+      <h4>Hors cadre</h4>
+      <div class="note">${d.nfar ? `<b style="color:${FAR_COLOR}">${d.nfar} voxels</b> hors du cadre des coupes : en rouge dans la vue d'ensemble.` : "Aucun voxel hors cadre."}</div>
+      <div id="goMsg" class="warnbox"></div>
+      <h4>Note sur cette délinéation</h4>
+      <textarea id="noteBox" placeholder="Problème observé, à reporter dans la consigne…">${esc(NOTES[d.file] ? NOTES[d.file].text : "")}</textarea>
+      <div id="noteMsg" class="note">${NOTES[d.file] ? "Note du " + esc(NOTES[d.file].date) : "Enregistrement automatique dans ce navigateur."}</div>
+    </div></div>`;
+  el.querySelectorAll(".go").forEach(btn => btn.onclick = () => goTo(btn.dataset.p.split(",").map(Number), d, +btn.dataset.l));
+  const box = $("noteBox");
+  box.oninput = () => setNote(d, box.value);
+  box.onchange = () => renderDelList();
+}
+function setActive(i) {
+  S.active = i; S.visible.add(i); S.mark = null;
+  renderCtl(); update();
 }
 
 // ---------------------------------------------------------------- vues
@@ -273,10 +473,7 @@ function sizeViews() {
 }
 
 function hexRGB(h) { return [1, 3, 5].map(i => parseInt(h.slice(i, i + 2), 16)); }
-function colorFor(d, label) {
-  if (S.colorBy === "del") return d.color;
-  return NUC[label] ? NUC[label].color : "#ffffff";
-}
+function colorFor(d, label) { return S.colorBy === "del" ? d.color : labColor(label); }
 
 function draw() {
   if (!S.data) return;
@@ -294,7 +491,7 @@ function draw() {
       const g = new Uint16Array(w * h);
       for (let r = 0; r < h; r++) for (let c = 0; c < w; c++) {
         const [x, y, z] = v.vox(c, r, slice, b), l = d.vol[x + b.nx * (y + b.ny * z)];
-        if (l && S.labelsOn.has(l)) g[c + w * r] = l;
+        if (l && labOn(l)) g[c + w * r] = l;
       }
       return { d, g };
     });
@@ -341,8 +538,93 @@ function draw() {
       ctx.moveTo(0, (rr + 0.5) * px); ctx.lineTo(w * px, (rr + 0.5) * px);
       ctx.stroke(); ctx.setLineDash([]);
     }
+    // cercle autour du point choisi avec « aller » (fragment, trou), sur les coupes qui le contiennent
+    if (S.mark && Math.abs(S.mark[v.axis] - slice) <= 1) {
+      const [cc, rr] = v.toCR(S.mark, b);
+      ctx.strokeStyle = MARK_COLOR; ctx.lineWidth = 2;
+      ctx.beginPath(); ctx.arc((cc + 0.5) * px, (rr + 0.5) * px, Math.max(10, 4 * px), 0, 2 * Math.PI); ctx.stroke();
+    }
   });
+  drawOverview();
   showHover(S.cur);
+}
+
+// ---------------------------------------------------------------- vue d'ensemble (volume entier)
+const OV = [
+  { name: "Axiale", L: "G", R: "D", dims: sh => [sh[0], sh[1]], cr: (x, y, z, sh) => [x, sh[1] - 1 - y], inv: (c, r, sh) => [[0, c], [1, sh[1] - 1 - r]] },
+  { name: "Coronale", L: "G", R: "D", dims: sh => [sh[0], sh[2]], cr: (x, y, z, sh) => [x, sh[2] - 1 - z], inv: (c, r, sh) => [[0, c], [2, sh[2] - 1 - r]] },
+  { name: "Sagittale", L: "P", R: "A", dims: sh => [sh[1], sh[2]], cr: (x, y, z, sh) => [y, sh[2] - 1 - z], inv: (c, r, sh) => [[1, c], [2, sh[2] - 1 - r]] },
+];
+const OV_SCALE = 2;
+function buildOverview() {
+  const box = $("ov"), sh = S.data.shape; box.innerHTML = "";
+  OV.forEach(o => {
+    const [w, h] = o.dims(sh);
+    const el = document.createElement("div");
+    el.innerHTML = `<div class="vh">${o.name} <span class="note">(${o.L} → ${o.R})</span></div><canvas></canvas>`;
+    box.appendChild(el);
+    o.cv = el.querySelector("canvas"); o.w = w; o.h = h;
+    o.cv.width = w * OV_SCALE; o.cv.height = h * OV_SCALE;
+    o.off = document.createElement("canvas"); o.off.width = w; o.off.height = h;
+    o.cv.onclick = e => {
+      const r = o.cv.getBoundingClientRect(), b = S.data.bbox;
+      const c = Math.floor((e.clientX - r.left) / r.width * w), rr = Math.floor((e.clientY - r.top) / r.height * h);
+      const p = S.cur.slice();
+      for (const [a, v] of o.inv(c, rr, sh)) {
+        const q = v - b[AX0[a]];
+        if (q < 0 || q >= b[AXSIZE[a]]) return;  // hors cadre : pas de coupe à afficher
+        p[a] = q;
+      }
+      S.cur = p; draw();
+    };
+  });
+  // projections de chaque délinéation, calculées une fois par sujet
+  const b = S.data.bbox, nxy = b.nx * b.ny;
+  S.dels.forEach(d => {
+    d.proj = OV.map(o => {
+      const out = new Int32Array(d.idxArr.length);
+      for (let k = 0; k < d.idxArr.length; k++) {
+        const f = d.idxArr[k], x = f % b.nx + b.x0, y = ((f / b.nx) | 0) % b.ny + b.y0, z = ((f / nxy) | 0) + b.z0;
+        const [c, r] = o.cr(x, y, z, sh); out[k] = c + o.w * r;
+      }
+      return out;
+    });
+  });
+}
+function drawOverview() {
+  if (!OV[0].cv || !S.data) return;
+  const sh = S.data.shape, b = S.data.bbox, vis = S.dels.filter(d => S.visible.has(d.i));
+  OV.forEach((o, vi) => {
+    const octx = o.off.getContext("2d"), img = octx.createImageData(o.w, o.h);
+    for (let k = 3; k < img.data.length; k += 4) img.data[k] = 255;
+    vis.forEach(d => {
+      const [R, G, B] = hexRGB(d.color), pr = d.proj[vi];
+      for (let k = 0; k < pr.length; k++) img.data.set([R, G, B], pr[k] * 4);
+    });
+    octx.putImageData(img, 0, 0);
+    const ctx = o.cv.getContext("2d"), s = OV_SCALE;
+    ctx.imageSmoothingEnabled = false;
+    ctx.drawImage(o.off, 0, 0, o.w * s, o.h * s);
+    // cadre des coupes du haut
+    const c0 = o.cr(b.x0, b.y0 + b.ny - 1, b.z0 + b.nz - 1, sh), c1 = o.cr(b.x0 + b.nx - 1, b.y0, b.z0, sh);
+    const x0 = Math.min(c0[0], c1[0]), y0 = Math.min(c0[1], c1[1]), x1 = Math.max(c0[0], c1[0]) + 1, y1 = Math.max(c0[1], c1[1]) + 1;
+    ctx.strokeStyle = "rgba(255,255,255,0.6)"; ctx.lineWidth = 1; ctx.setLineDash([4, 3]);
+    ctx.strokeRect(x0 * s + 0.5, y0 * s + 0.5, (x1 - x0) * s, (y1 - y0) * s); ctx.setLineDash([]);
+    // curseur
+    const cur = o.cr(S.cur[0] + b.x0, S.cur[1] + b.y0, S.cur[2] + b.z0, sh);
+    ctx.strokeStyle = "rgba(255,255,255,0.3)"; ctx.beginPath();
+    ctx.moveTo((cur[0] + 0.5) * s, y0 * s); ctx.lineTo((cur[0] + 0.5) * s, y1 * s);
+    ctx.moveTo(x0 * s, (cur[1] + 0.5) * s); ctx.lineTo(x1 * s, (cur[1] + 0.5) * s); ctx.stroke();
+    // voxels hors cadre : carrés rouges agrandis pour rester visibles
+    ctx.fillStyle = FAR_COLOR;
+    vis.forEach(d => {
+      const f = d.farPts;
+      for (let k = 0; k < f.length; k += 3) {
+        const [c, r] = o.cr(f[k], f[k + 1], f[k + 2], sh);
+        ctx.fillRect((c - 1) * s, (r - 1) * s, 3 * s, 3 * s);
+      }
+    });
+  });
 }
 
 // ---------------------------------------------------------------- panneaux
@@ -352,9 +634,9 @@ function showHover(p) {
   let html = `<div>Voxel (${p[0] + b.x0}, ${p[1] + b.y0}, ${p[2] + b.z0})</div>`;
   if (!vis.length) html += "<div>Aucune délinéation visible.</div>";
   html += "<table>" + vis.map(d => {
-    const l = d.vol[k], n = NUC[l];
-    return `<tr><td><span class="chip" style="background:${d.color}"></span>${d.rater} (ses${d.session})</td>
-      <td style="text-align:left">${l ? (n ? `<span class="chip" style="background:${n.color}"></span>${l} · ${n.name}` : "label " + l) : "—"}</td></tr>`;
+    const l = d.vol[k];
+    return `<tr><td><span class="chip" style="background:${d.color}"></span>${esc(d.rater)} (ses${esc(d.session)})</td>
+      <td style="text-align:left">${l ? labChip(l) : "—"}</td></tr>`;
   }).join("") + "</table>";
   $("hover").innerHTML = html;
 }
@@ -382,19 +664,20 @@ function computeDice() {
     return { per, mean: n ? sum / n : null };
   };
   const f = x => x === null ? "—" : x.toFixed(2);
+  const warn = '<div class="note" style="margin-top:6px">Compare le même numéro de label. Un Dice ≈ 0 sur un label peut venir de labels permutés par un rater.</div>';
   if (vis.length === 2) {
     const r = pairDice(vis[0], vis[1]);
-    el.innerHTML = `<div class="note">${vis[0].rater} vs ${vis[1].rater} — Dice par noyau (même label)</div><table><tr><th>Noyau</th><th>Dice</th></tr>` +
-      labs.map(l => `<tr><td><span class="chip" style="background:${NUC[l] ? NUC[l].color : "#fff"}"></span>${l} · ${NUC[l] ? NUC[l].name : ""}</td><td>${f(r.per[l])}</td></tr>`).join("") +
-      `<tr><th>Moyenne</th><th>${f(r.mean)}</th></tr></table>`;
+    el.innerHTML = `<div class="note">${esc(vis[0].rater)} vs ${esc(vis[1].rater)} : Dice par label</div><table><tr><th>Label</th><th>Dice</th></tr>` +
+      labs.map(l => `<tr><td>${labChip(l)}</td><td>${f(r.per[l])}</td></tr>`).join("") +
+      `<tr><th>Moyenne</th><th>${f(r.mean)}</th></tr></table>` + warn;
   } else {
-    let html = `<div class="note">Dice moyen sur les noyaux sélectionnés</div><table><tr><th></th>` +
-      vis.map(d => `<th><span class="chip" style="background:${d.color}"></span>${d.rater}</th>`).join("") + "</tr>";
+    let html = `<div class="note">Dice moyen sur les labels sélectionnés</div><table><tr><th></th>` +
+      vis.map(d => `<th><span class="chip" style="background:${d.color}"></span>${esc(d.rater)}</th>`).join("") + "</tr>";
     vis.forEach((A, i) => {
-      html += `<tr><td><span class="chip" style="background:${A.color}"></span>${A.rater}</td>` +
+      html += `<tr><td><span class="chip" style="background:${A.color}"></span>${esc(A.rater)}</td>` +
         vis.map((B, j) => j === i ? "<td>—</td>" : j < i ? `<td>${f(pairDice(B, A).mean)}</td>` : `<td>${f(pairDice(A, B).mean)}</td>`).join("") + "</tr>";
     });
-    el.innerHTML = html + "</table>";
+    el.innerHTML = html + "</table>" + warn;
   }
 }
 
@@ -404,43 +687,49 @@ function renderSessions() {
   if (opts.length > 1) opts.push(["all", "toutes"]);
   box.innerHTML = opts.map(([k, t]) => `<button data-v="${k}" class="${k === S.session ? "on" : ""}">${t}</button>`).join("");
   box.querySelectorAll("button").forEach(btn => btn.onclick = () => {
-    S.session = btn.dataset.v; resetVisible(); renderSessions(); renderDelList(); draw();
+    S.session = btn.dataset.v; resetVisible(); renderSessions(); renderDelList(); renderCtl(); draw();
   });
   // l'avertissement n'a de sens que si au moins 2 sessions sont réellement présentes
   $("sesWarn").hidden = !(S.session === "all" && sessionCounts().length > 1);
 }
 function renderDelList() {
-  const list = shown();
-  $("dels").innerHTML = list.map((d, n) => `
-    <label class="del ${S.visible.has(d.i) ? "on" : ""}" data-i="${d.i}">
-      <input type="checkbox" ${S.visible.has(d.i) ? "checked" : ""}>
+  const list = shown(), refs = {};
+  const refFor = d => refs[d.session] || (refs[d.session] = volRef(d));
+  $("dels").innerHTML = list.map((d, n) => {
+    const al = alertsOf(d, refFor(d));
+    return `<div class="del ${S.visible.has(d.i) ? "on" : ""} ${d.i === S.active ? "active" : ""}" data-i="${d.i}">
+      <input type="checkbox" title="Afficher / masquer" ${S.visible.has(d.i) ? "checked" : ""}>
       <span class="sw" style="background:${d.color}"></span>
-      <span><span class="name">Rater ${d.rater}</span> <span class="meta">· groupe ${d.group} · ses${d.session} · <span style="white-space:nowrap">${d.nvox} vox</span></span>
-        <div class="meta">${d.file.split("/").pop()}</div>
+      <span><span class="name">Rater ${esc(d.rater)}</span> <span class="meta">· groupe ${esc(d.group)} · ses${esc(d.session)} · <span style="white-space:nowrap">${d.nvox} vox</span></span>${NOTES[d.file] ? ' <span title="Note enregistrée">📝</span>' : ""}
+        <div class="meta">${esc(d.file.split(/[\\/]/).pop())}</div>
         <div><span class="badge ${STEP_BADGE[d.step][0]}">${STEP_BADGE[d.step][1]}</span>
-          ${d.reason ? `<span class="iss">${d.reason}</span>` : ""}</div>
-        ${d.clean_file ? `<div class="meta">→ ${d.clean_file.split("/").pop()}</div>` : ""}
-        ${d.issues.length ? `<div class="iss">⚠ ${d.issues.join(" · ")}</div>` : ""}</span>
+          ${d.reason ? `<span class="iss">${esc(d.reason)}</span>` : ""}</div>
+        ${d.clean_file ? `<div class="meta">→ ${esc(d.clean_file.split("/").pop())}</div>` : ""}
+        ${d.issues.length ? `<div class="iss" title="Erreurs du fichier brut (01_inventory.csv)">⚠ ${esc(d.issues.join(" · "))}</div>` : ""}
+        ${al.length ? `<div class="alerts" title="Contrôles du viewer : cliquer pour le détail">● ${al.join(" · ")}</div>` : '<div class="okc">● aucune alerte de contrôle</div>'}</span>
       <span style="display:flex;flex-direction:column;align-items:end;gap:4px">
         <span class="key">${n < 9 ? n + 1 : ""}</span><button class="solo" title="Afficher uniquement celle-ci">solo</button></span>
-    </label>`).join("") || '<div class="note">Aucune délinéation.</div>';
+    </div>`;
+  }).join("") || '<div class="note">Aucune délinéation.</div>';
   $("dels").querySelectorAll(".del").forEach(el => {
-    const i = +el.dataset.i;
-    el.querySelector("input").onchange = e => { e.target.checked ? S.visible.add(i) : S.visible.delete(i); update(); };
-    el.querySelector(".solo").onclick = e => { e.preventDefault(); S.visible = new Set([i]); update(); };
+    const i = +el.dataset.i, cb = el.querySelector("input");
+    cb.onclick = e => e.stopPropagation();
+    cb.onchange = () => { cb.checked ? S.visible.add(i) : S.visible.delete(i); update(); };
+    el.querySelector(".solo").onclick = e => { e.stopPropagation(); S.visible = new Set([i]); setActive(i); };
+    el.onclick = () => setActive(i);
   });
   scheduleDice();
 }
 function renderNuclei() {
   $("nuclei").innerHTML = NUCLEI.map(n => `<label class="nuc"><input type="checkbox" data-l="${n.label}" ${S.labelsOn.has(n.label) ? "checked" : ""}>
-    <span class="sw" style="background:${n.color}"></span>${n.label} · ${n.name}</label>`).join("");
+    ${labChip(n.label)}</label>`).join("");
   $("nuclei").querySelectorAll("input").forEach(cb => cb.onchange = () => {
     const l = +cb.dataset.l; cb.checked ? S.labelsOn.add(l) : S.labelsOn.delete(l); draw(); scheduleDice();
   });
 }
 function update() { renderDelList(); draw(); }
 
-// ---------------------------------------------------------------- contrôles
+// ---------------------------------------------------------------- contrôles de l'interface
 function seg(id, key) {
   $(id).querySelectorAll("button").forEach(btn => btn.onclick = () => {
     S[key] = btn.dataset.v;
@@ -449,8 +738,11 @@ function seg(id, key) {
 }
 seg("mode", "mode"); seg("colorby", "colorBy");
 $("opacity").oninput = e => { S.opacity = +e.target.value; draw(); };
-$("zoom").oninput = e => { S.zoom = +e.target.value; sizeViews(); draw(); };
+$("zoom").oninput = e => { S.zoom = +e.target.value; if (S.data) { sizeViews(); draw(); } };
 $("cross").onchange = e => { S.cross = e.target.checked; draw(); };
+document.addEventListener("click", e => { if (!$("settings").contains(e.target)) $("settings").open = false; });
+$("exportNotes").onclick = exportNotes;
+refreshNoteCount();
 $("all").onclick = () => { S.visible = new Set(shown().map(d => d.i)); update(); };
 $("none").onclick = () => { S.visible = new Set(); update(); };
 const swap = () => { S.visible = new Set(shown().filter(d => !S.visible.has(d.i)).map(d => d.i)); update(); };
@@ -458,7 +750,8 @@ $("swap").onclick = swap;
 $("nucAll").onclick = () => { S.labelsOn = new Set(NUCLEI.map(n => n.label)); renderNuclei(); draw(); scheduleDice(); };
 $("nucNone").onclick = () => { S.labelsOn = new Set(); renderNuclei(); draw(); scheduleDice(); };
 document.addEventListener("keydown", e => {
-  if (e.target.tagName === "SELECT" || !S.data) return;
+  const t = e.target;
+  if (!S.data || t.tagName === "SELECT" || t.tagName === "TEXTAREA" || (t.tagName === "INPUT" && t.type === "text")) return;
   if (e.key === " ") { e.preventDefault(); swap(); return; }
   const n = parseInt(e.key, 10);
   if (n >= 1 && n <= 9) {
@@ -472,7 +765,7 @@ const sel = $("subject");
 // Liste des sujets ayant au moins une délinéation sous le filtre courant
 function renderSubjects() {
   const avail = INDEX.filter(s => countFor(s) > 0);
-  sel.innerHTML = avail.map(s => `<option value="${s.subject}">${s.subject} — ${countFor(s)} délin.</option>`).join("");
+  sel.innerHTML = avail.map(s => `<option value="${esc(s.subject)}">${esc(s.subject)} (${countFor(s)} délin.)</option>`).join("");
   return avail;
 }
 function applyFilter(v) {
@@ -483,7 +776,7 @@ function applyFilter(v) {
   if (!avail.length) { $("dels").innerHTML = '<div class="note">Aucune délinéation pour ce filtre.</div>'; return false; }
   if (!avail.some(s => s.subject === S.subject)) { sel.value = avail[0].subject; loadSubject(avail[0].subject); return true; }
   sel.value = S.subject;
-  if (S.data) { S.session = bestSession(); resetVisible(); renderSessions(); renderDelList(); draw(); }
+  if (S.data) { S.session = bestSession(); resetVisible(); renderSessions(); renderDelList(); renderCtl(); draw(); }
   return true;
 }
 $("filter").querySelectorAll("button").forEach(b => b.onclick = () => applyFilter(b.dataset.v));

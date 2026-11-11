@@ -14,6 +14,9 @@ Chaque délinéation porte :
       propre  = gardé sans correction      corrige = gardé après correction
       exclu   = hors de CLEAN_DELINEATION  absent  = pas dans le journal
   - ses erreurs, lues dans RESULTS/01_inventory.csv (colonne 'errors').
+  - des contrôles calculés ici (aide à la détection, pas encore dans checks.py) :
+      volume de chaque label par côté (G/D), fragments (morceaux séparés du bloc
+      principal), trous entre coupes, voxels hors du cadre affiché.
 Pour les fichiers gardés, le sujet et la session viennent du nom corrigé.
 Relancer ce script après 01_inventory.py et 02_easy_clean.py.
 
@@ -33,6 +36,8 @@ from collections import defaultdict
 from pathlib import Path
 
 import numpy as np
+from scipy import ndimage
+from scipy.spatial import cKDTree
 
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE.parent))  # checks.py est dans ANALYSIS/
@@ -44,6 +49,10 @@ OUT = ROOT / "RESULTS" / "viewer"
 INVENTORY = ROOT / "RESULTS" / "01_inventory.csv"
 CLEAN_LOG = ROOT / "RESULTS" / "02_easy_clean.csv"
 MARGIN = 12  # voxels autour du cadre
+STRUCT = np.ones((3, 3, 3), bool)  # 26-connexité : deux voxels qui se touchent par un coin = même morceau
+ISOLATED_MM = 3  # fragment à plus de 3 mm de son bloc principal = "isolé" (sinon "détaché")
+MAX_FRAGS = 200  # fragments détaillés par délinéation (les comptes restent exacts)
+MAX_FAR = 50000  # voxels hors cadre transmis à la page
 
 # Ordre de DOCUMENTATION/given_documents/colors.md. La correspondance
 # label <-> noyau n'est PAS confirmée : hypothèse label 1 = 1er noyau de la liste, etc.
@@ -118,6 +127,67 @@ def list_files(inventory, log):
     return files
 
 
+def gaps_of(pts, lo):
+    """Coupes vides entre la première et la dernière coupe occupée, sur chaque axe."""
+    out = []
+    for a in range(3):
+        vals = np.unique(pts[:, a])
+        for i in np.nonzero(np.diff(vals) > 1)[0]:
+            out.append([a, int(vals[i] + 1 + lo[a]), int(vals[i + 1] - 1 + lo[a])])
+    return out
+
+
+def controls(data):
+    """Contrôles par label et par côté. Chaque label est bilatéral : un bloc principal
+    à gauche, un à droite (côté = centre du morceau par rapport au centre gauche-droite
+    de la délinéation ; RAS : x petit = gauche). Tout autre morceau est un fragment.
+    Coordonnées renvoyées : voxels du volume d'origine."""
+    coords = np.argwhere(data)
+    lo, hi = coords.min(0), coords.max(0) + 1
+    crop = data[lo[0]:hi[0], lo[1]:hi[1], lo[2]:hi[2]]
+    cx = coords[:, 0].mean() - lo[0]
+    stats, gaps, frags = {}, [], []
+    nfrag = [0, 0, 0, 0]  # isolés, détachés, voxels isolés, voxels détachés
+    for l in np.unique(crop[crop != 0]):
+        l = int(l)
+        comp, n = ndimage.label(crop == l, STRUCT)
+        pts = np.argwhere(comp)
+        ids = comp[tuple(pts.T)] - 1
+        sizes = np.bincount(ids, minlength=n)
+        cents = np.zeros((n, 3))
+        np.add.at(cents, ids, pts)
+        cents /= sizes[:, None]
+        side = np.where(cents[:, 0] < cx, "G", "D")
+        stats[str(l)] = {}
+        for s in ("G", "D"):
+            members = np.nonzero(side == s)[0]
+            if not len(members):
+                continue
+            main = members[np.argmax(sizes[members])]
+            tot = int(sizes[members].sum())
+            c = (cents[members] * sizes[members, None]).sum(0) / tot + lo
+            stats[str(l)][s] = [tot] + [int(round(v)) for v in c]
+            keep = ids == main
+            others = members[members != main]
+            if len(others):
+                in_frag = np.isin(ids, others)
+                d, _ = cKDTree(pts[ids == main]).query(pts[in_frag])
+                dmin = np.full(n, np.inf)
+                np.minimum.at(dmin, ids[in_frag], d)
+                for j in others:
+                    iso = bool(dmin[j] > ISOLATED_MM)
+                    nfrag[0 if iso else 1] += 1
+                    nfrag[2 if iso else 3] += int(sizes[j])
+                    frags.append([l, s, int(sizes[j])] + [int(round(v)) for v in cents[j] + lo]
+                                 + [round(float(dmin[j]), 1)])
+                    if not iso:
+                        keep |= ids == j
+            # trous : sur le bloc principal + fragments proches (les isolés sont listés à part)
+            gaps += [[l, s] + g for g in gaps_of(pts[keep], lo)]
+    frags.sort(key=lambda f: (f[6] <= ISOLATED_MM, -f[2]))
+    return {"stats": stats, "gaps": gaps, "frags": frags[:MAX_FRAGS], "nfrag": nfrag}
+
+
 def build_subject(subject, files):
     vols, metas = [], []
     for f in files:
@@ -132,22 +202,27 @@ def build_subject(subject, files):
             "session": f["session"], "file": f["file"], "labels": sorted(labels),
             "nvox": int(np.count_nonzero(data)), "issues": list(f["issues"]),
             "step": f["step"], "reason": f["reason"], "clean_file": f["clean_file"],
+            **controls(data),
         })
     if not vols:
         return None
 
     # Cadre commun = percentiles 0.1–99.9 % des voxels de toutes les délinéations
     # (des voxels parasites loin du thalamus étireraient sinon le cadre).
-    # Les voxels hors cadre sont comptés et signalés dans "issues".
+    # Les voxels hors cadre sont transmis à part : la page les montre en rouge
+    # dans la vue d'ensemble (volume entier).
     shape = vols[0].shape
     coords = np.concatenate([np.argwhere(v != 0) for v in vols])
     lo = [max(0, int(np.percentile(coords[:, a], 0.1)) - MARGIN) for a in range(3)]
     hi = [min(shape[a], int(np.percentile(coords[:, a], 99.9)) + 1 + MARGIN) for a in range(3)]
     nx, ny, nzz = (h - l for l, h in zip(lo, hi))
     for v, m in zip(vols, metas):
-        inside = int(np.count_nonzero(v[lo[0]:hi[0], lo[1]:hi[1], lo[2]:hi[2]]))
-        if m["nvox"] - inside:
-            m["issues"].append(f"{m['nvox'] - inside} voxels loin du thalamus (non affichés)")
+        pts = np.argwhere(v)
+        far = pts[~((pts >= lo) & (pts < hi)).all(1)]
+        m["nfar"] = len(far)
+        far = far[:MAX_FAR]
+        m["far"] = b64(far.astype("<u2"))
+        m["far_lab"] = b64(np.clip(v[tuple(far.T)], 0, 65535).astype("<u2"))
 
     dels = []
     order = sorted(range(len(vols)), key=lambda i: (metas[i]["session"] or "", metas[i]["group"].zfill(2), metas[i]["rater"]))
@@ -199,6 +274,7 @@ def main(only):
         # VIEWER_BUILD : ajouté à l'URL des fichiers sujets pour que le navigateur
         # ne réutilise pas une ancienne version en cache après un nouveau build
         f"window.VIEWER_BUILD={int(time.time())};\n"
+        f"window.VIEWER_PARAMS={json.dumps({'isolated_mm': ISOLATED_MM})};\n"
         "window.VIEWER_NUCLEI=" + json.dumps(nuclei) + ";\nwindow.VIEWER_INDEX="
         # sujets "SUB?" (lettre C/G absente du nom) en fin de liste
         + json.dumps(sorted(index.values(), key=lambda s: ("?" in s["subject"], s["subject"])), indent=0) + ";",

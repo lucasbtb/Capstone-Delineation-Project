@@ -58,6 +58,10 @@ Pour finir, le script relance les 5 tests sur `CLEAN_DELINEATION` et vérifie qu
 ## `viewer/` — visualisation
 
 Page web locale pour superposer les délinéations d'un sujet, filtrer *propres / exclues*, et voir le Dice.
+Elle sert aussi à **découvrir de nouveaux problèmes** : `build_viewer.py` calcule des contrôles exploratoires
+(volume par label et par côté, fragments, trous entre coupes, voxels hors cadre), et la page permet de noter
+chaque problème vu puis d'exporter les notes en CSV, pour les reporter dans la consigne.
+Ces contrôles ne sont pas encore dans `checks.py`.
 Elle lit les fichiers avec `checks.py`, les erreurs dans `01_inventory.csv` et le statut dans `02_easy_clean.csv`.
 Détail : `viewer.md`.
 
