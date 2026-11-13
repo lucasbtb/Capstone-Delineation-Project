@@ -14,11 +14,16 @@ Voici les consiges claires de la partie analyse
 3. ne pas garder les fichiers avec + ou - de nuclei
 4. Check si des doublons sont exactement des copies ou ont juste le même nom mais différent
 5. Check que le fichier a la bonne orientation gauche droite
+6. Points parasites
+7. Delineation incomplète 
+8. Labels interchangés
+
 
 Problèmes potentiels a rajouter 
 -  Le rater a par erreur placé deux points très loin des nuclei
 - le rater s'est arreté en pleine délinéation
 - Il manque des frames 
+9. (Délinéation décalée / mauvais scan)
 
 ## Prises de décisions associées
 4. ne pas utiliser ceux avec un nuclei différent de 9 A UPDATE
@@ -35,3 +40,14 @@ For each scan with three or more delineations, a file is created that:
 - applies the staple algorithm to all the groups of delineations, thus producing a set of "reference delineations"
 - saves that somewhere that makes sense
 - makes a report with statistics
+
+# Definition précise des problèmes 
+6. 
+Parametre du centre de la delineation et median = 
+Parametre du dice moyen avec les autres raters pour supprimer ?
+
+7. 
+Paramètres : la distance au bloc principal (mm), la taille du morceau (voxels) et le nombre de morceaux.
+
+8. 
+A completeer
