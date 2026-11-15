@@ -83,7 +83,7 @@ for r in rows:
     if target is None:
         e["reason"] = f"naming: sujet ou session inexploitable (lu : {r['scan'] or 'rien'})"
         continue
-    candidates[f"{r['group']}\\Rater {r['rater']}\\{target}"].append(r)
+    candidates[f"{r['group']}/Rater {r['rater']}/{target}"].append(r)  # '/' : marche aussi sous Windows
 
 kept = {}  # nom final -> ligne d'inventaire du fichier gardé
 for target, group in candidates.items():                            # problème 4
@@ -154,7 +154,7 @@ if APPLY:
     print("\nVérification de CLEAN_DELINEATION (tests 1 à 5)...")
     clean_rows = build_inventory(CLEAN)
     bad = [r for r in clean_rows if not passes(r)]
-    altered = [r for r in clean_rows if expected_hash.get(r["file"]) != r["content_hash"]]
+    altered = [r for r in clean_rows if expected_hash.get(Path(r["file"]).as_posix()) != r["content_hash"]]
     print(f"   fichiers           : {len(clean_rows)} (attendu {len(kept)})")
     print(f"   échouent un test   : {len(bad)}")
     for r in bad:
