@@ -1,10 +1,10 @@
 """
-02_new_clean.py — Reorganises DATA/DELINEATION_DATA by scan into DATA/NEW_CLEAN_DELINEATION.
+build_clean_data.py — Reorganises DATA/DELINEATION_DATA by scan into DATA/DELINEATION_CLEAN.
 
-Spec (docs/consigne_analyse.md, "02_new_clean.py - new version", plus instructions of 2026-11-15):
+Spec (docs/analysis_instructions.md, "Initial problems and build_clean_data.py", plus instructions of 2026-11-15):
   - takes all the delineations in DELINEATION_DATA;
   - one folder per scan (C|G + ID + session), files renamed '{G|C}_<ID>_{1|2}_<rater>.nii.gz':
-        NEW_CLEAN_DELINEATION/C_001_1/C_001_1_3_2.nii.gz
+        DELINEATION_CLEAN/C_001_1/C_001_1_3_2.nii.gz
   - raters with no delineation (empty folder) are removed; the rater ID is '<group>_<number>': the group
     number is kept and the raters of each group are numbered 1, 2, 3... in their original letter order.
     If Group 3 has 3a (empty), 3b and 3d, they become 3_1 and 3_2;
@@ -16,28 +16,30 @@ Spec (docs/consigne_analyse.md, "02_new_clean.py - new version", plus instructio
   - MRIs (non-integer values instead of labels) are not copied;
   - orientation: a header that is not RAS is reoriented to RAS (same voxels, axes flipped / swapped);
     a file whose grid is still not 192x224x224 at 1 mm after that is not copied;
-  - left-right flip: in a scan with 3 or more raters, each mask is compared with the majority of the
-    other raters, as it is and mirrored left-right; if the mirrored one matches clearly better
-    (Dice gain > 0.10, same test as checks.find_lr_flips), the mask is written back mirrored;
   - duplicates (same rater, same scan): exact copies (same voxels) -> one is copied;
     different content -> the most recently modified file is kept (earlier ones were unfinished saves);
-  - dataframes, saved next to the delineations: subjects (one G|C_ID per row) and
-    delineations (index, filepath, scantype, delineationID, session, raterID).
+  - a dataframe, saved next to the delineations: delineations.csv
+    (index, filepath, scantype, delineationID, session, raterID).
 
-Outputs, all in DATA/NEW_CLEAN_DELINEATION/ (emptied and recreated on every run):
-  <scan>/<scan>_<rater>.nii.gz   the delineations
-  subjects.csv, delineations.csv the dataframes
-  report.csv                     every raw file that was not copied as it was: wrong type, MRI,
-                                 reoriented, duplicate, unreadable subject / session...
-Never modifies DATA/DELINEATION_DATA.
-Usage: python ANALYSIS/02_new_clean.py
+Outputs (DATA/DELINEATION_CLEAN/ is emptied and recreated on every run):
+  DATA/DELINEATION_CLEAN/<scan>/<scan>_<rater>.nii.gz   the delineations
+  DATA/DELINEATION_CLEAN/delineations.csv               the dataframe
+  RESULTS/build_clean_data_report.csv                   every raw file that was not copied as it was, one row per issue:
+                                 original_file, issue (wrong type, MRI, duplicate, name corrected,
+                                 reoriented...), action, new_file (the delineation it became,
+                                 empty if not copied). A delineation with no row was copied unchanged.
+Never modifies DATA/DELINEATION_DATA. Raw files are read in parallel (WORKERS processes, 8 at most):
+a full run takes ~7 s.
+Usage: python ANALYSIS/build_clean_data.py
 """
 
 import gzip
 import hashlib
+import os
 import re
 import shutil
 import zipfile
+from concurrent.futures import ProcessPoolExecutor
 from collections import defaultdict
 from pathlib import Path
 
@@ -45,11 +47,13 @@ import nibabel as nib
 import numpy as np
 import pandas as pd
 
-from checks import FLIP_MARGIN, dice, downsample, fix_orientation, get_labels, scan_key, split_name
+from helpers import fix_orientation, get_labels, scan_key, split_name
 
 ROOT = Path(__file__).resolve().parent.parent
 RAW = ROOT / "DATA" / "DELINEATION_DATA"
 OUT = ROOT / "DATA" / "DELINEATION_CLEAN"
+REPORT = ROOT / "RESULTS" / "build_clean_data_report.csv"
+WORKERS = min(8, os.cpu_count() or 1)  # files read in parallel in pass 1
 ACTIONS = {"wrong type": "converted to .nii.gz", "header": "reoriented", "name corrected": "placed with the corrected name"}
 
 
@@ -139,13 +143,55 @@ def read_image(nifti):
 
 
 def voxel_hash(data):
-    """Fingerprint of the voxel values, independent of the storage type (uint8, float32...)."""
-    return hashlib.md5(np.ascontiguousarray(np.round(data).astype(np.int32)).tobytes()
+    """Fingerprint of the voxel values, independent of the storage type (uint8, float32...).
+    Values are stored as uint8 when they fit (masks: 0-255), else int32, so that the same values
+    always give the same bytes; uint8 makes the fingerprint 4x faster to compute."""
+    values = np.round(data) if data.dtype.kind == "f" else data
+    small = values.min() >= 0 and values.max() <= 255
+    return hashlib.md5(np.ascontiguousarray(values.astype(np.uint8 if small else np.int32)).tobytes()
                        + str(data.shape).encode()).hexdigest()
 
 
+def file_hash(f):
+    """Voxel fingerprint of a candidate file, read again (only needed for the few duplicates)."""
+    img = read_image(unpack(f["path"])[0])
+    if f["reoriented"]:
+        img = fix_orientation(img)
+    return voxel_hash(np.asarray(img.dataobj))
+
+
+def inspect_file(job):
+    """Pass 1 for one raw file (run in a worker process).
+    Returns ('not copied', issue) or ('candidate', (scantype, ID, session, rater), file info)."""
+    path, original_rater, rater = job
+    nifti, layers, kind = unpack(path)
+    if nifti is None:
+        return "not copied", f"wrong file type: {kind}"
+    parts, corrections, read = read_scan(path.name, original_rater)
+    if parts is None:
+        return "not copied", f"subject or session unreadable in the name (read: {read})"
+    img = read_image(nifti)
+    data = np.asarray(img.dataobj)
+    # an MRI has non-integer values, so only a float file can be one: integer files skip the test
+    if data.dtype.kind == "f" and get_labels(data) is None:
+        return "not copied", "MRI instead of a mask (non-integer values)"
+    fixes = [f"name corrected ({c}, NAME_FIXES)" for c in corrections]
+    if split_name(path.name)[1] != ".nii.gz" or layers != ["gzip"]:
+        fixes.append(f"wrong type for its name: '{split_name(path.name)[1]}' is a {kind}")
+    axes = "".join(nib.aff2axcodes(img.affine))
+    reoriented = False
+    if axes != "RAS":
+        if fix_orientation(img) is None:
+            return "not copied", f"header {axes}, grid {'x'.join(map(str, img.shape))} still wrong once reoriented"
+        fixes.append(f"header {axes} reoriented to RAS")
+        reoriented = True
+    elif tuple(img.shape) != (192, 224, 224) or not np.allclose(img.header.get_zooms()[:3], 1, atol=0.01):
+        return "not copied", f"wrong grid {'x'.join(map(str, img.shape))}"
+    return "candidate", (*parts, rater), {"path": path, "layers": layers, "fixes": fixes, "reoriented": reoriented}
+
+
 # ================================================================ main
-def main():
+def main(workers=WORKERS):
     report = []  # one row per raw file not copied as it was
 
     def note(path, issue, action):
@@ -160,48 +206,22 @@ def main():
         letters_used[group] += 1
         new_id[folder] = f"{group}_{letters_used[group]}"
 
-    # pass 1: read every file, decide what to copy
+    # pass 1: read every file (in parallel), decide what to copy; results come back in file order
+    jobs = [(path, folder.name.strip().replace("Rater ", ""), new_id[folder])
+            for folder in raters for path in sorted(p for p in folder.rglob("*") if p.is_file())]
     candidates = defaultdict(list)  # (scantype, ID, session, rater) -> readable masks
-    for folder in raters:
-        rater, original_rater = new_id[folder], folder.name.strip().replace("Rater ", "")
-        for path in sorted(p for p in folder.rglob("*") if p.is_file()):
-            nifti, layers, kind = unpack(path)
-            if nifti is None:
-                note(path, f"wrong file type: {kind}", "not copied")
-                continue
-            parts, corrections, read = read_scan(path.name, original_rater)
-            if parts is None:
-                note(path, f"subject or session unreadable in the name (read: {read})", "not copied")
-                continue
-            img = read_image(nifti)
-            data = np.asarray(img.dataobj)
-            if get_labels(data) is None:
-                note(path, "MRI instead of a mask (non-integer values)", "not copied")
-                continue
-            fixes = [f"name corrected ({c}, NAME_FIXES)" for c in corrections]
-            if split_name(path.name)[1] != ".nii.gz" or layers != ["gzip"]:
-                fixes.append(f"wrong type for its name: '{split_name(path.name)[1]}' is a {kind}")
-            axes = "".join(nib.aff2axcodes(img.affine))
-            reoriented = None
-            if axes != "RAS":
-                reoriented = fix_orientation(img)
-                if reoriented is None:
-                    note(path, f"header {axes}, grid {'x'.join(map(str, img.shape))} still wrong once reoriented",
-                         "not copied")
-                    continue
-                fixes.append(f"header {axes} reoriented to RAS")
-                data = np.asarray(reoriented.dataobj)
-            elif tuple(img.shape) != (192, 224, 224) or not np.allclose(img.header.get_zooms()[:3], 1, atol=0.01):
-                note(path, f"wrong grid {'x'.join(map(str, img.shape))}", "not copied")
-                continue
-            small = downsample(data > 0)  # coarse thalamus mask, enough to see a left-right flip
-            candidates[(*parts, rater)].append(
-                {"path": path, "layers": layers, "fixes": fixes, "hash": voxel_hash(data),
-                 "reoriented": reoriented is not None, "small": (np.packbits(small), small.shape)})
+    with ProcessPoolExecutor(max_workers=workers) as pool:
+        for path, outcome in zip((j[0] for j in jobs), pool.map(inspect_file, jobs, chunksize=8)):
+            if outcome[0] == "not copied":
+                note(path, outcome[1], "not copied")
+            else:
+                candidates[outcome[1]].append(outcome[2])
 
     # duplicates: same rater, same scan
     kept = {}
     for key, files in candidates.items():
+        for f in files:  # fingerprint only when there is a duplicate to compare with
+            f["hash"] = file_hash(f) if len(files) > 1 else None
         if len({f["hash"] for f in files}) > 1:
             # different content: keep the most recently modified file (earlier ones are unfinished saves)
             best, *older = sorted(files, key=lambda f: -f["path"].stat().st_mtime)
@@ -222,68 +242,45 @@ def main():
         for fix in best["fixes"]:
             note(best["path"], fix, next(a for k, a in ACTIONS.items() if fix.startswith(k)))
 
-    # left-right flip: each mask vs the majority of the other raters of the same scan (same test as
-    # checks.find_lr_flips). If the mirrored mask matches clearly better, it is written back mirrored.
-    by_scan = defaultdict(list)
-    for key in kept:
-        by_scan[key[:3]].append(key)
-    for keys in by_scan.values():
-        if len(keys) < 3:
-            continue  # fewer than 2 other raters: no reliable majority to compare with
-        masks = {k: np.unpackbits(kept[k]["small"][0], count=int(np.prod(kept[k]["small"][1])))
-                 .reshape(kept[k]["small"][1]).astype(bool) for k in keys}
-        total = np.sum(list(masks.values()), axis=0, dtype=np.int16)
-        for k, m in masks.items():
-            reference = (total - m) > (len(keys) - 1) / 2
-            d, d_flip = dice(m, reference), dice(m[::-1], reference)
-            kept[k]["flip"] = bool(d_flip > d + FLIP_MARGIN)
-            if kept[k]["flip"]:
-                note(kept[k]["path"], f"left-right flipped compared with the other {len(keys) - 1} raters "
-                                      f"(Dice {d:.2f}, mirrored {d_flip:.2f})", "unflipped")
-
     # pass 2: write
     if OUT.exists():
-        assert OUT.name == "NEW_CLEAN_DELINEATION" and OUT.parent.name == "DATA"
+        assert OUT.name == "DELINEATION_CLEAN" and OUT.parent.name == "DATA"
         shutil.rmtree(OUT)  # generated folder: recreated on every run
-    rows = []
+    rows, new_file = [], {}  # new_file: raw file -> the delineation it became
     for (scantype, sid, session, rater), f in sorted(kept.items(), key=lambda kv: (kv[0][:3], rater_key(kv[0][3]))):
         scan = f"{scantype}_{sid}_{session}"
         dst = OUT / scan / f"{scan}_{rater}.nii.gz"
         dst.parent.mkdir(parents=True, exist_ok=True)
-        flip = f.get("flip", False)
-        if f["layers"] == ["gzip"] and not f["reoriented"] and not flip:
+        if f["layers"] == ["gzip"] and not f["reoriented"]:
             shutil.copy2(f["path"], dst)  # already a real .nii.gz: identical copy
         else:
             nifti = unpack(f["path"])[0]
-            if f["reoriented"] or flip:
-                img = read_image(nifti)
-                if f["reoriented"]:
-                    img = fix_orientation(img)
-                if flip:  # mirror the voxels along the left-right axis (axis 0 in RAS), header unchanged
-                    img = img.__class__(np.asarray(img.dataobj)[::-1].copy(), img.affine, img.header)
-                nifti = img.to_bytes()
+            if f["reoriented"]:
+                nifti = fix_orientation(read_image(nifti)).to_bytes()
             dst.write_bytes(gzip.compress(nifti, compresslevel=6))
+        new_file[f["path"].relative_to(RAW).as_posix()] = dst.relative_to(ROOT).as_posix()
         rows.append({"filepath": dst.relative_to(ROOT).as_posix(), "scantype": scantype,
                      "delineationID": sid, "session": int(session), "raterID": rater})
 
-    # dataframes, next to the delineations
+    # dataframe, next to the delineations
     delineations = pd.DataFrame(rows)
     delineations.index.name = "index"
-    subjects = (delineations[["scantype", "delineationID"]].drop_duplicates()
-                .assign(subject=lambda d: d.scantype + "_" + d.delineationID)
-                [["subject", "scantype", "delineationID"]].reset_index(drop=True))
-    report_df = pd.DataFrame(report, columns=["original_file", "issue", "action"]).sort_values("original_file")
+    for r in report:  # copied with a change: name the delineation it became
+        r["new_file"] = "" if r["action"].startswith("not copied") else new_file[r["original_file"]]
+    report_df = (pd.DataFrame(report, columns=["original_file", "issue", "action", "new_file"])
+                 .sort_values("original_file"))
     delineations.to_csv(OUT / "delineations.csv", encoding="utf-8-sig")
-    subjects.to_csv(OUT / "subjects.csv", index=False, encoding="utf-8-sig")
-    report_df.to_csv(OUT / "report.csv", index=False, encoding="utf-8-sig")
+    REPORT.parent.mkdir(exist_ok=True)
+    report_df.to_csv(REPORT, index=False, encoding="utf-8-sig")
 
     # summary
     n_raw = sum(1 for d in raters for p in d.rglob("*") if p.is_file())
     print(f"{len(delineations)} delineations written to {OUT.relative_to(ROOT)}/ from {n_raw} raw files: "
-          f"{delineations.filepath.str.split('/').str[2].nunique()} scans, {len(subjects)} subjects")
+          f"{delineations.filepath.str.split('/').str[2].nunique()} scans, "
+          f"{len(delineations[['scantype', 'delineationID']].drop_duplicates())} subjects")
     print(f"{len(raters)} raters kept, numbered <group>_<n> within each group "
           f"({len(folders) - len(raters)} empty folders removed)")
-    print("Report (report.csv):")
+    print(f"Report ({REPORT.relative_to(ROOT)}):")
     summary = report_df.assign(issue=report_df.issue.str.replace(r"[:(].*", "", regex=True).str.strip())
     for (issue, action), k in summary.groupby(["issue", "action"]).size().sort_values(ascending=False).items():
         print(f"   {k:3d}  {issue} -> {action}")

@@ -1,11 +1,11 @@
 <!doctype html>
-<html lang="fr">
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Tableaux CSV</title>
-<!-- Lecteur de CSV local (01_inventory.csv, 02_easy_clean.csv, notes_viewer.csv…).
-     Aucun serveur, aucune requête réseau : les fichiers sont lus par le navigateur. -->
+<title>CSV tables</title>
+<!-- Local CSV reader (delineations.csv, build_clean_data_report.csv, STAPLE results, notes_viewer.csv…).
+     No server, no network request: the files are read by the browser. -->
 <style>
 :root {
   color-scheme: dark;
@@ -59,32 +59,32 @@ td.num { text-align: right; }
 </head>
 <body>
 <header>
-  <h1>Tableaux CSV</h1>
-  <button id="open" title="Un CSV hors de RESULTS (ex. notes_viewer.csv téléchargé)">+ Autre CSV…</button>
+  <h1>CSV tables</h1>
+  <button id="open" title="Any other CSV (e.g. a downloaded notes_viewer.csv)">+ Other CSV…</button>
   <input type="file" id="file" accept=".csv,.tsv,text/csv" multiple hidden>
   <div class="tabs" id="tabs"></div>
   <span class="spacer"></span>
-  <input type="search" id="q" placeholder="Rechercher dans toutes les colonnes…" style="min-width:240px">
+  <input type="search" id="q" placeholder="Search all columns…" style="min-width:240px">
   <span class="muted" id="count"></span>
-  <button id="reset" title="Effacer les filtres et le tri">Effacer les filtres</button>
-  <label class="muted"><input type="checkbox" id="wrapcells"> Texte complet</label>
-  <details class="cols" id="colsBox"><summary>Colonnes ▾</summary><div class="pop" id="cols"></div></details>
+  <button id="reset" title="Clear the filters and the sort">Clear filters</button>
+  <label class="muted"><input type="checkbox" id="wrapcells"> Full text</label>
+  <details class="cols" id="colsBox"><summary>Columns ▾</summary><div class="pop" id="cols"></div></details>
   <a href="index.html">← Viewer</a>
 </header>
 <div class="wrap" id="wrap"></div>
 
-<!-- CSV de RESULTS/, recopiés par build_tables.py ; paramètre unique : jamais servi depuis le cache -->
+<!-- CSVs of RESULTS/ and DATA/DELINEATION_CLEAN/, copied by build_tables.py; unique parameter: never served from the cache -->
 <script>document.write('<script src="data/tables.js?t=' + Date.now() + '"><\/script>');</script>
 <script>
 "use strict";
 const $ = id => document.getElementById(id);
 const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
-const STORE = "tables.files";  // CSV ouverts à la main, gardés dans ce navigateur (si la taille le permet)
+const STORE = "tables.files";  // CSVs opened by hand, kept in this browser (if the size allows)
 
-// tables : { nom: { cols, rows, sort: [col, dir], filters: {}, hidden: Set, q, src: "results" | "local", date } }
+// tables: { name: { cols, rows, sort: [col, dir], filters: {}, hidden: Set, q, src: "results" | "local", date } }
 let T = {}, cur = null;
 
-// ---------------------------------------------------------------- lecture CSV (guillemets, ; ou ,)
+// ---------------------------------------------------------------- reading a CSV (quotes, ; or ,)
 function parseCSV(text) {
   text = text.replace(/^﻿/, "");
   const first = text.split(/\r?\n/, 1)[0];
@@ -109,15 +109,15 @@ function parseCSV(text) {
 }
 function addTable(name, text, src = "local", date = "") {
   const { cols, rows } = parseCSV(text);
-  // colonnes entièrement vides : masquées par défaut
+  // completely empty columns: hidden by default
   const hidden = new Set(cols.map((c, j) => rows.every(r => !r[j]) ? j : -1).filter(j => j >= 0));
   T[name] = { cols, rows, text, sort: null, filters: {}, hidden, q: "", src, date };
   cur = name;
 }
-function persist() {  // seulement les CSV ouverts à la main : ceux de RESULTS sont relus à chaque ouverture
+function persist() {  // only the CSVs opened by hand: the project ones are reread on every opening
   const local = Object.entries(T).filter(([, t]) => t.src === "local").map(([k, t]) => [k, t.text]);
   try { localStorage.setItem(STORE, JSON.stringify(Object.fromEntries(local))); }
-  catch (e) { /* trop gros ou indisponible : la page marche sans */ }
+  catch (e) { /* too big or unavailable: the page works without it */ }
 }
 function readFiles(files) {
   const list = [...files].filter(f => /\.(csv|tsv|txt)$/i.test(f.name));
@@ -129,7 +129,7 @@ function readFiles(files) {
   });
 }
 
-// ---------------------------------------------------------------- affichage
+// ---------------------------------------------------------------- display
 const isNum = v => v !== "" && !isNaN(v);
 function visibleRows(t) {
   const q = t.q.toLowerCase();
@@ -145,22 +145,22 @@ function visibleRows(t) {
     const [j, dir] = t.sort;
     rows = rows.slice().sort((a, b) => {
       const x = a[j] || "", y = b[j] || "";
-      const c = isNum(x) && isNum(y) ? x - y : x.localeCompare(y, "fr", { numeric: true });
+      const c = isNum(x) && isNum(y) ? x - y : x.localeCompare(y, "en", { numeric: true });
       return c * dir;
     });
   }
   return rows;
 }
 function cellClass(col, v) {
-  if (v === "True" || v === "gardé") return "t";
-  if (v === "False" || v === "exclu") return "f";
-  if (/error|reason|detail/i.test(col) && v) return "err";
+  if (v === "True") return "t";
+  if (v === "False" || v.startsWith("not copied")) return "f";
+  if (/error|reason|detail|issue/i.test(col) && v) return "err";
   return isNum(v) ? "num" : "";
 }
 function renderTabs() {
   $("tabs").innerHTML = Object.entries(T).map(([n, t]) => t.src === "results"
-    ? `<button data-n="${esc(n)}" class="${n === cur ? "on" : ""}" title="RESULTS/${esc(n)} · modifié le ${esc(t.date)}">${esc(n)}</button>`
-    : `<button data-n="${esc(n)}" class="${n === cur ? "on" : ""}" title="Ouvert à la main">${esc(n)}<span class="x" title="Fermer">✕</span></button>`).join("");
+    ? `<button data-n="${esc(n)}" class="${n === cur ? "on" : ""}" title="${esc(n)} · modified ${esc(t.date)}">${esc(n)}</button>`
+    : `<button data-n="${esc(n)}" class="${n === cur ? "on" : ""}" title="Opened by hand">${esc(n)}<span class="x" title="Close">✕</span></button>`).join("");
   $("tabs").querySelectorAll("button").forEach(b => b.onclick = e => {
     if (e.target.classList.contains("x")) { delete T[b.dataset.n]; if (cur === b.dataset.n) cur = Object.keys(T)[0] || null; persist(); }
     else cur = b.dataset.n;
@@ -177,13 +177,13 @@ function renderCols(t) {
 function render() {
   renderTabs();
   const t = T[cur];
-  try { if (cur) localStorage.setItem("tables.current", cur); } catch (e) {}  // onglet rouvert la prochaine fois
+  try { if (cur) localStorage.setItem("tables.current", cur); } catch (e) {}  // tab reopened next time
   if (!t) {
     $("count").textContent = ""; $("cols").innerHTML = "";
-    $("wrap").innerHTML = `<div class="drop" id="drop"><p><b>Aucun CSV de RESULTS trouvé</b></p>
-      <p>Lancer <code>python ANALYSIS/viewer/build_tables.py</code> puis recharger la page.</p>
-      <p class="muted">On peut aussi glisser un CSV ici ou utiliser « + Autre CSV… » (ex. <code>notes_viewer.csv</code>).
-      Les fichiers restent sur l'ordinateur.</p></div>`;
+    $("wrap").innerHTML = `<div class="drop" id="drop"><p><b>No CSV of the project found</b></p>
+      <p>Run <code>python ANALYSIS/viewer/build_tables.py</code> then reload the page.</p>
+      <p class="muted">You can also drop a CSV here or use "+ Other CSV…" (e.g. <code>notes_viewer.csv</code>).
+      The files stay on the computer.</p></div>`;
     return;
   }
   $("q").value = t.q;
@@ -192,26 +192,26 @@ function render() {
 function renderTable() {
   const t = T[cur], cols = t.cols.map((c, j) => j).filter(j => !t.hidden.has(j));
   const rows = visibleRows(t);
-  $("count").textContent = `${rows.length} / ${t.rows.length} lignes`;
-  // filtre par colonne : liste déroulante si peu de valeurs différentes, sinon texte
+  $("count").textContent = `${rows.length} / ${t.rows.length} rows`;
+  // filter per column: drop-down list if few different values, otherwise text
   const filt = j => {
     const vals = [...new Set(t.rows.map(r => r[j] || ""))];
     const f = t.filters[j] || {};
-    if (vals.length <= 15) return `<select data-j="${j}"><option value="__all">(tout)</option>` +
-      vals.sort((a, b) => a.localeCompare(b, "fr", { numeric: true })).map(v =>
-        `<option value="${esc(v)}" ${f.exact === v ? "selected" : ""}>${v === "" ? "(vide)" : esc(v)}</option>`).join("") + "</select>";
-    return `<input type="text" data-j="${j}" placeholder="filtrer" value="${esc(f.text || "")}">`;
+    if (vals.length <= 15) return `<select data-j="${j}"><option value="__all">(all)</option>` +
+      vals.sort((a, b) => a.localeCompare(b, "en", { numeric: true })).map(v =>
+        `<option value="${esc(v)}" ${f.exact === v ? "selected" : ""}>${v === "" ? "(empty)" : esc(v)}</option>`).join("") + "</select>";
+    return `<input type="text" data-j="${j}" placeholder="filter" value="${esc(f.text || "")}">`;
   };
   const arrow = j => t.sort && t.sort[0] === j ? (t.sort[1] > 0 ? " ▲" : " ▼") : "";
   const MAX = 3000;
   $("wrap").innerHTML = `<table><thead>
-    <tr class="h">${cols.map(j => `<th data-j="${j}" title="Trier">${esc(t.cols[j])}${arrow(j)}</th>`).join("")}</tr>
+    <tr class="h">${cols.map(j => `<th data-j="${j}" title="Sort">${esc(t.cols[j])}${arrow(j)}</th>`).join("")}</tr>
     <tr class="f">${cols.map(j => `<th>${filt(j)}</th>`).join("")}</tr></thead>
     <tbody>${rows.slice(0, MAX).map(r => `<tr>${cols.map(j => {
       const v = r[j] || "";
       return `<td class="${cellClass(t.cols[j], v)}" title="${esc(v)}">${esc(v)}</td>`;
     }).join("")}</tr>`).join("")}</tbody></table>` +
-    (rows.length > MAX ? `<p class="muted" style="padding:8px 16px">${MAX} premières lignes affichées : filtrer pour voir les autres.</p>` : "");
+    (rows.length > MAX ? `<p class="muted" style="padding:8px 16px">first ${MAX} rows shown: filter to see the others.</p>` : "");
   $("wrap").querySelectorAll("tr.h th").forEach(th => th.onclick = () => {
     const j = +th.dataset.j;
     t.sort = t.sort && t.sort[0] === j ? (t.sort[1] > 0 ? [j, -1] : null) : [j, 1];
@@ -229,7 +229,7 @@ function renderTable() {
   });
 }
 
-// ---------------------------------------------------------------- événements
+// ---------------------------------------------------------------- events
 $("open").onclick = () => $("file").click();
 $("wrapcells").onchange = e => document.body.classList.toggle("wrapcells", e.target.checked);
 $("file").onchange = e => { readFiles(e.target.files); e.target.value = ""; };

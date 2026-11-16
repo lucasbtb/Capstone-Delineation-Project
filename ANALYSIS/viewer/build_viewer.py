@@ -1,29 +1,27 @@
 """
-build_viewer.py — Prépare le site local de comparaison des délinéations.
+build_viewer.py — Prepares the local website for comparing delineations.
 
-Pour chaque sujet, lit toutes les délinéations brutes lisibles (tous raters,
-toutes sessions), garde uniquement les voxels non nuls dans la boîte englobante
-commune du sujet, et écrit :
-  RESULTS/viewer/index.html          (copie de ANALYSIS/viewer/index.html)
-  RESULTS/viewer/data/index.js       (liste des sujets)
-  RESULTS/viewer/data/<SUJET>.js     (masques du sujet, encodés en base64)
+Shows, for each subject:
+  - every delineation of DATA/DELINEATION_CLEAN (output of build_clean_data.py), as listed in its
+    delineations.csv. Status, from RESULTS/build_clean_data_report.csv (column new_file):
+      clean    = copied unchanged from the raw data
+      fixed    = copied with a change (converted, reoriented, name corrected), reason shown
+  - every raw file of DATA/DELINEATION_DATA that build_clean_data.py did not copy (build_clean_data_report.csv,
+    action "not copied"): status excluded, with the reason.
+Keeps only the non-zero voxels inside the subject's common bounding box, and writes:
+  RESULTS/viewer/index.html          (copy of ANALYSIS/viewer/index.html)
+  RESULTS/viewer/data/index.js       (list of subjects)
+  RESULTS/viewer/data/<SUBJECT>.js   (masks of the subject, base64-encoded)
+Also computes exploratory checks (help to detect problems, not in the cleaning yet):
+  volume of each label per side (L/R), fragments (pieces separate from the main block),
+  gaps between slices, voxels outside the displayed frame.
+Files and names are read with the shared functions of ANALYSIS/helpers.py.
+Rerun this script after build_clean_data.py.
 
-Lecture des fichiers et des noms : mêmes fonctions que l'analyse (ANALYSIS/checks.py).
-Chaque délinéation porte :
-  - son statut, lu dans RESULTS/02_easy_clean.csv :
-      propre  = gardé sans correction      corrige = gardé après correction
-      exclu   = hors de CLEAN_DELINEATION  absent  = pas dans le journal
-  - ses erreurs, lues dans RESULTS/01_inventory.csv (colonne 'errors').
-  - des contrôles calculés ici (aide à la détection, pas encore dans checks.py) :
-      volume de chaque label par côté (G/D), fragments (morceaux séparés du bloc
-      principal), trous entre coupes, voxels hors du cadre affiché.
-Pour les fichiers gardés, le sujet et la session viennent du nom corrigé.
-Relancer ce script après 01_inventory.py et 02_easy_clean.py.
+Then open RESULTS/viewer/index.html in a browser (no server, no data sent online).
+Does not modify any file of DATA/.
 
-Ouvrir ensuite RESULTS/viewer/index.html dans un navigateur (aucun serveur,
-aucune donnée envoyée en ligne). Ne modifie aucun fichier de DATA/.
-
-Usage : python ANALYSIS/viewer/build_viewer.py [SUJET ...]   (sans argument = tous les sujets)
+Usage: python ANALYSIS/viewer/build_viewer.py [SUBJECT ...]   (e.g. C_001; no argument = every subject)
 """
 
 import base64
@@ -40,32 +38,33 @@ from scipy import ndimage
 from scipy.spatial import cKDTree
 
 HERE = Path(__file__).resolve().parent
-sys.path.insert(0, str(HERE.parent))  # checks.py est dans ANALYSIS/
-from checks import get_labels, load, scan_key  # noqa: E402
-import build_tables  # noqa: E402  (même dossier que ce script)
+sys.path.insert(0, str(HERE.parent))  # helpers.py is in ANALYSIS/
+from helpers import get_labels, load, scan_key  # noqa: E402
+import build_tables  # noqa: E402  (same folder as this script)
 
 ROOT = HERE.parents[1]
 DATA = ROOT / "DATA" / "DELINEATION_DATA"
 OUT = ROOT / "RESULTS" / "viewer"
-INVENTORY = ROOT / "RESULTS" / "01_inventory.csv"
-CLEAN_LOG = ROOT / "RESULTS" / "02_easy_clean.csv"
-MARGIN = 12  # voxels autour du cadre
-STRUCT = np.ones((3, 3, 3), bool)  # 26-connexité : deux voxels qui se touchent par un coin = même morceau
-ISOLATED_MM = 3  # fragment à plus de 3 mm de son bloc principal = "isolé" (sinon "détaché")
-MAX_FRAGS = 200  # fragments détaillés par délinéation (les comptes restent exacts)
-MAX_FAR = 50000  # voxels hors cadre transmis à la page
+CLEAN = ROOT / "DATA" / "DELINEATION_CLEAN"
+DELINEATIONS = CLEAN / "delineations.csv"
+REPORT = ROOT / "RESULTS" / "build_clean_data_report.csv"
+MARGIN = 12  # voxels around the frame
+STRUCT = np.ones((3, 3, 3), bool)  # 26-connectivity: two voxels touching by a corner = same piece
+ISOLATED_MM = 3  # fragment more than 3 mm from its main block = "isolated" (otherwise "detached")
+MAX_FRAGS = 200  # fragments listed per delineation (the counts stay exact)
+MAX_FAR = 50000  # voxels outside the frame sent to the page
 
-# Ordre de DOCUMENTATION/given_documents/colors.md. La correspondance
-# label <-> noyau n'est PAS confirmée : hypothèse label 1 = 1er noyau de la liste, etc.
+# Order of DOCUMENTATION/given_documents/colors.md. The label <-> nucleus mapping
+# is NOT confirmed: assumption label 1 = first nucleus of the list, etc.
 NUCLEI = [
     ("LGN", "#40e0d0"),       # turquoise
-    ("MGN", "#ff69b4"),       # rose
-    ("Pulvinar", "#ffd700"),  # jaune
-    ("AV", "#e32626"),        # rouge
-    ("VA", "#2eb82e"),        # vert
-    ("VLA/VLP", "#2a6fdb"),   # bleu
-    ("VPL", "#8b5a2b"),       # marron
-    ("MD", "#8e44ad"),        # violet
+    ("MGN", "#ff69b4"),       # pink
+    ("Pulvinar", "#ffd700"),  # yellow
+    ("AV", "#e32626"),        # red
+    ("VA", "#2eb82e"),        # green
+    ("VLA/VLP", "#2a6fdb"),   # blue
+    ("VPL", "#8b5a2b"),       # brown
+    ("MD", "#8e44ad"),        # purple
     ("CM", "#ff8c00"),        # orange
 ]
 
@@ -78,58 +77,48 @@ def safe(subject):
     return subject.replace("?", "X")
 
 
-def norm(p):
-    """Chemin comparable entre Mac et Windows : séparateur '/' et espaces retirés
-    autour de chaque dossier (Windows supprime ceux de ' Rater 16i', 'delineated ')."""
-    return "/".join(part.strip() for part in p.replace("\\", "/").split("/"))
-
-
-def read_csv(path):
-    """{chemin normalisé: ligne} ; vide (avec avertissement) si le fichier manque."""
+def read_rows(path):
+    """Rows of a CSV; empty (with a warning) if the file is missing."""
     if not path.exists():
-        print(f"⚠ {path.name} absent : lancer 01_inventory.py puis 02_easy_clean.py")
-        return {}
-    with open(path, encoding="utf-8-sig") as f:
-        rows = list(csv.DictReader(f))
-    key = "original" if "original" in rows[0] else "file"
-    return {norm(r[key]): r for r in rows}
+        print(f"⚠ {path.relative_to(ROOT)} missing: run build_clean_data.py first")
+        return []
+    with open(path, newline="", encoding="utf-8-sig") as f:
+        return list(csv.DictReader(f))
 
 
-def subject_session(filename):
-    """'SUBC001_ses01_...' -> ('SUBC001', '1') via scan_key de checks.py."""
-    scan = scan_key(filename)
-    if not scan:
-        return None, None
-    subject, session = scan.split("_ses")
-    return subject, session
+def list_files():
+    """Delineations to show: every file of DELINEATION_CLEAN (clean / fixed) and every raw file
+    that build_clean_data.py did not copy (excluded), with status, reason, subject and session."""
+    report = read_rows(REPORT)
+    fixes, excluded = defaultdict(list), defaultdict(list)
+    for r in report:
+        if r["action"].startswith("not copied"):
+            excluded[r["original_file"]].append(r["issue"])
+        elif r["new_file"]:
+            fixes[r["new_file"]].append(r["issue"])
 
-
-def list_files(inventory, log):
-    """Fichiers bruts avec groupe / rater du dossier, statut et erreurs."""
     files = []
-    for path in sorted(DATA.rglob("*")):
-        if not path.is_file():
-            continue
-        rel = path.relative_to(DATA)
-        f = {"path": path, "file": str(rel), "group": rel.parts[0].strip(),
-             "rater": rel.parts[1].strip().replace("Rater ", "")}
-        inv, e = inventory.get(norm(f["file"])), log.get(norm(f["file"]))
-        if not e:
-            f["step"], f["reason"], f["clean_file"] = "absent", "absent de 02_easy_clean.csv", ""
-        else:
-            kept = e["status"] == "gardé"
-            f["step"] = ("corrige" if e["corrections"] else "propre") if kept else "exclu"
-            f["reason"] = e["corrections"] if kept else e["reason"]
-            f["clean_file"] = norm(e["new_file"]) if kept else ""
-        f["issues"] = inv["errors"].split(" | ") if inv and inv["errors"] else []
-        name = Path(f["clean_file"]).name if f["clean_file"] else path.name
-        f["subject"], f["session"] = subject_session(name)
-        files.append(f)
+    for row in read_rows(DELINEATIONS):
+        if not (ROOT / row["filepath"]).exists():
+            continue  # deleted by fix_problems.py (e.g. wrong number of nuclei)
+        done = fixes.get(row["filepath"], [])
+        files.append({"path": ROOT / row["filepath"], "file": row["filepath"],
+                      "group": row["raterID"].split("_")[0], "rater": row["raterID"],
+                      "subject": f"{row['scantype']}_{row['delineationID']}", "session": row["session"],
+                      "step": "fixed" if done else "clean", "reason": "; ".join(done)})
+    for rel, issues in excluded.items():
+        parts = Path(rel).parts
+        scan = scan_key(parts[-1])  # 'SUBC001_ses1' -> subject 'C_001', session '1' ('?' if unreadable)
+        subject, session = (f"{scan[3]}_{scan[4:7]}", scan.split("_ses")[1]) if scan else (None, None)
+        files.append({"path": DATA / rel, "file": (DATA / rel).relative_to(ROOT).as_posix(),
+                      "group": parts[0].strip().replace("Group ", ""),
+                      "rater": parts[1].strip().replace("Rater ", ""),
+                      "subject": subject, "session": session, "step": "excluded", "reason": "; ".join(issues)})
     return files
 
 
 def gaps_of(pts, lo):
-    """Coupes vides entre la première et la dernière coupe occupée, sur chaque axe."""
+    """Empty slices between the first and the last occupied slice, on each axis."""
     out = []
     for a in range(3):
         vals = np.unique(pts[:, a])
@@ -139,16 +128,16 @@ def gaps_of(pts, lo):
 
 
 def controls(data):
-    """Contrôles par label et par côté. Chaque label est bilatéral : un bloc principal
-    à gauche, un à droite (côté = centre du morceau par rapport au centre gauche-droite
-    de la délinéation ; RAS : x petit = gauche). Tout autre morceau est un fragment.
-    Coordonnées renvoyées : voxels du volume d'origine."""
+    """Checks per label and per side. Each label is bilateral: one main block on the left,
+    one on the right (side = centre of the piece relative to the left-right centre of the
+    delineation; RAS: small x = left). Any other piece is a fragment.
+    Returned coordinates: voxels of the original volume."""
     coords = np.argwhere(data)
     lo, hi = coords.min(0), coords.max(0) + 1
     crop = data[lo[0]:hi[0], lo[1]:hi[1], lo[2]:hi[2]]
     cx = coords[:, 0].mean() - lo[0]
     stats, gaps, frags = {}, [], []
-    nfrag = [0, 0, 0, 0]  # isolés, détachés, voxels isolés, voxels détachés
+    nfrag = [0, 0, 0, 0]  # isolated, detached, isolated voxels, detached voxels
     for l in np.unique(crop[crop != 0]):
         l = int(l)
         comp, n = ndimage.label(crop == l, STRUCT)
@@ -158,9 +147,9 @@ def controls(data):
         cents = np.zeros((n, 3))
         np.add.at(cents, ids, pts)
         cents /= sizes[:, None]
-        side = np.where(cents[:, 0] < cx, "G", "D")
+        side = np.where(cents[:, 0] < cx, "L", "R")
         stats[str(l)] = {}
-        for s in ("G", "D"):
+        for s in ("L", "R"):
             members = np.nonzero(side == s)[0]
             if not len(members):
                 continue
@@ -183,7 +172,7 @@ def controls(data):
                                  + [round(float(dmin[j]), 1)])
                     if not iso:
                         keep |= ids == j
-            # trous : sur le bloc principal + fragments proches (les isolés sont listés à part)
+            # gaps: on the main block + nearby fragments (isolated ones are listed separately)
             gaps += [[l, s] + g for g in gaps_of(pts[keep], lo)]
     frags.sort(key=lambda f: (f[6] <= ISOLATED_MM, -f[2]))
     return {"stats": stats, "gaps": gaps, "frags": frags[:MAX_FRAGS], "nfrag": nfrag}
@@ -195,23 +184,22 @@ def build_subject(subject, files):
         _, _, data = load(f["path"])
         labels = get_labels(data) if data is not None else None
         if not labels:
-            continue  # illisible, IRM au lieu du masque, vide
+            continue  # unreadable, MRI instead of a mask, empty
         data = np.rint(data).astype(np.int64)
         vols.append(data)
         metas.append({
             "rater": f["rater"], "group": f["group"].replace("Group ", ""),
             "session": f["session"], "file": f["file"], "labels": sorted(labels),
-            "nvox": int(np.count_nonzero(data)), "issues": list(f["issues"]),
-            "step": f["step"], "reason": f["reason"], "clean_file": f["clean_file"],
+            "nvox": int(np.count_nonzero(data)), "step": f["step"], "reason": f["reason"],
             **controls(data),
         })
     if not vols:
         return None
 
-    # Cadre commun = percentiles 0.1–99.9 % des voxels de toutes les délinéations
-    # (des voxels parasites loin du thalamus étireraient sinon le cadre).
-    # Les voxels hors cadre sont transmis à part : la page les montre en rouge
-    # dans la vue d'ensemble (volume entier).
+    # Common frame = 0.1–99.9 % percentiles of the voxels of every delineation
+    # (stray voxels far from the thalamus would otherwise stretch the frame).
+    # Voxels outside the frame are sent separately: the page shows them in red
+    # in the overview (whole volume).
     shape = vols[0].shape
     coords = np.concatenate([np.argwhere(v != 0) for v in vols])
     lo = [max(0, int(np.percentile(coords[:, a], 0.1)) - MARGIN) for a in range(3)]
@@ -230,7 +218,7 @@ def build_subject(subject, files):
     for i in order:
         crop = vols[i][lo[0]:hi[0], lo[1]:hi[1], lo[2]:hi[2]]
         x, y, z = np.nonzero(crop)
-        idx = (x + nx * (y + ny * z)).astype("<u4")  # index plat, x varie le plus vite
+        idx = (x + nx * (y + ny * z)).astype("<u4")  # flat index, x varies fastest
         lab = np.clip(crop[x, y, z], 0, 65535).astype("<u2")
         dels.append({**metas[i], "idx": b64(idx), "lab": b64(lab)})
 
@@ -241,17 +229,17 @@ def build_subject(subject, files):
 
 def main(only):
     by_subject = defaultdict(list)
-    for f in list_files(read_csv(INVENTORY), read_csv(CLEAN_LOG)):
+    for f in list_files():
         if f["subject"]:
             by_subject[f["subject"]].append(f)
 
     (OUT / "data").mkdir(parents=True, exist_ok=True)
     shutil.copy(HERE / "index.html", OUT / "index.html")
-    build_tables.main()  # lecteur de CSV : RESULTS/viewer/tables.html
+    build_tables.main()  # CSV reader: RESULTS/viewer/tables.html
 
     index_path = OUT / "data" / "index.js"
     index = {}
-    if index_path.exists() and only:  # mise à jour partielle : garder les autres sujets
+    if index_path.exists() and only:  # partial update: keep the other subjects
         txt = index_path.read_text(encoding="utf-8")
         txt = txt[txt.index("window.VIEWER_INDEX=") + len("window.VIEWER_INDEX="):].rstrip().rstrip(";")
         index = {s["subject"]: s for s in json.loads(txt)}
@@ -266,22 +254,22 @@ def main(only):
         (OUT / "data" / f"{name}.js").write_text(
             f"window.VIEWER_DATA=window.VIEWER_DATA||{{}};window.VIEWER_DATA[{json.dumps(subject)}]="
             + json.dumps(payload, separators=(",", ":")) + ";", encoding="utf-8")
-        # (session, statut) de chaque délinéation : l'appli compte selon le filtre choisi
+        # (session, status) of each delineation: the page counts according to the chosen filter
         index[subject] = {"subject": subject, "file": name,
                           "dels": [[d["session"], d["step"]] for d in payload["dels"]]}
-        print(f"{subject:8s} {len(payload['dels']):2d} délinéations")
+        print(f"{subject:8s} {len(payload['dels']):2d} delineations")
 
     nuclei = [{"label": i + 1, "name": n, "color": c} for i, (n, c) in enumerate(NUCLEI)]
     index_path.write_text(
-        # VIEWER_BUILD : ajouté à l'URL des fichiers sujets pour que le navigateur
-        # ne réutilise pas une ancienne version en cache après un nouveau build
+        # VIEWER_BUILD: added to the URL of the subject files so that the browser
+        # does not reuse an old cached version after a new build
         f"window.VIEWER_BUILD={int(time.time())};\n"
         f"window.VIEWER_PARAMS={json.dumps({'isolated_mm': ISOLATED_MM})};\n"
         "window.VIEWER_NUCLEI=" + json.dumps(nuclei) + ";\nwindow.VIEWER_INDEX="
-        # sujets "SUB?" (lettre C/G absente du nom) en fin de liste
+        # "?_" subjects (letter C/G missing from the name) at the end of the list
         + json.dumps(sorted(index.values(), key=lambda s: ("?" in s["subject"], s["subject"])), indent=0) + ";",
         encoding="utf-8")
-    print(f"\nOuvrir : {OUT / 'index.html'}")
+    print(f"\nOpen: {OUT / 'index.html'}")
 
 
 if __name__ == "__main__":

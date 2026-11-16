@@ -15,7 +15,7 @@ Usage:
       -> opens the page with these files already loaded (folder = every .nii / .nii.gz inside it).
          The page is then served on 127.0.0.1 while the script runs (Ctrl+C to stop).
   e.g.: python ANALYSIS/delineation_explorer/delineation_explorer.py \\
-            DATA/STAPLE/SUBC001_ses02_staple.nii.gz "DATA/CLEAN_DELINEATION/Group 1"
+            DATA/STAPLE/C_001_2_staple.nii.gz DATA/DELINEATION_CLEAN/C_001_2
 """
 
 import json
@@ -42,7 +42,7 @@ def nifti_files(args):
 
 
 def display_name(path):
-    """Displayed name: parent folder + file (the folder = the rater in DELINEATION_DATA / CLEAN_DELINEATION)."""
+    """Displayed name: parent folder + file (the rater folder in DELINEATION_DATA, the scan folder in DELINEATION_CLEAN)."""
     return f"{path.parent.name.strip()}/{path.name}" if path.parent.name else path.name
 
 

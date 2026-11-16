@@ -1,18 +1,18 @@
-# Questions ouvertes (à poser au superviseur)
+# Open questions (to ask the supervisor)
 
-## Données
-1. **Sessions** : que signifient `ses1` / `ses2` ? Deux IRM du même sujet (test-retest), ou deux délinéations du même rater ?
-2. **Labels 1–9** : quel nom de noyau correspond à chaque label ? Est-ce un seul hémisphère ou les deux ?
-3. **SUBC / SUBG** : est-ce bien contrôles / patients ? De quelle pathologie s'agit-il ?
-4. **WMn** : certains fichiers contiennent « WMn ». L'IRM de base est-elle une WMn-MPRAGE (white-matter-nulled, comme pour THOMAS) ?
-5. **Répartition** : pourquoi certains sujets sont-ils délinéés par plusieurs groupes (ex. C1–C4 dans les groupes 1, 7, 8 et 16) ? Est-ce voulu, pour mesurer l'accord inter-groupes ?
-6. **Référence** : existe-t-il une segmentation de référence (expert ou automatique) ?
+## Data
+1. **Sessions**: what do `ses1` / `ses2` mean? Two MRIs of the same subject (test-retest), or two delineations by the same rater?
+2. **Labels 1–9**: which nucleus name matches each label? Is it one hemisphere or both?
+3. **SUBC / SUBG**: are these really controls / patients? Which pathology is it?
+4. **WMn**: some files contain "WMn". Is the base MRI a WMn-MPRAGE (white-matter-nulled, as for THOMAS)?
+5. **Distribution**: why are some subjects delineated by several groups (e.g. C1–C4 in groups 1, 7, 8 and 16)? Is it on purpose, to measure inter-group agreement?
+6. **Reference**: is there a reference segmentation (expert or automatic)?
 
-## Fichiers problématiques
-7. Certains fichiers ont des labels hors de 1–9 (10, 11, 12, 13, 35) : erreur de numérotation à remapper, ou fichiers à exclure ?
-8. 15 fichiers « seg » sont en réalité des images d'intensité (float32) : le rater a sauvegardé l'IRM au lieu de la segmentation. Faut-il exclure ces fichiers ou redemander les segmentations ?
-9. Fichiers incomplets ou vides : faut-il les exclure ?
-10. Sessions `ses3`–`ses7` (rater 6j) et `ses9` (rater 9b) : est-ce une erreur de nommage ?
+## Problem files
+7. Some files have labels outside 1–9 (10, 11, 12, 13, 35): a numbering mistake to remap, or files to exclude?
+8. 15 "seg" files are actually intensity images (float32): the rater saved the MRI instead of the segmentation. Should these files be excluded or the segmentations asked for again?
+9. Incomplete or empty files: should they be excluded?
+10. Sessions `ses3`–`ses7` (rater 6j) and `ses9` (rater 9b): is it a naming mistake?
 
-## Projet
-11. Quel est l'objectif exact : accord inter-rater et intra-rater (Dice, volumes), comparaison C vs G, autre ?
+## Project
+11. What is the exact goal: inter-rater and intra-rater agreement (Dice, volumes), C vs G comparison, something else?

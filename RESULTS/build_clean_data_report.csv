@@ -1,0 +1,81 @@
+﻿original_file,issue,action,new_file
+Group 1/Rater 1a/SUBC001_ses2_Rater1a_manual_seg.nii,wrong type for its name: '.nii' is a NIfTI,converted to .nii.gz,DATA/DELINEATION_CLEAN/C_001_2/C_001_2_1_1.nii.gz
+Group 10/Rater 10j/SUBC001_ses2_Rater10j_manual_seg.nii.gz,MRI instead of a mask (non-integer values),not copied,
+Group 11/Rater 11d/SUBC027_ses2_Rater11d_manual_seg 2.nii,wrong type for its name: '.nii' is a NIfTI,converted to .nii.gz,DATA/DELINEATION_CLEAN/C_027_2/C_027_2_11_2.nii.gz
+Group 11/Rater 11e/SUBCO29_ses2_Rater11e_manual_seg.nii.gz,MRI instead of a mask (non-integer values),not copied,
+Group 11/Rater 11e/SUBCO31_ses2_Rater11e_manual_seg.nii.gz,MRI instead of a mask (non-integer values),not copied,
+Group 11/Rater 11e/SUBCO32_ses2_Rater11e_manual_seg.nii.gz,MRI instead of a mask (non-integer values),not copied,
+Group 11/Rater 11e/SUBG004_ses1_Rater11e_manual_seg.nii.gz,MRI instead of a mask (non-integer values),not copied,
+Group 11/Rater 11i/SUBC028_ses_2_Rater11i.nii,wrong type for its name: '.nii' is a NIfTI,converted to .nii.gz,DATA/DELINEATION_CLEAN/C_028_2/C_028_2_11_6.nii.gz
+Group 11/Rater 11i/SUBC030_ses2_Rater11i.nii,wrong type for its name: '.nii' is a NIfTI,converted to .nii.gz,DATA/DELINEATION_CLEAN/C_030_2/C_030_2_11_6.nii.gz
+Group 11/Rater 11i/SUBC031_ses2_Rater11i.nii,wrong type for its name: '.nii' is a NIfTI,converted to .nii.gz,DATA/DELINEATION_CLEAN/C_031_2/C_031_2_11_6.nii.gz
+Group 11/Rater 11i/SUBG004_ses1_Rater11i.nii,wrong type for its name: '.nii' is a NIfTI,converted to .nii.gz,DATA/DELINEATION_CLEAN/G_004_1/G_004_1_11_6.nii.gz
+Group 12/Rater 12h/SUBC035_ses2_Rater12h_manual_seg.nii.gz.gz,wrong type for its name: '.nii.gz.gz' is a NIfTI in gzip,converted to .nii.gz,DATA/DELINEATION_CLEAN/C_035_2/C_035_2_12_3.nii.gz
+Group 12/Rater 12h/SUBC036_ses2_Rater12h_manual_seg.nii.gz.gz,wrong type for its name: '.nii.gz.gz' is a NIfTI in gzip,converted to .nii.gz,DATA/DELINEATION_CLEAN/C_036_2/C_036_2_12_3.nii.gz
+Group 12/Rater 12h/SUBC037_ses2_Rater12h_manual_seg.nii.gz.gz,wrong type for its name: '.nii.gz.gz' is a NIfTI in gzip,converted to .nii.gz,DATA/DELINEATION_CLEAN/C_037_2/C_037_2_12_3.nii.gz
+Group 12/Rater 12h/SUBC039_ses2_Rater12h_manual_seg.nii.gz.gz,wrong type for its name: '.nii.gz.gz' is a NIfTI in gzip,converted to .nii.gz,DATA/DELINEATION_CLEAN/C_039_2/C_039_2_12_3.nii.gz
+Group 12/Rater 12h/SUBC040_ses2_Rater12h_manual_seg.nii.gz.gz,wrong type for its name: '.nii.gz.gz' is a NIfTI in gzip,converted to .nii.gz,DATA/DELINEATION_CLEAN/C_040_2/C_040_2_12_3.nii.gz
+Group 12/Rater 12h/SUBG006_ses1_Rater12h_manual_seg.nii.gz.gz,wrong type for its name: '.nii.gz.gz' is a NIfTI in gzip,converted to .nii.gz,DATA/DELINEATION_CLEAN/G_006_1/G_006_1_12_3.nii.gz
+Group 12/Rater 12h/SUBG007_ses2_Rater12h_manual_seg.nii.gz.gz,wrong type for its name: '.nii.gz.gz' is a NIfTI in gzip,converted to .nii.gz,DATA/DELINEATION_CLEAN/G_007_2/G_007_2_12_3.nii.gz
+Group 12/Rater 12k/SUBC035_ses2_Rater12k_manual_seg.nii,wrong type for its name: '.nii' is a NIfTI,converted to .nii.gz,DATA/DELINEATION_CLEAN/C_035_2/C_035_2_12_4.nii.gz
+Group 12/Rater 12k/SUBC036_ses2_Rater12k_manual_seg.nii,wrong type for its name: '.nii' is a NIfTI,converted to .nii.gz,DATA/DELINEATION_CLEAN/C_036_2/C_036_2_12_4.nii.gz
+Group 12/Rater 12k/SUBC037_ses2_Rater12k_manual_seg.nii,wrong type for its name: '.nii' is a NIfTI,converted to .nii.gz,DATA/DELINEATION_CLEAN/C_037_2/C_037_2_12_4.nii.gz
+Group 12/Rater 12k/SUBC039_ses2_Rater12k_manual_seg.nii,wrong type for its name: '.nii' is a NIfTI,converted to .nii.gz,DATA/DELINEATION_CLEAN/C_039_2/C_039_2_12_4.nii.gz
+Group 12/Rater 12k/SUBC040_ses2_rater12k_manual_seg.nii,wrong type for its name: '.nii' is a NIfTI,converted to .nii.gz,DATA/DELINEATION_CLEAN/C_040_2/C_040_2_12_4.nii.gz
+Group 13/Rater 13d/SUBCO41_ses2_Rater13d_manual_seg.nii.gz,wrong type for its name: '.nii.gz' is a NIfTI,converted to .nii.gz,DATA/DELINEATION_CLEAN/C_041_2/C_041_2_13_2.nii.gz
+Group 13/Rater 13e/SUBG007_ses1_Rater13e_manual_seg.nii,wrong type for its name: '.nii' is a NIfTI,converted to .nii.gz,DATA/DELINEATION_CLEAN/G_007_1/G_007_1_13_3.nii.gz
+Group 13/Rater 13f/SUBC041_ses2_WMn_Rater 13f_manual_seg.nii.gz,MRI instead of a mask (non-integer values),not copied,
+Group 13/Rater 13f/SUBC042_ses2_WMn_Rater_ 13f_manual_seg.nii.gz,MRI instead of a mask (non-integer values),not copied,
+Group 13/Rater 13f/SUBG007_ses1_WMn_Rater_ 13f_manual_seg.nii.gz,MRI instead of a mask (non-integer values),not copied,
+Group 13/Rater 13f/SUBG008_ses2_WMn_Rater 13f_manual_seg.nii.gz,MRI instead of a mask (non-integer values),not copied,
+Group 14/Rater 14k/SUBC053_ses2_Rater14k_manual_seg(INCOMPLETE).nii,wrong type for its name: '.nii' is a NIfTI,converted to .nii.gz,DATA/DELINEATION_CLEAN/C_053_2/C_053_2_14_6.nii.gz
+Group 15/Rater 15a/SUBG009_ses1_Rater15a_manual_seg.nii,wrong type for its name: '.nii' is a NIfTI,converted to .nii.gz,DATA/DELINEATION_CLEAN/G_009_1/G_009_1_15_1.nii.gz
+Group 15/Rater 15a/SUBG009_ses1_Rater15a_manual_seg.nii.gz,duplicate: older version of Group 15/Rater 15a/SUBG009_ses1_Rater15a_manual_seg.nii (different content),not copied (the latest file is kept),
+Group 15/Rater 15a/SUBG010_ses1_Rater15a_manual_seg 2.nii,duplicate: exact copy of Group 15/Rater 15a/SUBG010_ses1_Rater15a_manual_seg.nii.gz,not copied,
+Group 15/Rater 15a/SUBG012_ses1_Rater15a_manual_seg.nii,duplicate: exact copy of Group 15/Rater 15a/SUBG012_ses1_Rater15a_manual_seg.nii.gz,not copied,
+Group 15/Rater 15a/SUBG013_ses1_Rater15a_manual_ses.nii,wrong type for its name: '.nii' is a NIfTI,converted to .nii.gz,DATA/DELINEATION_CLEAN/G_013_1/G_013_1_15_1.nii.gz
+Group 15/Rater 15a/SUBG013_ses1_Rater15a_manual_ses.nii.gz,duplicate: older version of Group 15/Rater 15a/SUBG013_ses1_Rater15a_manual_ses.nii (different content),not copied (the latest file is kept),
+Group 15/Rater 15a/SUBG014_ses1_Rater15a_manual_seg.nii,duplicate: exact copy of Group 15/Rater 15a/SUBG014_ses1_Rater15a_manual_seg.nii.gz,not copied,
+Group 15/Rater 15a/SUBG015_ses1_Rater15a_manual_seg.nii,duplicate: exact copy of Group 15/Rater 15a/SUBG015_ses1_Rater15a_manual_seg.nii.gz,not copied,
+Group 15/Rater 15a/SUBG016_ses1_Rater15a_manual_seg.nii,duplicate: exact copy of Group 15/Rater 15a/SUBG016_ses1_Rater15a_manual_seg.nii.gz,not copied,
+Group 15/Rater 15d/SUBG016_ses01_Rater15d_manual_seg.nii.zip,duplicate: exact copy of Group 15/Rater 15d/SUBG016_ses01_Rater15d_manual_seg.nii.gz,not copied,
+Group 15/Rater 15f/SUBG009_ses1_Rater15f_manual_seg.nii.gz,wrong type for its name: '.nii.gz' is a NIfTI,converted to .nii.gz,DATA/DELINEATION_CLEAN/G_009_1/G_009_1_15_3.nii.gz
+Group 15/Rater 15g/SUBG009_ses1_Rater15g_manual_seg.nii.gz,MRI instead of a mask (non-integer values),not copied,
+Group 15/Rater 15g/SUBG010_ses1_Rater15g_manual_seg.nii (1).gz,wrong type for its name: '.nii (1).gz' is a NIfTI in gzip,converted to .nii.gz,DATA/DELINEATION_CLEAN/G_010_1/G_010_1_15_4.nii.gz
+Group 15/Rater 15g/SUBG010_ses1_Rater15g_manual_seg.nii.gz,MRI instead of a mask (non-integer values),not copied,
+Group 15/Rater 15g/SUBG012_ses1_Rater15g_manual_seg.nii.gz,MRI instead of a mask (non-integer values),not copied,
+Group 15/Rater 15i/SUBG16_ses01_Rater15i_manual_seg_nii.gz,wrong type for its name: '_nii.gz' is a NIfTI in gzip,converted to .nii.gz,DATA/DELINEATION_CLEAN/G_016_1/G_016_1_15_5.nii.gz
+Group 16/Rater 16j/SUBG019_ses1_Rater16j_manual_seg.docx,"wrong file type: Word document, no NIfTI inside",not copied,
+Group 3/Rater 3a/SUBC015_ses01_Rater3a.nii,duplicate: exact copy of Group 3/Rater 3a/delineated /SUBC015_ses01_Rater3a.nii.gz,not copied,
+Group 3/Rater 3a/SUBC016_ses1_Rater3a.nii,duplicate: exact copy of Group 3/Rater 3a/delineated /SUBC016_ses1_Rater3a.nii.gz,not copied,
+Group 3/Rater 3a/SUBC017_ses01_Rater3a.nii,duplicate: exact copy of Group 3/Rater 3a/delineated /SUBC017_ses01_Rater3a.nii.gz,not copied,
+Group 3/Rater 3a/SUBC020_ses01_Rater3a.nii,duplicate: exact copy of Group 3/Rater 3a/delineated /SUBC020_ses01_Rater3a.nii.gz,not copied,
+Group 3/Rater 3a/SUBC021_ses01_Rater3a.nii,duplicate: exact copy of Group 3/Rater 3a/delineated /SUBC021_ses01_Rater3a.nii.gz,not copied,
+Group 3/Rater 3a/SUBC024_ses01_Rater3a.nii,duplicate: exact copy of Group 3/Rater 3a/delineated /SUBC024_ses01_Rater3a.nii.gz,not copied,
+Group 3/Rater 3a/delineated /.DS_Store,wrong file type: macOS .DS_Store (folder settings),not copied,
+Group 3/Rater 3d/SUBC15_ses01_Rater3d_manual_seg.nii,wrong type for its name: '.nii' is a NIfTI,converted to .nii.gz,DATA/DELINEATION_CLEAN/C_015_1/C_015_1_3_3.nii.gz
+Group 3/Rater 3d/SUBC17_ses01_Rater3d_manual_seg.nii,wrong type for its name: '.nii' is a NIfTI,converted to .nii.gz,DATA/DELINEATION_CLEAN/C_017_1/C_017_1_3_3.nii.gz
+Group 4/Rater 4h/SUBC025_ses1_Rater4h_manual_seg.nii,wrong type for its name: '.nii' is a NIfTI,converted to .nii.gz,DATA/DELINEATION_CLEAN/C_025_1/C_025_1_4_2.nii.gz
+Group 4/Rater 4h/SUBC025_ses1_Rater4h_manual_seg.nii.gz,duplicate: exact copy of Group 4/Rater 4h/SUBC025_ses1_Rater4h_manual_seg.nii,not copied,
+Group 5/Rater 5a/Sub 32- Final.nii.gz,"name corrected (type ? -> C, NAME_FIXES)",placed with the corrected name,DATA/DELINEATION_CLEAN/C_032_1/C_032_1_5_1.nii.gz
+Group 5/Rater 5a/Sub 32- Final.nii.gz,"name corrected (session ? -> 1, NAME_FIXES)",placed with the corrected name,DATA/DELINEATION_CLEAN/C_032_1/C_032_1_5_1.nii.gz
+Group 5/Rater 5f/SUBJEC35_ses1_rater5f_manual_seg.nii.gz,"name corrected (type ? -> C, NAME_FIXES)",placed with the corrected name,DATA/DELINEATION_CLEAN/C_035_1/C_035_1_5_5.nii.gz
+Group 5/Rater 5f/SUBJEC36_ses1_rater5f_manual_seg.nii.gz,"name corrected (type ? -> C, NAME_FIXES)",placed with the corrected name,DATA/DELINEATION_CLEAN/C_036_1/C_036_1_5_5.nii.gz
+Group 5/Rater 5f/SUBJEC37_ses1_rater5f_manual_seg.nii.gz,"name corrected (type ? -> C, NAME_FIXES)",placed with the corrected name,DATA/DELINEATION_CLEAN/C_037_1/C_037_1_5_5.nii.gz
+Group 5/Rater 5g/SUBC032_ses1_Rater5g_manual_seg.nii,wrong type for its name: '.nii' is a NIfTI,converted to .nii.gz,DATA/DELINEATION_CLEAN/C_032_1/C_032_1_5_6.nii.gz
+Group 6/Rater 6b/SUBC040_ses1_Rater6b_manual_seg.nii,wrong type for its name: '.nii' is a NIfTI,converted to .nii.gz,DATA/DELINEATION_CLEAN/C_040_1/C_040_1_6_1.nii.gz
+Group 6/Rater 6b/SUBC041_ses1_Rater6b_manual_seg.nii,wrong type for its name: '.nii' is a NIfTI,converted to .nii.gz,DATA/DELINEATION_CLEAN/C_041_1/C_041_1_6_1.nii.gz
+Group 6/Rater 6b/SUBC042_ses1_Rater6b_manual_seg.nii,wrong type for its name: '.nii' is a NIfTI,converted to .nii.gz,DATA/DELINEATION_CLEAN/C_042_1/C_042_1_6_1.nii.gz
+Group 6/Rater 6b/SUBC043_ses1_Rater6b_manual_seg.nii,wrong type for its name: '.nii' is a NIfTI,converted to .nii.gz,DATA/DELINEATION_CLEAN/C_043_1/C_043_1_6_1.nii.gz
+Group 6/Rater 6j/SUBC041_ses2_Rater6j_manual_seg.nii.gz,"name corrected (session 2 -> 1, NAME_FIXES)",placed with the corrected name,DATA/DELINEATION_CLEAN/C_041_1/C_041_1_6_2.nii.gz
+Group 6/Rater 6j/SUBC042_ses3_Rater6j_manual_seg.nii.gz,"name corrected (session 3 -> 1, NAME_FIXES)",placed with the corrected name,DATA/DELINEATION_CLEAN/C_042_1/C_042_1_6_2.nii.gz
+Group 6/Rater 6j/SUBC043_ses4_Rater6j_manual_seg.nii.gz,"name corrected (session 4 -> 1, NAME_FIXES)",placed with the corrected name,DATA/DELINEATION_CLEAN/C_043_1/C_043_1_6_2.nii.gz
+Group 6/Rater 6j/SUBC045_ses5_Rater6j_manual_seg.nii.gz,"name corrected (session 5 -> 1, NAME_FIXES)",placed with the corrected name,DATA/DELINEATION_CLEAN/C_045_1/C_045_1_6_2.nii.gz
+Group 6/Rater 6j/SUBC047_ses6_Rater6j_manual_seg.nii.gz,"name corrected (session 6 -> 1, NAME_FIXES)",placed with the corrected name,DATA/DELINEATION_CLEAN/C_047_1/C_047_1_6_2.nii.gz
+Group 6/Rater 6j/SUBC048_ses7_Rater6j_manual_seg.nii.gz,"name corrected (session 7 -> 1, NAME_FIXES)",placed with the corrected name,DATA/DELINEATION_CLEAN/C_048_1/C_048_1_6_2.nii.gz
+Group 7/Rater 7d/SUBC50_ses01_Rater7d_manual_seg.nii.gz,MRI instead of a mask (non-integer values),not copied,
+Group 7/Rater 7d/SUBC51_ses01_Rater7d_manual_seg.nii.gz,MRI instead of a mask (non-integer values),not copied,
+Group 7/Rater 7d/SUBC52_ses01_Rater7d_manual_seg.nii.gz,MRI instead of a mask (non-integer values),not copied,
+Group 8/Rater 8b/SUB008_ses2_Rater8b_manual_seg.nii.gz,"name corrected (type ? -> C, NAME_FIXES)",placed with the corrected name,DATA/DELINEATION_CLEAN/C_008_2/C_008_2_8_2.nii.gz
+Group 9/Rater 9b/SUBC009_ses9_RATER9b_manual_seg.nii.gz,"name corrected (session 9 -> 1, NAME_FIXES)",placed with the corrected name,DATA/DELINEATION_CLEAN/C_009_1/C_009_1_9_1.nii.gz
+Group 9/Rater 9h/SUBC09_ses2_Rater9h_manual_seg.nii,wrong type for its name: '.nii' is a NIfTI,converted to .nii.gz,DATA/DELINEATION_CLEAN/C_009_2/C_009_2_9_4.nii.gz
