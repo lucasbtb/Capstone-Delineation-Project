@@ -28,10 +28,19 @@ Problèmes potentiels a rajouter
 ## Prises de décisions associées
 4. ne pas utiliser ceux avec un nuclei différent de 9 A UPDATE
 
-# Fichier 02_Easy_Clean
-Ce fichier devra corriger les problèmes 1 / 2 / 3 / 4 / 5 
-le met dans CLEAN_DELINEATION
+## build_clean_data.py - new version
 
+Takes all the data in DELINEATION_DATA.
+Makes a NEW_CLEAN_DELINATION folder.
+Organises it the following way:
+  all the delineations are put in a folder corresponding to their scan (so one folder for each C/G ID, session number combination)They are renamed using the following convention
+  '{G|C}_<ID>_{1|2}_<ratergroup>_<raterid>'
+Raters who have no delineations are removed and the other raters are renumbered accordingly.
+A first dataframe is created that identifies each G|C_Id
+We make a dataframe which has the following columns:
+index, filepath, scantype(G or C), delinationID, session number, raterID
+unclear files are renamed
+duplicates are handled
 
 # Fichier 03_Staple
 

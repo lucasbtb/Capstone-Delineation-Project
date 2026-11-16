@@ -73,14 +73,27 @@ en numpy) estime à la fois la délinéation la plus probable (la *référence*)
 vote majoritaire, un rater peu fiable pèse moins dans la référence. Le calcul se fait dans la boîte englobant
 tous les voxels non nuls du scan (+ 3 voxels), et la référence vaut 0 en dehors.
 
-Sorties (`DATA/STAPLE` vidé puis recréé à chaque exécution) :
+**Calcul rapide et léger.** STAPLE ne dépend que des votes de chaque voxel : les voxels qui ont exactement
+les mêmes votes (ex. « les 9 raters disent 5 ») sont regroupés et comptés une fois avec leur nombre.
+Le résultat est identique (vérifié sur des scans réels : même référence, mêmes statistiques), mais l'algorithme
+travaille sur quelques milliers de motifs au lieu de ~400 000 voxels : ~1 s pour un scan à 9 raters au lieu de
+~3 min, et ~300 Mo de mémoire par scan. Arrêt quand la matrice de confusion bouge de moins de 1e-6
+(au plus 1000 itérations ; un scan non convergé est signalé).
+
+**Parallèle et reprise.** Les scans sont calculés en parallèle (`--workers`, 4 par défaut). Chaque scan terminé
+est enregistré tout de suite : référence écrite sous un nom temporaire puis renommée (jamais de fichier à moitié
+écrit), lignes ajoutées aux deux CSV. Si le script est arrêté (Ctrl+C, manque de mémoire, plantage de VS Code),
+`--resume` garde les scans déjà enregistrés et calcule seulement les autres. À la fin, les CSV sont réécrits
+triés par scan et le rapport est généré.
+
+Sorties (sans `--resume`, `DATA/STAPLE` et les CSV sont vidés puis recréés) :
 - `DATA/STAPLE/<SCAN>_staple.nii.gz` : la référence (labels 0–9), sur la grille du premier masque du scan ;
 - `RESULTS/03_staple_raters.csv` : une ligne par masque : Dice vs référence par noyau, Dice moyen 1–9,
   Dice du thalamus entier, sensibilité STAPLE par noyau, spécificité du fond, volume ;
 - `RESULTS/03_staple_scans.csv` : une ligne par scan : nb de raters, itérations / convergence, volumes de la
   référence par noyau, part des voxels unanimes, part des voxels incertains (probabilité < 0.9), rater le plus faible ;
 - `RESULTS/03_staple_report.md` : résumé chiffré (vue d'ensemble, accord par noyau, scans et masques
-  les moins en accord avec la référence).
+  les moins en accord avec la référence), écrit une fois tous les scans terminés.
 
 STAPLE atténue les voxels isolés d'un seul rater (mis en minorité), mais ne les retire pas des masques eux-mêmes :
 ils baissent le Dice de ce rater dans le rapport.
@@ -103,7 +116,9 @@ python ANALYSIS/01_inventory.py                 # état des lieux
 python ANALYSIS/02_easy_clean.py                # simulation : journal seulement
 python ANALYSIS/02_easy_clean.py --apply        # crée CLEAN_DELINEATION + vérification
 python ANALYSIS/viewer/build_viewer.py          # puis ouvrir RESULTS/viewer/index.html
-python ANALYSIS/03_staple.py                    # références STAPLE (après 02 --apply)
+python ANALYSIS/03_staple.py                    # références STAPLE (après 02 --apply), 4 scans en parallèle
+python ANALYSIS/03_staple.py --workers 8        #   plus de scans en parallèle (~300 Mo chacun)
+python ANALYSIS/03_staple.py --resume           #   reprendre après une interruption
 ```
 
 ## Pas encore traité (étapes futures)

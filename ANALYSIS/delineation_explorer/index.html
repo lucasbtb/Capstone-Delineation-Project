@@ -1,0 +1,588 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Delineation Explorer</title>
+<style>
+:root {
+  --bg: #121211; --panel: #1a1a19; --panel-2: #232321; --line: #34332f;
+  --text: #f0efec; --text-2: #c3c2b7; --muted: #8d8c84;
+  --accent: #3987e5; --warn: #c98500; --bad: #e66767;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; height: 100%; background: var(--bg); color: var(--text);
+  font: 13px/1.4 system-ui, -apple-system, "Segoe UI", sans-serif; }
+body { display: grid; grid-template-columns: 310px 1fr; }
+aside { background: var(--panel); border-right: 1px solid var(--line); overflow-y: auto; padding: 14px; }
+h1 { font-size: 15px; margin: 0 0 12px; }
+h2 { font-size: 11px; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); margin: 18px 0 8px; }
+button, select { background: var(--panel-2); color: var(--text); border: 1px solid var(--line);
+  border-radius: 6px; padding: 5px 9px; font: inherit; cursor: pointer; }
+button:hover, select:hover { border-color: var(--muted); }
+button.primary { background: var(--accent); border-color: var(--accent); color: #fff; width: 100%; padding: 8px; }
+.row { display: flex; gap: 6px; align-items: center; }
+.hint { color: var(--muted); font-size: 12px; }
+.warn { color: var(--warn); font-size: 12px; }
+.err { color: var(--bad); font-size: 12px; }
+
+.file { border: 1px solid var(--line); border-left: 4px solid var(--c); border-radius: 6px;
+  padding: 7px 8px; margin-bottom: 6px; background: var(--panel-2); }
+.file.hidden { opacity: .45; }
+.file .name { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-weight: 600; }
+.file .meta { color: var(--muted); font-size: 11.5px; margin-top: 3px; }
+.file select { flex: 1; min-width: 0; padding: 3px 5px; font-size: 12px; }
+aside { overflow-x: hidden; }
+.file button { padding: 2px 7px; font-size: 12px; }
+.file input[type=color] { width: 22px; height: 22px; padding: 0; border: none; background: none; cursor: pointer; }
+
+.nuc { display: grid; grid-template-columns: 18px 14px 1fr auto; gap: 6px; align-items: center;
+  padding: 3px 4px; border-radius: 4px; cursor: pointer; user-select: none; }
+.nuc:hover { background: var(--panel-2); }
+.nuc.off { opacity: .4; }
+.sw { width: 14px; height: 14px; border-radius: 3px; }
+.nuc .key { color: var(--muted); font-size: 11px; }
+
+table.cursor { width: 100%; border-collapse: collapse; font-size: 12px; }
+table.cursor td { padding: 2px 0; }
+table.cursor td:last-child { text-align: right; white-space: nowrap; padding-left: 10px; }
+table.cursor { table-layout: fixed; } table.cursor td:last-child { width: 9em; }
+.cname { display: flex; gap: 6px; align-items: center; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+.cname .sw { flex: none; }
+
+main { display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr;
+  gap: 6px; padding: 6px; height: 100vh; position: relative; }
+#info { background: var(--panel); border: 1px solid var(--line); border-radius: 6px; padding: 12px 14px; overflow: auto; }
+#info h2 { margin-top: 0; }
+.view { position: relative; background: #000; border: 1px solid var(--line); border-radius: 6px; overflow: hidden; }
+.view canvas { position: absolute; inset: 0; width: 100%; height: 100%; cursor: crosshair; }
+.view .title { position: absolute; top: 6px; left: 8px; font-size: 12px; color: var(--text-2);
+  pointer-events: none; text-shadow: 0 0 3px #000; }
+#drop { position: fixed; inset: 0; background: rgba(57,135,229,.18); border: 3px dashed var(--accent);
+  display: none; align-items: center; justify-content: center; font-size: 20px; z-index: 10; pointer-events: none; }
+body.dragging #drop { display: flex; }
+#empty { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+  color: var(--muted); font-size: 15px; pointer-events: none; text-align: center; }
+kbd { background: var(--panel-2); border: 1px solid var(--line); border-radius: 3px; padding: 0 4px; font-size: 11px; }
+ul.help { padding-left: 16px; margin: 0; color: var(--text-2); font-size: 12px; }
+ul.help li { margin: 2px 0; }
+
+@media (max-width: 760px) {
+  html, body { height: auto; }
+  body { grid-template-columns: minmax(0, 1fr); }
+  aside { border-right: none; border-bottom: 1px solid var(--line); overflow: visible; }
+  main { grid-template-columns: 1fr; grid-template-rows: none; grid-auto-rows: 85vw; height: auto; }
+  #info { height: auto; }
+}
+</style>
+</head>
+<body>
+<aside>
+  <h1>Delineation Explorer</h1>
+  <button class="primary" id="importBtn">Import delineations…</button>
+  <input type="file" id="fileInput" multiple accept=".nii,.gz,.nii.gz" hidden>
+  <div class="hint" style="margin-top:6px">.nii or .nii.gz, several at once, or drag and drop onto the page.</div>
+  <div id="status" class="hint"></div>
+
+  <h2>Files</h2>
+  <div id="files"><div class="hint">No files.</div></div>
+
+  <h2>Nuclei</h2>
+  <div id="nuclei"></div>
+  <div class="row" style="margin-top:6px">
+    <button id="allOn">All</button><button id="allOff">None</button>
+  </div>
+
+  <h2>Display</h2>
+  <div class="row"><span style="flex:1">Fill opacity</span><input type="range" id="opacity" min="0.1" max="1" step="0.05" value="0.6"></div>
+  <div class="row" style="margin-top:8px">
+    <button id="fitBtn">Zoom to thalamus</button><button id="resetBtn">Whole volume</button>
+  </div>
+
+  <h2>Navigation</h2>
+  <ul class="help">
+    <li>Click / drag: move the cursor (updates the other views)</li>
+    <li>Wheel or <kbd>↑</kbd><kbd>↓</kbd>: change slice in the hovered view (<kbd>Shift</kbd> = ×5)</li>
+    <li>Right-drag or <kbd>Ctrl</kbd>+wheel: zoom</li>
+    <li>Middle-drag or <kbd>Ctrl</kbd>+drag: pan</li>
+    <li><kbd>1</kbd>–<kbd>9</kbd>: show / hide a nucleus, <kbd>0</kbd>: all</li>
+    <li><kbd>F</kbd>: zoom to thalamus, <kbd>R</kbd>: whole volume</li>
+  </ul>
+  <div class="hint" style="margin-top:10px">Radiological convention (as in ITK-SNAP): the patient's right is on the left of the screen.
+    Files are reoriented to RAS from their header. Nothing is sent online.</div>
+</aside>
+
+<main id="views">
+  <div id="empty">Import one or more delineations to start.</div>
+</main>
+<div id="drop">Drop files here</div>
+
+<script>
+"use strict";
+// Order of DOCUMENTATION/given_documents/colors.md, as in the viewer.
+// Label <-> nucleus mapping not confirmed: assumes label 1 = first nucleus in the list, etc.
+const NUCLEI = [
+  { label: 1, name: "LGN", color: "#40e0d0" }, { label: 2, name: "MGN", color: "#ff69b4" },
+  { label: 3, name: "Pulvinar", color: "#ffd700" }, { label: 4, name: "AV", color: "#e32626" },
+  { label: 5, name: "VA", color: "#2eb82e" }, { label: 6, name: "VLA/VLP", color: "#2a6fdb" },
+  { label: 7, name: "VPL", color: "#8b5a2b" }, { label: 8, name: "MD", color: "#8e44ad" },
+  { label: 9, name: "CM", color: "#ff8c00" },
+];
+const FILE_COLORS = ["#3987e5", "#e66767", "#4fb286", "#e5c35e", "#d55181", "#9085e9", "#5ec8e5", "#f0efec"];
+const STYLES = { fill: "Fill (nucleus colour)", outline: "Outline (file colour)", outlineNuc: "Outline (nucleus colour)" };
+const OTHER = 0;  // pseudo-nucleus: labels outside 1–9 (white)
+
+// Display axes: 0 = x (towards the patient's right, R), 1 = y (anterior, A), 2 = z (superior, S).
+// h = horizontal axis (flipped: R / A on the left of the screen, as in ITK-SNAP), v = vertical axis (up = +).
+const VIEWS = [
+  { id: "axial", title: "Axial", slice: 2, h: 0, v: 1, letters: ["R", "L", "A", "P"] },
+  { id: "coronal", title: "Coronal", slice: 1, h: 0, v: 2, letters: ["R", "L", "S", "I"] },
+  { id: "sagittal", title: "Sagittal", slice: 0, h: 1, v: 2, letters: ["A", "P", "S", "I"] },
+];
+
+const S = {
+  files: [], dims: null, vox: [1, 1, 1], cur: [0, 0, 0], zoom: 1,
+  on: new Set([OTHER, ...NUCLEI.map(n => n.label)]), opacity: 0.6, colorCount: 0,
+};
+const $ = id => document.getElementById(id);
+const hexRgb = h => [1, 3, 5].map(i => parseInt(h.slice(i, i + 2), 16));
+const NUC_RGB = Array.from({ length: 256 }, (_, l) => {
+  const n = NUCLEI.find(n => n.label === l);
+  return n ? hexRgb(n.color) : [255, 255, 255];
+});
+const isOn = l => S.on.has(l >= 1 && l <= 9 ? l : OTHER);
+const nucName = l => (NUCLEI.find(n => n.label === l) || {}).name || "other";
+
+// ================================================================ NIfTI reading
+async function gunzip(u8) {
+  while (u8[0] === 0x1f && u8[1] === 0x8b) {  // one or more gzip layers (.nii.gz.gz)
+    const stream = new Blob([u8]).stream().pipeThrough(new DecompressionStream("gzip"));
+    u8 = new Uint8Array(await new Response(stream).arrayBuffer());
+  }
+  return u8;
+}
+
+function parseNifti(u8) {
+  const dv = new DataView(u8.buffer, u8.byteOffset, u8.byteLength);
+  let le = true, size = dv.getInt32(0, true);
+  if (size !== 348 && size !== 540) { le = false; size = dv.getInt32(0, false); }
+  if (size !== 348 && size !== 540) {
+    if (u8[0] === 0x50 && u8[1] === 0x4b) throw new Error(".zip archive: unzip it first");
+    throw new Error("not a NIfTI file");
+  }
+  const v2 = size === 540;
+  const i16 = o => dv.getInt16(o, le), i32 = o => dv.getInt32(o, le);
+  const f = v2 ? o => dv.getFloat64(o, le) : o => dv.getFloat32(o, le);
+  const i64 = o => Number(dv.getBigInt64(o, le));
+  const dim = Array.from({ length: 8 }, (_, i) => v2 ? i64(16 + 8 * i) : i16(40 + 2 * i));
+  const pix = Array.from({ length: 8 }, (_, i) => v2 ? f(104 + 8 * i) : f(76 + 4 * i));
+  const H = v2
+    ? { type: i16(12), off: i64(168), slope: f(176), inter: f(184), qcode: i32(344), scode: i32(348),
+        quat: [352, 360, 368].map(f), qoff: [376, 384, 392].map(f),
+        srow: [0, 1, 2].map(r => [0, 1, 2, 3].map(c => f(400 + 32 * r + 8 * c))) }
+    : { type: i16(70), off: f(108), slope: f(112), inter: f(116), qcode: i16(252), scode: i16(254),
+        quat: [256, 260, 264].map(f), qoff: [268, 272, 276].map(f),
+        srow: [0, 1, 2].map(r => [0, 1, 2, 3].map(c => f(280 + 16 * r + 4 * c))) };
+  const [nx, ny, nz] = [dim[1], dim[2], Math.max(dim[3], 1)];
+  const n = nx * ny * nz;
+  const warnings = [];
+  if (dim[0] > 3 && dim[4] > 1) warnings.push(`4D image (${dim[4]} volumes): only the first is shown`);
+
+  const T = { 2: [Uint8Array, 1], 256: [Int8Array, 1], 4: [Int16Array, 2], 512: [Uint16Array, 2],
+              8: [Int32Array, 4], 768: [Uint32Array, 4], 16: [Float32Array, 4], 64: [Float64Array, 8] }[H.type];
+  if (!T) throw new Error(`NIfTI data type ${H.type} not supported`);
+  const [Arr, bytes] = T, start = Math.max(H.off, v2 ? 544 : 352);
+  if (start + n * bytes > u8.byteLength) throw new Error("truncated file");
+  let raw;
+  if (le || bytes === 1) raw = new Arr(u8.slice(start, start + n * bytes).buffer);
+  else {  // big-endian: read value by value
+    raw = new Arr(n);
+    const get = { 2: "getInt16", 4: H.type === 16 ? "getFloat32" : "getInt32", 8: "getFloat64" }[bytes];
+    for (let i = 0; i < n; i++) raw[i] = dv[get](start + i * bytes, false);
+  }
+  const slope = H.slope && isFinite(H.slope) ? H.slope : 1, inter = isFinite(H.inter) ? H.inter : 0;
+  const labels = new Uint8Array(n);
+  let nonInt = 0, clipped = 0;
+  for (let i = 0; i < n; i++) {
+    const val = raw[i] * slope + inter, r = Math.round(val);
+    if (r !== val && Math.abs(r - val) > 1e-3) nonInt++;
+    if (r < 0 || r > 255) { clipped++; labels[i] = r < 0 ? 0 : 255; } else labels[i] = r;
+  }
+  if (nonInt > n * 0.001) warnings.push("non-integer values: probably an MRI, not a mask");
+  if (clipped) warnings.push(`${clipped} voxels outside 0–255 clipped`);
+  return { dims: [nx, ny, nz], affine: affineOf(H, pix), labels, warnings };
+}
+
+function affineOf(H, pix) {
+  if (H.scode > 0) return H.srow;
+  if (H.qcode > 0) {
+    const [b, c, d] = H.quat, a = Math.sqrt(Math.max(0, 1 - b * b - c * c - d * d));
+    const R = [[a * a + b * b - c * c - d * d, 2 * (b * c - a * d), 2 * (b * d + a * c)],
+               [2 * (b * c + a * d), a * a + c * c - b * b - d * d, 2 * (c * d - a * b)],
+               [2 * (b * d - a * c), 2 * (c * d + a * b), a * a + d * d - c * c - b * b]];
+    const qfac = pix[0] < 0 ? -1 : 1, sc = [pix[1], pix[2], pix[3] * qfac];
+    return R.map((row, i) => [...row.map((x, j) => x * sc[j]), H.qoff[i]]);
+  }
+  return [[pix[1] || 1, 0, 0, 0], [0, pix[2] || 1, 0, 0], [0, 0, pix[3] || 1, 0]];
+}
+
+// Reorients the voxels to RAS (axis 0 = R, 1 = A, 2 = S) from the header affine.
+function toRAS(img) {
+  const { dims, affine, labels } = img;
+  const perm = [-1, -1, -1], flip = [false, false, false], vox = [1, 1, 1], code = [];
+  for (let i = 0; i < 3; i++) {
+    const col = [0, 1, 2].map(r => affine[r][i]);
+    const j = [0, 1, 2].reduce((m, k) => Math.abs(col[k]) > Math.abs(col[m]) ? k : m, 0);
+    if (perm[j] !== -1) { img.warnings.push("unreadable header orientation: shown as stored");
+      return { ...img, dims, vox: [1, 1, 1], orient: "?" }; }
+    perm[j] = i; flip[j] = col[j] < 0; vox[j] = Math.hypot(...col) || 1;
+    code.push(col[j] < 0 ? "LPI"[j] : "RAS"[j]);
+  }
+  const stride = [1, dims[0], dims[0] * dims[1]];
+  const nd = perm.map(i => dims[i]);
+  const step = [0, 1, 2].map(j => flip[j] ? -stride[perm[j]] : stride[perm[j]]);
+  const base = [0, 1, 2].reduce((s, j) => s + (flip[j] ? (nd[j] - 1) * stride[perm[j]] : 0), 0);
+  const out = new Uint8Array(labels.length);
+  let o = 0;
+  for (let z = 0; z < nd[2]; z++) for (let y = 0; y < nd[1]; y++) {
+    let src = base + z * step[2] + y * step[1];
+    for (let x = 0; x < nd[0]; x++, src += step[0]) out[o++] = labels[src];
+  }
+  return { ...img, dims: nd, vox, labels: out, orient: code.join("") };
+}
+
+function summarize(img) {
+  const [nx, ny] = img.dims, hist = new Uint32Array(256);
+  const lo = [Infinity, Infinity, Infinity], hi = [-1, -1, -1], sum = [0, 0, 0];
+  let fg = 0, i = 0;
+  for (let z = 0; z < img.dims[2]; z++) for (let y = 0; y < ny; y++) for (let x = 0; x < nx; x++, i++) {
+    const l = img.labels[i];
+    hist[l]++;
+    if (!l) continue;
+    fg++; sum[0] += x; sum[1] += y; sum[2] += z;
+    if (x < lo[0]) lo[0] = x; if (y < lo[1]) lo[1] = y; if (z < lo[2]) lo[2] = z;
+    if (x > hi[0]) hi[0] = x; if (y > hi[1]) hi[1] = y; if (z > hi[2]) hi[2] = z;
+  }
+  const present = [];
+  for (let l = 1; l < 256; l++) if (hist[l]) present.push(l);
+  if (!fg) return { present, fg, centroid: null, bbox: null };
+  // robust zoom box: 1st–99th percentile per axis (ignores stray voxels)
+  const prof = img.dims.map(n => new Uint32Array(n));
+  i = 0;
+  for (let z = 0; z < img.dims[2]; z++) for (let y = 0; y < ny; y++) for (let x = 0; x < nx; x++, i++)
+    if (img.labels[i]) { prof[0][x]++; prof[1][y]++; prof[2][z]++; }
+  const pct = (p, q) => { let c = 0; for (let k = 0; k < p.length; k++) if ((c += p[k]) >= q * fg) return k; return p.length - 1; };
+  return { present, fg, centroid: sum.map(s => Math.round(s / fg)),
+           bbox: [prof.map(p => pct(p, 0.01)), prof.map(p => pct(p, 0.99))] };
+}
+
+async function addFile(name, buffer) {
+  $("status").textContent = `Reading ${name}…`;
+  try {
+    const img = toRAS(parseNifti(await gunzip(new Uint8Array(buffer))));
+    Object.assign(img, summarize(img));
+    const first = !S.files.length;
+    if (first) { S.dims = img.dims; S.vox = img.vox; }
+    else if (img.dims.join() !== S.dims.join())
+      img.warnings.push(`grid ${img.dims.join("×")} ≠ ${S.dims.join("×")}: overlay is approximate`);
+    const missing = NUCLEI.map(n => n.label).filter(l => !img.present.includes(l));
+    const extra = img.present.filter(l => l > 9);
+    if (!img.fg) img.warnings.push("empty mask");
+    else {
+      if (missing.length) img.warnings.push(`missing nuclei: ${missing.join(" ")}`);
+      if (extra.length) img.warnings.push(`labels outside 1–9: ${extra.slice(0, 8).join(" ")}${extra.length > 8 ? "…" : ""}`);
+    }
+    S.files.push({ ...img, name, visible: true, style: first ? "fill" : "outline",
+                   color: FILE_COLORS[S.colorCount++ % FILE_COLORS.length] });
+    if (first) { buildViews(); requestAnimationFrame(() => fit()); } else draw();  // fit after layout
+    renderFiles();
+    $("status").textContent = "";
+  } catch (e) {
+    $("status").innerHTML = `<span class="err">${esc(name)} : ${esc(e.message)}</span>`;
+  }
+}
+
+async function addFiles(fileList) {
+  const wasEmpty = !S.files.length;
+  for (const f of [...fileList].sort((a, b) => a.name.localeCompare(b.name))) await addFile(f.name, await f.arrayBuffer());
+  if (wasEmpty && S.files.length) requestAnimationFrame(() => fit());  // zoom to the whole batch
+}
+
+const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+
+// ================================================================ views
+const V = {};  // id -> { def, canvas, ctx, off, offCtx, cu, cv }
+
+function buildViews() {
+  $("empty").remove();
+  for (const def of VIEWS) {
+    const el = document.createElement("div");
+    el.className = "view";
+    el.innerHTML = `<canvas></canvas><div class="title"></div>`;
+    $("views").appendChild(el);
+    const canvas = el.querySelector("canvas"), off = document.createElement("canvas");
+    V[def.id] = { def, el, canvas, ctx: canvas.getContext("2d"), off, offCtx: off.getContext("2d"),
+                  title: el.querySelector(".title"), cu: 0, cv: 0 };
+    attachMouse(V[def.id]);
+  }
+  const info = document.createElement("div");
+  info.id = "info";
+  info.innerHTML = `<h2>Cursor</h2><table class="cursor" id="cursor"></table>`;
+  $("views").appendChild(info);
+  new ResizeObserver(draw).observe($("views"));
+}
+
+const imgSize = def => [S.dims[def.h], S.dims[def.v]];
+function scales(view) {
+  const { def, canvas } = view, [w, h] = imgSize(def);
+  const W = canvas.clientWidth, Hh = canvas.clientHeight;
+  const fitScale = Math.min(W / (w * S.vox[def.h]), Hh / (h * S.vox[def.v]));
+  return { W, H: Hh, sx: fitScale * S.zoom * S.vox[def.h], sy: fitScale * S.zoom * S.vox[def.v], fitScale };
+}
+// voxel coordinates (h axis, v axis) <-> image coordinates (u to the right of the screen, w downwards)
+const toImg = (def, a, b) => [S.dims[def.h] - 1 - a, S.dims[def.v] - 1 - b];
+
+function renderSlice(view) {
+  const { def, off, offCtx } = view, [w, h] = imgSize(def);
+  if (off.width !== w || off.height !== h) { off.width = w; off.height = h; }
+  const im = offCtx.createImageData(w, h), px = im.data;
+  for (let i = 3; i < px.length; i += 4) px[i] = 255;
+  const alpha = S.opacity;
+  for (const F of S.files) {
+    if (!F.visible) continue;
+    const [nx, ny, nz] = F.dims, stride = [1, nx, nx * ny];
+    const s = S.cur[def.slice];
+    if (s >= F.dims[def.slice]) continue;
+    const fw = F.dims[def.h], fh = F.dims[def.v];
+    // voxel index of pixel (u, w): base + u * su + w * sw
+    const base = s * stride[def.slice] + (fw - 1) * stride[def.h] + (fh - 1) * stride[def.v];
+    const su = -stride[def.h], sw = -stride[def.v];
+    const L = F.labels, fileRGB = hexRgb(F.color), outline = F.style !== "fill";
+    const at = (u, ww) => (u < 0 || ww < 0 || u >= fw || ww >= fh) ? 0 : L[base + u * su + ww * sw];
+    for (let ww = 0; ww < Math.min(h, fh); ww++) for (let u = 0; u < Math.min(w, fw); u++) {
+      const l = L[base + u * su + ww * sw];
+      if (!l || !isOn(l)) continue;
+      const p = 4 * (ww * w + u);
+      if (outline) {
+        const nb = [at(u - 1, ww), at(u + 1, ww), at(u, ww - 1), at(u, ww + 1)];
+        if (nb.every(x => x === l)) continue;
+        const c = F.style === "outline" ? fileRGB : NUC_RGB[l];
+        px[p] = c[0]; px[p + 1] = c[1]; px[p + 2] = c[2];
+      } else {
+        const c = NUC_RGB[l];
+        px[p] += (c[0] - px[p]) * alpha; px[p + 1] += (c[1] - px[p + 1]) * alpha; px[p + 2] += (c[2] - px[p + 2]) * alpha;
+      }
+    }
+  }
+  offCtx.putImageData(im, 0, 0);
+}
+
+function drawView(view) {
+  const { def, canvas, ctx } = view, dpr = window.devicePixelRatio || 1;
+  const { W, H, sx, sy } = scales(view);
+  if (canvas.width !== Math.round(W * dpr) || canvas.height !== Math.round(H * dpr)) {
+    canvas.width = Math.round(W * dpr); canvas.height = Math.round(H * dpr);
+  }
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  ctx.fillStyle = "#000"; ctx.fillRect(0, 0, W, H);
+  renderSlice(view);
+  const [w, h] = imgSize(def), ox = W / 2 - view.cu * sx, oy = H / 2 - view.cv * sy;
+  ctx.imageSmoothingEnabled = false;
+  ctx.drawImage(view.off, ox, oy, w * sx, h * sy);
+  ctx.strokeStyle = "#34332f"; ctx.lineWidth = 1; ctx.strokeRect(ox, oy, w * sx, h * sy);
+
+  // cursor
+  const [cu, cw] = toImg(def, S.cur[def.h], S.cur[def.v]);
+  const X = ox + (cu + 0.5) * sx, Y = oy + (cw + 0.5) * sy;
+  ctx.strokeStyle = "rgba(255, 225, 77, .75)"; ctx.setLineDash([4, 4]);
+  ctx.beginPath(); ctx.moveTo(X, 0); ctx.lineTo(X, H); ctx.moveTo(0, Y); ctx.lineTo(W, Y); ctx.stroke();
+  ctx.setLineDash([]);
+
+  // orientation letters
+  ctx.fillStyle = "#c3c2b7"; ctx.font = "bold 13px system-ui"; ctx.textBaseline = "middle";
+  const [L, R, T, B] = def.letters;
+  ctx.textAlign = "left"; ctx.fillText(L, 6, H / 2);
+  ctx.textAlign = "right"; ctx.fillText(R, W - 6, H / 2);
+  ctx.textAlign = "center"; ctx.fillText(T, W / 2, 30); ctx.fillText(B, W / 2, H - 12);
+  view.title.textContent = `${def.title} — slice ${S.cur[def.slice] + 1} / ${S.dims[def.slice]}`;
+}
+
+function draw() {
+  if (!S.dims) return;
+  for (const view of Object.values(V)) drawView(view);
+  renderCursor();
+}
+
+function clampCur() { for (let a = 0; a < 3; a++) S.cur[a] = Math.max(0, Math.min(S.dims[a] - 1, S.cur[a])); }
+
+function fit() {
+  const vis = S.files.filter(f => f.visible && f.bbox);
+  if (!vis.length) return reset();
+  const lo = [0, 1, 2].map(a => Math.min(...vis.map(f => f.bbox[0][a])));
+  const hi = [0, 1, 2].map(a => Math.max(...vis.map(f => f.bbox[1][a])));
+  const mid = lo.map((l, a) => (l + hi[a]) / 2);
+  S.cur = mid.map(Math.round);
+  let zoom = Infinity;
+  for (const view of Object.values(V)) {
+    const { def } = view, [u, w] = toImg(def, mid[def.h], mid[def.v]);
+    view.cu = u + 0.5; view.cv = w + 0.5;
+    const { W, H, fitScale } = scales(view);
+    if (!W || !H) continue;
+    const bw = (hi[def.h] - lo[def.h] + 1) * S.vox[def.h] * 1.5, bh = (hi[def.v] - lo[def.v] + 1) * S.vox[def.v] * 1.5;
+    zoom = Math.min(zoom, Math.min(W / bw, H / bh) / fitScale);
+  }
+  S.zoom = isFinite(zoom) ? Math.max(1, Math.min(zoom, 20)) : 1;
+  draw();
+}
+
+function reset() {
+  S.zoom = 1;
+  for (const view of Object.values(V)) { const [w, h] = imgSize(view.def); view.cu = w / 2; view.cv = h / 2; }
+  draw();
+}
+
+// ================================================================ mouse / keyboard
+let hovered = null;
+function attachMouse(view) {
+  const { canvas, def } = view;
+  canvas.addEventListener("contextmenu", e => e.preventDefault());
+  canvas.addEventListener("mouseenter", () => hovered = view);
+  canvas.addEventListener("mouseleave", () => { if (hovered === view) hovered = null; });
+  const setCursor = e => {
+    const r = canvas.getBoundingClientRect(), { W, H, sx, sy } = scales(view);
+    const u = Math.floor((e.clientX - r.left - W / 2) / sx + view.cu);
+    const w = Math.floor((e.clientY - r.top - H / 2) / sy + view.cv);
+    S.cur[def.h] = S.dims[def.h] - 1 - u; S.cur[def.v] = S.dims[def.v] - 1 - w;
+    clampCur(); draw();
+  };
+  canvas.addEventListener("mousedown", e => {
+    e.preventDefault();
+    const mode = e.button === 2 ? "zoom" : (e.button === 1 || e.ctrlKey || e.metaKey) ? "pan" : "cursor";
+    let lastX = e.clientX, lastY = e.clientY;
+    if (mode === "cursor") setCursor(e);
+    const move = ev => {
+      const dx = ev.clientX - lastX, dy = ev.clientY - lastY;
+      lastX = ev.clientX; lastY = ev.clientY;
+      if (mode === "cursor") setCursor(ev);
+      else if (mode === "zoom") { S.zoom = Math.max(0.5, Math.min(40, S.zoom * Math.exp(-dy * 0.01))); draw(); }
+      else { const { sx, sy } = scales(view); view.cu -= dx / sx; view.cv -= dy / sy; draw(); }
+    };
+    const up = () => { removeEventListener("mousemove", move); removeEventListener("mouseup", up); };
+    addEventListener("mousemove", move); addEventListener("mouseup", up);
+  });
+  canvas.addEventListener("wheel", e => {
+    e.preventDefault();
+    if (e.ctrlKey || e.metaKey) { S.zoom = Math.max(0.5, Math.min(40, S.zoom * Math.exp(-e.deltaY * 0.002))); draw(); }
+    else moveSlice(view, (e.deltaY < 0 ? 1 : -1) * (e.shiftKey ? 5 : 1));
+  }, { passive: false });
+}
+
+function moveSlice(view, d) { S.cur[view.def.slice] += d; clampCur(); draw(); }
+
+addEventListener("keydown", e => {
+  if (e.target.matches("select, input[type=range], input[type=color]") || !S.dims) return;
+  const view = hovered || V.axial, step = e.shiftKey ? 5 : 1;
+  if (e.key === "ArrowUp" || e.key === "PageUp") { moveSlice(view, step); e.preventDefault(); }
+  else if (e.key === "ArrowDown" || e.key === "PageDown") { moveSlice(view, -step); e.preventDefault(); }
+  else if (/^[1-9]$/.test(e.key)) toggleNucleus(+e.key);
+  else if (e.key === "0") setAll(true);
+  else if (e.key === "f" || e.key === "F") fit();
+  else if (e.key === "r" || e.key === "R") reset();
+});
+
+// ================================================================ panels
+function renderFiles() {
+  const box = $("files");
+  if (!S.files.length) { box.innerHTML = `<div class="hint">No files.</div>`; return; }
+  box.innerHTML = S.files.map((F, i) => `
+    <div class="file ${F.visible ? "" : "hidden"}" style="--c:${F.color}">
+      <div class="row">
+        <input type="checkbox" data-i="${i}" data-act="vis" ${F.visible ? "checked" : ""} title="Show">
+        <span class="name" title="${esc(F.name)}">${esc(F.name)}</span>
+        <input type="color" data-i="${i}" data-act="color" value="${F.color}" title="File colour">
+      </div>
+      <div class="row" style="margin-top:5px">
+        <select data-i="${i}" data-act="style">${Object.entries(STYLES).map(([k, t]) =>
+          `<option value="${k}" ${k === F.style ? "selected" : ""}>${t}</option>`).join("")}</select>
+        <button data-i="${i}" data-act="solo" title="Show only this file">solo</button>
+        <button data-i="${i}" data-act="del" title="Remove">×</button>
+      </div>
+      <div class="meta">${F.dims.join("×")} · header ${F.orient} · ${(F.fg / 1000).toFixed(1)} cm³ · labels ${F.present.slice(0, 12).join(" ") || "—"}</div>
+      ${F.warnings.map(w => `<div class="warn">⚠ ${esc(w)}</div>`).join("")}
+    </div>`).join("");
+}
+
+$("files").addEventListener("input", e => {
+  const i = +e.target.dataset.i, F = S.files[i], act = e.target.dataset.act;
+  if (!F) return;
+  if (act === "vis") F.visible = e.target.checked;
+  if (act === "color") F.color = e.target.value;
+  if (act === "style") F.style = e.target.value;
+  if (act !== "color") renderFiles(); else e.target.closest(".file").style.setProperty("--c", F.color);
+  draw();
+});
+$("files").addEventListener("click", e => {
+  const act = e.target.dataset.act, i = +e.target.dataset.i;
+  if (act === "solo") S.files.forEach((F, j) => F.visible = j === i);
+  else if (act === "del") {
+    S.files.splice(i, 1);
+    if (!S.files.length) return location.reload();
+  } else return;
+  renderFiles(); draw();
+});
+
+function renderNuclei() {
+  const rows = [...NUCLEI, { label: OTHER, name: "other labels", color: "#ffffff" }];
+  $("nuclei").innerHTML = rows.map(n => `
+    <div class="nuc ${S.on.has(n.label) ? "" : "off"}" data-l="${n.label}">
+      <input type="checkbox" ${S.on.has(n.label) ? "checked" : ""} tabindex="-1">
+      <span class="sw" style="background:${n.color}"></span>
+      <span>${n.label ? n.label + " · " : ""}${n.name}</span>
+      <span class="key">${n.label ? "key " + n.label : "outside 1–9"}</span>
+    </div>`).join("");
+}
+function toggleNucleus(l) { S.on.has(l) ? S.on.delete(l) : S.on.add(l); renderNuclei(); draw(); }
+function setAll(v) { [OTHER, ...NUCLEI.map(n => n.label)].forEach(l => v ? S.on.add(l) : S.on.delete(l)); renderNuclei(); draw(); }
+$("nuclei").addEventListener("click", e => { const row = e.target.closest(".nuc"); if (row) toggleNucleus(+row.dataset.l); });
+$("allOn").onclick = () => setAll(true);
+$("allOff").onclick = () => setAll(false);
+
+function renderCursor() {
+  const [x, y, z] = S.cur;
+  const rows = [`<tr><td>Voxel (RAS)</td><td>${x}, ${y}, ${z}</td></tr>`];
+  for (const F of S.files) {
+    const inside = x < F.dims[0] && y < F.dims[1] && z < F.dims[2];
+    const l = inside ? F.labels[x + F.dims[0] * (y + F.dims[1] * z)] : 0;
+    rows.push(`<tr><td><div class="cname" title="${esc(F.name)}"><span class="sw" style="background:${F.color}"></span>
+      ${esc(F.name)}</div></td><td>${l ? l + " · " + nucName(l) : "—"}</td></tr>`);
+  }
+  $("cursor").innerHTML = rows.join("");
+}
+
+// ================================================================ import
+$("importBtn").onclick = () => $("fileInput").click();
+$("fileInput").onchange = e => { addFiles(e.target.files); e.target.value = ""; };
+$("opacity").oninput = e => { S.opacity = +e.target.value; draw(); };
+$("fitBtn").onclick = () => fit();
+$("resetBtn").onclick = () => reset();
+let dragDepth = 0;
+addEventListener("dragenter", e => { e.preventDefault(); dragDepth++; document.body.classList.add("dragging"); });
+addEventListener("dragleave", () => { if (--dragDepth <= 0) { dragDepth = 0; document.body.classList.remove("dragging"); } });
+addEventListener("dragover", e => e.preventDefault());
+addEventListener("drop", e => {
+  e.preventDefault(); dragDepth = 0; document.body.classList.remove("dragging");
+  addFiles(e.dataTransfer.files);
+});
+
+renderNuclei();
+
+// Files passed on the command line to delineation_explorer.py (page served locally)
+if (location.protocol.startsWith("http")) {
+  fetch("preload.json").then(r => r.ok ? r.json() : []).then(async list => {
+    for (const f of list) await addFile(f.name, await (await fetch(f.url)).arrayBuffer());
+    if (S.files.length) requestAnimationFrame(() => fit());
+  }).catch(() => {});
+}
+</script>
+</body>
+</html>
