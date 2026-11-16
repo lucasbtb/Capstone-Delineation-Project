@@ -25,6 +25,7 @@ delineation_explorer/   opens any .nii / .nii.gz in a local page (independent of
 |---|---|
 | `build_clean_data.py` | Initial problems: cleans and reorganises the raw delineations (~7 s) |
 | `staple.py` | STAPLE reference delineation per scan (~10 s) |
+| `explore_delineations.ipynb` | Notebook summarising `delineations.csv` with charts: delineations by type and session, raters per scan (STAPLE threshold), sessions per subject, per group / rater, problems flagged, what the cleaning did. Read-only |
 | `helpers.py` | Shared helpers: reading files whatever their format, reading names, Dice, reorientation |
 | `fix_problems.py` | Further problems: one function per problem, flags each delineation and fixes it in place (~20 s) |
 | `viewer/` | Web page comparing the raters of a subject, plus a CSV reader (`docs/viewer.md`) |
@@ -192,3 +193,4 @@ vs the reference 0.77, whole-thalamus Dice 0.88; 14 masks with a mean Dice < 0.5
 - 2026-11-15 — STAPLE back to 3 raters minimum (instructions updated). Every report is named after the script that
   writes it + `_report` and saved in `RESULTS/`: `build_clean_data_report.csv` (moved from `DATA/DELINEATION_CLEAN`),
   `staple_report.md`, `staple_report_raters.csv`, `staple_report_scans.csv` (were `03_staple_*`).
+- 2026-11-15 — `explore_delineations.ipynb` added (data summary charts); `matplotlib==3.11.2` added to `requirements.txt`.
