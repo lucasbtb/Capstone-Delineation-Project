@@ -1,27 +1,29 @@
 """
-build_viewer.py — Prepares the local website for comparing delineations.
+build_viewer.py — Prepares the local website for comparing the delineations of DATA/DELINEATION_CLEAN.
 
-Shows, for each subject:
-  - every delineation of DATA/DELINEATION_CLEAN (output of build_clean_data.py), as listed in its
-    delineations.csv. Status, from RESULTS/build_clean_data_report.csv (column new_file):
-      clean    = copied unchanged from the raw data
-      fixed    = copied with a change (converted, reoriented, name corrected), reason shown
-  - every raw file of DATA/DELINEATION_DATA that build_clean_data.py did not copy (build_clean_data_report.csv,
-    action "not copied"): status excluded, with the reason.
-Keeps only the non-zero voxels inside the subject's common bounding box, and writes:
+Only shows the clean data, i.e. the output of the analysis (build_clean_data.py, then fix_problems.py,
+then optionally staple.py). One page per scan (C|G ID + session, e.g. C_001_1), with:
+  - every delineation listed in DATA/DELINEATION_CLEAN/delineations.csv for that scan, with the
+    <problem>_flag / <problem>_fix columns written by fix_problems.py (a problem without columns = not run);
+  - the delineations whose file fix_problems.py deleted: listed, red-flagged with the reason, not drawable
+    (their file no longer exists);
+  - the STAPLE reference DATA/STAPLE/<scan>_staple.nii.gz (staple.py), as an extra layer, when it exists.
+Raw files of DATA/DELINEATION_DATA are never read.
+
+Keeps only the non-zero voxels inside the scan's common bounding box, and writes:
   RESULTS/viewer/index.html          (copy of ANALYSIS/viewer/index.html)
-  RESULTS/viewer/data/index.js       (list of subjects)
-  RESULTS/viewer/data/<SUBJECT>.js   (masks of the subject, base64-encoded)
-Also computes exploratory checks (help to detect problems, not in the cleaning yet):
+  RESULTS/viewer/data/index.js       (list of scans)
+  RESULTS/viewer/data/<SCAN>.js      (masks of the scan, base64-encoded)
+Also computes exploratory checks (help to detect problems not handled by fix_problems.py yet):
   volume of each label per side (L/R), fragments (pieces separate from the main block),
   gaps between slices, voxels outside the displayed frame.
-Files and names are read with the shared functions of ANALYSIS/helpers.py.
-Rerun this script after build_clean_data.py.
+Rerun this script after build_clean_data.py / fix_problems.py / staple.py.
 
 Then open RESULTS/viewer/index.html in a browser (no server, no data sent online).
 Does not modify any file of DATA/.
 
-Usage: python ANALYSIS/viewer/build_viewer.py [SUBJECT ...]   (e.g. C_001; no argument = every subject)
+Usage: python ANALYSIS/viewer/build_viewer.py [SCAN|SUBJECT ...]
+       (e.g. C_001_1, or C_001 for both sessions; no argument = every scan)
 """
 
 import base64
@@ -38,16 +40,16 @@ from scipy import ndimage
 from scipy.spatial import cKDTree
 
 HERE = Path(__file__).resolve().parent
-sys.path.insert(0, str(HERE.parent))  # helpers.py is in ANALYSIS/
-from helpers import get_labels, load, scan_key  # noqa: E402
+sys.path.insert(0, str(HERE.parent))  # helpers.py and fix_problems.py are in ANALYSIS/
+from helpers import get_labels, load  # noqa: E402
+from fix_problems import PROBLEMS  # noqa: E402  (names and order of the problems)
 import build_tables  # noqa: E402  (same folder as this script)
 
 ROOT = HERE.parents[1]
-DATA = ROOT / "DATA" / "DELINEATION_DATA"
 OUT = ROOT / "RESULTS" / "viewer"
 CLEAN = ROOT / "DATA" / "DELINEATION_CLEAN"
 DELINEATIONS = CLEAN / "delineations.csv"
-REPORT = ROOT / "RESULTS" / "build_clean_data_report.csv"
+STAPLE = ROOT / "DATA" / "STAPLE"
 MARGIN = 12  # voxels around the frame
 STRUCT = np.ones((3, 3, 3), bool)  # 26-connectivity: two voxels touching by a corner = same piece
 ISOLATED_MM = 3  # fragment more than 3 mm from its main block = "isolated" (otherwise "detached")
@@ -73,48 +75,36 @@ def b64(arr):
     return base64.b64encode(np.ascontiguousarray(arr).tobytes()).decode("ascii")
 
 
-def safe(subject):
-    return subject.replace("?", "X")
+def problems_of(row):
+    """[name, flag, fix] for every problem of fix_problems.py, in order.
+    flag = True / False, or None when the problem has not been run (no column, or empty cell)."""
+    out = []
+    for name in PROBLEMS:
+        flag = row.get(f"{name}_flag", "")
+        out.append([name, None if flag == "" else flag == "True", row.get(f"{name}_fix", "")])
+    return out
 
 
-def read_rows(path):
-    """Rows of a CSV; empty (with a warning) if the file is missing."""
-    if not path.exists():
-        print(f"⚠ {path.relative_to(ROOT)} missing: run build_clean_data.py first")
-        return []
-    with open(path, newline="", encoding="utf-8-sig") as f:
-        return list(csv.DictReader(f))
-
-
-def list_files():
-    """Delineations to show: every file of DELINEATION_CLEAN (clean / fixed) and every raw file
-    that build_clean_data.py did not copy (excluded), with status, reason, subject and session."""
-    report = read_rows(REPORT)
-    fixes, excluded = defaultdict(list), defaultdict(list)
-    for r in report:
-        if r["action"].startswith("not copied"):
-            excluded[r["original_file"]].append(r["issue"])
-        elif r["new_file"]:
-            fixes[r["new_file"]].append(r["issue"])
-
-    files = []
-    for row in read_rows(DELINEATIONS):
-        if not (ROOT / row["filepath"]).exists():
-            continue  # deleted by fix_problems.py (e.g. wrong number of nuclei)
-        done = fixes.get(row["filepath"], [])
-        files.append({"path": ROOT / row["filepath"], "file": row["filepath"],
-                      "group": row["raterID"].split("_")[0], "rater": row["raterID"],
-                      "subject": f"{row['scantype']}_{row['delineationID']}", "session": row["session"],
-                      "step": "fixed" if done else "clean", "reason": "; ".join(done)})
-    for rel, issues in excluded.items():
-        parts = Path(rel).parts
-        scan = scan_key(parts[-1])  # 'SUBC001_ses1' -> subject 'C_001', session '1' ('?' if unreadable)
-        subject, session = (f"{scan[3]}_{scan[4:7]}", scan.split("_ses")[1]) if scan else (None, None)
-        files.append({"path": DATA / rel, "file": (DATA / rel).relative_to(ROOT).as_posix(),
-                      "group": parts[0].strip().replace("Group ", ""),
-                      "rater": parts[1].strip().replace("Rater ", ""),
-                      "subject": subject, "session": session, "step": "excluded", "reason": "; ".join(issues)})
-    return files
+def list_scans():
+    """{scan: [delineation, ...]} from delineations.csv, plus the STAPLE reference of each scan if it exists."""
+    if not DELINEATIONS.exists():
+        print(f"⚠ {DELINEATIONS.relative_to(ROOT)} missing: run build_clean_data.py (then fix_problems.py) first")
+        return {}
+    with open(DELINEATIONS, newline="", encoding="utf-8-sig") as f:
+        rows = list(csv.DictReader(f))
+    scans = defaultdict(list)
+    for row in rows:
+        scan = f"{row['scantype']}_{row['delineationID']}_{row['session']}"
+        path = ROOT / row["filepath"]
+        scans[scan].append({"path": path, "file": row["filepath"], "kind": "rater", "deleted": not path.exists(),
+                            "rater": row["raterID"], "group": row["raterID"].split("_")[0],
+                            "problems": problems_of(row)})
+    for scan, files in scans.items():
+        ref = STAPLE / f"{scan}_staple.nii.gz"
+        if ref.exists():
+            files.append({"path": ref, "file": ref.relative_to(ROOT).as_posix(), "kind": "staple", "deleted": False,
+                          "rater": "STAPLE", "group": "", "problems": []})
+    return scans
 
 
 def gaps_of(pts, lo):
@@ -178,23 +168,25 @@ def controls(data):
     return {"stats": stats, "gaps": gaps, "frags": frags[:MAX_FRAGS], "nfrag": nfrag}
 
 
-def build_subject(subject, files):
-    vols, metas = [], []
+def build_scan(scan, files):
+    vols, metas, deleted = [], [], []
     for f in files:
+        meta = {k: f[k] for k in ("file", "kind", "rater", "group", "problems")}
+        if f["deleted"]:  # deleted by fix_problems.py: listed with its reason, nothing to draw
+            deleted.append({**meta, "deleted": True})
+            continue
         _, _, data = load(f["path"])
         labels = get_labels(data) if data is not None else None
         if not labels:
-            continue  # unreadable, MRI instead of a mask, empty
+            print(f"   ⚠ {f['file']}: unreadable or empty, skipped")
+            continue
         data = np.rint(data).astype(np.int64)
         vols.append(data)
-        metas.append({
-            "rater": f["rater"], "group": f["group"].replace("Group ", ""),
-            "session": f["session"], "file": f["file"], "labels": sorted(labels),
-            "nvox": int(np.count_nonzero(data)), "step": f["step"], "reason": f["reason"],
-            **controls(data),
-        })
-    if not vols:
-        return None
+        metas.append({**meta, "deleted": False, "labels": sorted(labels),
+                      "nvox": int(np.count_nonzero(data)), **controls(data)})
+    if not vols:  # every delineation of the scan was deleted: list them, nothing to draw
+        return {"scan": scan, "shape": None, "bbox": None, "problems": list(PROBLEMS),
+                "dels": sorted(deleted, key=lambda m: (m["group"].zfill(2), m["rater"]))} if deleted else None
 
     # Common frame = 0.1–99.9 % percentiles of the voxels of every delineation
     # (stray voxels far from the thalamus would otherwise stretch the frame).
@@ -213,61 +205,67 @@ def build_subject(subject, files):
         m["far"] = b64(far.astype("<u2"))
         m["far_lab"] = b64(np.clip(v[tuple(far.T)], 0, 65535).astype("<u2"))
 
-    dels = []
-    order = sorted(range(len(vols)), key=lambda i: (metas[i]["session"] or "", metas[i]["group"].zfill(2), metas[i]["rater"]))
-    for i in order:
+    # order: STAPLE reference first, then the raters (group, rater), the deleted ones at their place
+    key = lambda m: (m["kind"] != "staple", m["group"].zfill(2), m["rater"])
+    drawn = []
+    for i in sorted(range(len(vols)), key=lambda i: key(metas[i])):
         crop = vols[i][lo[0]:hi[0], lo[1]:hi[1], lo[2]:hi[2]]
         x, y, z = np.nonzero(crop)
         idx = (x + nx * (y + ny * z)).astype("<u4")  # flat index, x varies fastest
         lab = np.clip(crop[x, y, z], 0, 65535).astype("<u2")
-        dels.append({**metas[i], "idx": b64(idx), "lab": b64(lab)})
+        drawn.append({**metas[i], "idx": b64(idx), "lab": b64(lab)})
+    dels = sorted(drawn + deleted, key=key)
 
-    return {"subject": subject, "shape": list(shape),
+    return {"scan": scan, "shape": list(shape),
             "bbox": {"x0": lo[0], "y0": lo[1], "z0": lo[2], "nx": nx, "ny": ny, "nz": nzz},
-            "dels": dels}
+            "problems": list(PROBLEMS), "dels": dels}
 
 
 def main(only):
-    by_subject = defaultdict(list)
-    for f in list_files():
-        if f["subject"]:
-            by_subject[f["subject"]].append(f)
-
-    (OUT / "data").mkdir(parents=True, exist_ok=True)
+    scans = list_scans()
+    data_dir = OUT / "data"
+    data_dir.mkdir(parents=True, exist_ok=True)
     shutil.copy(HERE / "index.html", OUT / "index.html")
     build_tables.main()  # CSV reader: RESULTS/viewer/tables.html
 
-    index_path = OUT / "data" / "index.js"
+    index_path = data_dir / "index.js"
     index = {}
-    if index_path.exists() and only:  # partial update: keep the other subjects
+    if index_path.exists() and only:  # partial update: keep the other scans
         txt = index_path.read_text(encoding="utf-8")
         txt = txt[txt.index("window.VIEWER_INDEX=") + len("window.VIEWER_INDEX="):].rstrip().rstrip(";")
-        index = {s["subject"]: s for s in json.loads(txt)}
+        index = {s["scan"]: s for s in json.loads(txt) if "scan" in s}
+    if not only:  # full build: remove the data files of scans (or of an older version) no longer shown
+        for p in data_dir.glob("*.js"):
+            if p.name not in ("index.js", "tables.js"):
+                p.unlink()
 
-    for subject in sorted(by_subject):
-        if only and subject not in only:
+    for scan in sorted(scans):
+        if only and scan not in only and scan.rsplit("_", 1)[0] not in only:
             continue
-        payload = build_subject(subject, by_subject[subject])
+        payload = build_scan(scan, scans[scan])
         if payload is None:
+            index.pop(scan, None)
+            (data_dir / f"{scan}.js").unlink(missing_ok=True)
             continue
-        name = safe(subject)
-        (OUT / "data" / f"{name}.js").write_text(
-            f"window.VIEWER_DATA=window.VIEWER_DATA||{{}};window.VIEWER_DATA[{json.dumps(subject)}]="
+        (data_dir / f"{scan}.js").write_text(
+            f"window.VIEWER_DATA=window.VIEWER_DATA||{{}};window.VIEWER_DATA[{json.dumps(scan)}]="
             + json.dumps(payload, separators=(",", ":")) + ";", encoding="utf-8")
-        # (session, status) of each delineation: the page counts according to the chosen filter
-        index[subject] = {"subject": subject, "file": name,
-                          "dels": [[d["session"], d["step"]] for d in payload["dels"]]}
-        print(f"{subject:8s} {len(payload['dels']):2d} delineations")
+        raters = [d for d in payload["dels"] if d["kind"] == "rater"]
+        index[scan] = {"scan": scan, "file": scan,
+                       "n": sum(not d["deleted"] for d in raters), "ndeleted": sum(d["deleted"] for d in raters),
+                       "staple": any(d["kind"] == "staple" for d in payload["dels"])}
+        e = index[scan]
+        print(f"{scan:9s} {e['n']:2d} delineations" + (f", {e['ndeleted']} deleted" if e["ndeleted"] else "")
+              + (" + STAPLE" if e["staple"] else ""))
 
     nuclei = [{"label": i + 1, "name": n, "color": c} for i, (n, c) in enumerate(NUCLEI)]
     index_path.write_text(
-        # VIEWER_BUILD: added to the URL of the subject files so that the browser
+        # VIEWER_BUILD: added to the URL of the scan files so that the browser
         # does not reuse an old cached version after a new build
         f"window.VIEWER_BUILD={int(time.time())};\n"
         f"window.VIEWER_PARAMS={json.dumps({'isolated_mm': ISOLATED_MM})};\n"
         "window.VIEWER_NUCLEI=" + json.dumps(nuclei) + ";\nwindow.VIEWER_INDEX="
-        # "?_" subjects (letter C/G missing from the name) at the end of the list
-        + json.dumps(sorted(index.values(), key=lambda s: ("?" in s["subject"], s["subject"])), indent=0) + ";",
+        + json.dumps(sorted(index.values(), key=lambda s: s["scan"]), indent=0) + ";",
         encoding="utf-8")
     print(f"\nOpen: {OUT / 'index.html'}")
 
