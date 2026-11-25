@@ -29,7 +29,7 @@ delineation_explorer/   opens any .nii / .nii.gz in a local page (independent of
 | `staple.py` | STAPLE reference delineation per scan (~10 s) |
 | `explore_delineations.ipynb` | Notebook summarising `delineations.csv` with charts: delineations by type and session, raters per scan (STAPLE threshold), sessions per subject, per group / rater, problems flagged, what the cleaning did. Read-only |
 | `helpers.py` | Shared helpers: reading files whatever their format, reading names, Dice, reorientation |
-| `fix_problems.py` | Further problems: one function per problem, flags each delineation and fixes it in place (~20 s) |
+| `fix_problems.py` | Further problems: one function per problem, flags each delineation and fixes it in place (~3 min, mostly `stray_points`) |
 | `viewer/` | Web page comparing the raters of a scan with each other and with the STAPLE reference, showing the `fix_problems.py` flags; plus a CSV reader (`docs/viewer.md`) |
 | `delineation_explorer/` | Web page to open any delineation files (`delineation_explorer/delineation_explorer.md`) |
 
@@ -115,7 +115,7 @@ the problem columns: rerun `fix_problems.py` after it.
 |---|---|---|---|
 | 1 | Do not keep files with more or fewer nuclei | `nuclei` | **Done.** Flags a mask whose labels are not exactly 1–9 (missing, extra, empty). Fix: the file is **deleted**, its row stays with the reason. On the current data: **23 delineations** (e.g. `missing 9`, `extra 10`, `missing 7; extra 12 13`); 385 remain |
 | 2 | Check the left-right orientation | `lr_flip` | Not implemented. Header orientation is already handled by `build_clean_data.py`. A test that mirrored masks matching the other raters better was tried and removed: the only file it flagged (16i SUBC002_ses2) looks like a wrong scan |
-| 3 | Stray points | `stray_points` | Not implemented. The viewer spots isolated fragments and voxels outside the frame |
+| 3 | Stray points | `stray_points` | **Done.** For each label, the connected pieces (26-connectivity) are found; the **2 largest** are the main structure (each nucleus is drawn in both hemispheres, so one piece per side). Any other piece farther than **5 mm** (`STRAY_MARGIN_MM`) from them is stray. Fix: the stray voxels are **set to 0**, the file is rewritten in place. Fix text: `fixed: 231 voxels removed (label 4: 3 pieces, 231 voxels)`. On the current data (after problem 1): **143 of 383 delineations**, 2,493 voxels removed in total (median 3 per file, max 822 on `C_003_2_16_2`, a probable wrong scan). Idempotent (checked: 143 flagged, then 0). ~2 min 40 s |
 | 4 | Incomplete delineation | `incomplete` | Not implemented. The viewer flags abnormal volumes (< 50 % or > 200 % of the median) |
 | 5 | Swapped labels | `swapped_labels` | Not implemented. Analysis so far: labels 1–6 are almost always right; mix-ups concern nuclei 7, 8, 9, and some raters used 10–13 or 35 for them (e.g. 3g: 12 → 9, 13 → 7; 5e: 35 → 9). Note: problem 1 currently deletes these files before problem 5 could relabel them |
 | 6 | Points placed far from the nuclei by mistake | `far_points` | Not implemented. Close to problem 3 |
@@ -123,7 +123,7 @@ the problem columns: rerun `fix_problems.py` after it.
 | 8 | Missing frames | `missing_frames` | Not implemented. The viewer flags gaps between slices |
 | 9 | Shifted delineation / wrong scan | `shifted_scan` | Not implemented. Known suspects: 16i SUBC002–004_ses2 (look like SUBG002–004_ses2), headers with a different origin (6j, 9b, 10j, 7c) |
 
-The parameters in "Definition précise des problèmes" (6, 7, 8) are not used yet.
+The detection parameters of the old instructions (distance to the main block, piece size, number of pieces; centre vs median, mean Dice) are not used yet, except the distance (5 mm margin of `stray_points`).
 
 ---
 
@@ -173,7 +173,18 @@ vs the reference 0.77, whole-thalamus Dice 0.88; 14 masks with a mean Dice < 0.5
 8. **Generated data must be rebuilt after a code change**, in order: `build_clean_data.py`, `fix_problems.py`,
    `staple.py`, `build_viewer.py`. Rerunning `build_clean_data.py` alone brings back the deleted files. The viewer's
    STAPLE layer is only as recent as the last `staple.py` run.
-9. **Old files left in `RESULTS/`**: `01_inventory.csv`, `02_easy_clean.csv` (from deleted scripts, with local changes)
+9. **Rerunning a fixing problem erases the record of what it fixed.** On a second run, `stray_points` finds nothing
+   left and rewrites its columns as `False` / empty: the `fixed: … voxels removed` text of the first run is lost (and
+   `staple.py` then reports `stray_points: run, 0 flagged`). `nuclei` is not affected (it skips deleted files). To
+   keep the trace, run `fix_problems.py` once after `build_clean_data.py`, or keep the previous fix text when a
+   rerun finds nothing (not done: it would change what `_flag` means).
+10. **Stray points: pieces 2–5 mm away are kept on purpose.** A 2 mm margin was tried first: it removed real parts of
+   nuclei, e.g. pieces of 50–100 voxels 3 mm below the nucleus on both sides (C_001_2 rater 7_2, G_008_1 rater 14_6),
+   i.e. a nucleus cut by 1–2 empty slices. These gaps are problem 8 (missing frames). Margins and their effect:
+   2 mm → 246 files / 4,688 voxels, 3 mm → 175 / 3,107, 5 mm → 152 / 2,621, 7 mm → 144 / 2,536 (before problem 1).
+   Beyond 5 mm the removed pieces are 7–70 mm away and mostly 1–2 voxels. A nucleus drawn on one side only would keep
+   its 2nd largest piece even if it is stray (rule "2 largest pieces", chosen over a minimum size).
+11. **Old files left in `RESULTS/`**: `01_inventory.csv`, `02_easy_clean.csv` (from deleted scripts, with local changes)
    and `02_new_delineations.csv`, `02_new_subjects.csv` (from the old `02_new_clean.py`). Nothing reads them; they
    could not be deleted automatically and are left for you to remove.
 
@@ -214,3 +225,10 @@ vs the reference 0.77, whole-thalamus Dice 0.88; 14 masks with a mean Dice < 0.5
   *reviewed*. Export as `review_viewer_<date>.xlsx` (sheets `Delineations` and `Errors`), replacing the notes CSV.
   Stored in the browser only. The manual flags are not read back by the pipeline yet: they are meant to decide which
   problem functions to implement and to check them.
+- 2026-11-25 — Problem 3 `stray_points` implemented (instruction: a voxel not adjacent, with some margin, to the main
+  structure is deleted). Main structure = the 2 largest connected pieces of each label (the largest alone would
+  delete a hemisphere: 2,868 label masks have exactly 2 pieces, left and right). Margin 5 mm instead of 2 mm (see
+  "Things to worry about" 10). Work done in the box around the delineation (~0.4 s per file instead of ~2 s).
+- 2026-11-25 — `run_problem` fix: with pandas 3, a `_flag` column read back from the CSV with empty cells (rows of
+  deleted files) is typed `str` and refused booleans, so a second run of any problem after `nuclei` crashed. The
+  columns are now converted to `object` before writing.

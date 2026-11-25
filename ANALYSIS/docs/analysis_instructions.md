@@ -19,7 +19,7 @@ To even be able to start considering further problems, we need a good base to st
 -  wrong file extension: the file is not a real .nii.gz
 -  duplicate files : same rater, same scan
 -  files are scans, not delineations
-- checks for the right orientation = RAS
+-  checks for the right orientation = RAS
 
 ## Solution
 
@@ -49,10 +49,10 @@ Now we work with the data in DATA/DELINEATIONS_CLEAN
 
 ## Problems 
 
-3. Delineation has more than 9 nuclei
-4. Delineation has less than 9 nuclei
-1. Stray points: small pieces separated from the nuclei
-1. Swapped labels: the label numbers do not match the nuclei / colours of DOCUMENTATION/given_documents/colors.md
+1. Delineation has more than 9 nuclei
+2. Delineation has less than 9 nuclei
+3. Stray points: small pieces separated from the nuclei
+4. Swapped labels: the label numbers do not match the nuclei / colours of DOCUMENTATION/given_documents/colors.md
 5. Les couleurs associées a chaque label ne correspondent pas au couleur de DCOUMENTATION/given_documents/colors.md
 1. Incomplete delineation (missing frame)
 1. The rater placed points very far from the nuclei by mistake
@@ -67,8 +67,17 @@ All the problem funcions can call helpers. All the problems functions should be 
 A main function exists in fix_problems.py that runs every other function.
 Furthermore, all functions should be able to be ran also on a single delineation.
 
-1) solution 1 ...
+2) If less than 9 nuclei dont save the delineation
 
+3) For each delineation if there exist a pixel that is not adjacent in 3D (with some margin) to the main structure of the nuclei, delete the stray points
+
+4) Swapped labels: for each delineation, build the consensus of the other raters of the same scan
+(majority vote, without the delineation itself). Match each label of the delineation, including labels
+outside 1–9 (10–13, 35…), to the consensus nucleus it overlaps most. If the best
+match is not the identity and clearly improves the agreement (Dice of the relabelled nuclei > 0.5),
+relabel the delineation; otherwise only flag it. Scans with fewer than 3 raters are only flagged, to be
+checked manually in the viewer. This problem runs before problems 1–2 (number of nuclei), so that
+relabelled delineations are not deleted.
 
 # Staple and staple.py
 

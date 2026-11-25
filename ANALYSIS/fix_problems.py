@@ -20,7 +20,7 @@ are skipped (their columns keep the values that explain why they were deleted).
 Problems (PROBLEMS below, in the order of the instructions):
   nuclei          1. more or fewer nuclei than 1-9                  -> implemented: the file is deleted
   lr_flip         2. left-right orientation                          -> not implemented yet
-  stray_points    3. stray points                                    -> not implemented yet
+  stray_points    3. stray points                                    -> implemented: stray voxels set to 0
   incomplete      4. incomplete delineation                          -> not implemented yet
   swapped_labels  5. swapped labels                                  -> not implemented yet
   far_points      6. points placed far from the nuclei by mistake    -> not implemented yet
@@ -46,6 +46,7 @@ from pathlib import Path
 import nibabel as nib
 import numpy as np
 import pandas as pd
+from scipy import ndimage
 
 from helpers import get_labels, load
 
@@ -127,9 +128,49 @@ def lr_flip(d, no_changes=False):
     raise NotImplementedError
 
 
+KEPT_PIECES = 2       # each nucleus is drawn in both hemispheres: its 2 largest pieces are the main structure
+STRAY_MARGIN_MM = 5   # a piece closer than this to the main structure is kept: part of the nucleus cut by
+                      # 1-4 empty slices (missing frames, problem 8), not a stray point (2 mm removed real pieces)
+CONNECTIVITY = np.ones((3, 3, 3), bool)  # 26-connectivity: voxels touching by a face, an edge or a corner
+
+
 def stray_points(d, no_changes=False):
-    """3. Stray points."""
-    raise NotImplementedError
+    """3. Stray points: for each label, its 2 largest connected pieces (left and right) are the main structure;
+    any other piece farther than STRAY_MARGIN_MM from them is stray. Fix: the stray voxels are set to 0."""
+    data = d.data
+    if not data.any():
+        return False, ""
+    # all the work is done in the box around the delineation (+ margin): ~20x faster than the whole volume
+    box = tuple(slice(max(s.start - STRAY_MARGIN_MM - 1, 0), s.stop + STRAY_MARGIN_MM + 1)
+                for s in ndimage.find_objects((data != 0).astype(np.int8))[0])
+    sub = data[box]
+    spacing = d.image.header.get_zooms()[:3]
+    stray = np.zeros(sub.shape, bool)
+    details = []
+    for label in sorted(get_labels(sub) or ()):
+        pieces, n = ndimage.label(sub == label, CONNECTIVITY)
+        if n <= KEPT_PIECES:
+            continue
+        sizes = np.bincount(pieces.ravel())
+        sizes[0] = 0
+        main_ids = np.argsort(sizes)[::-1][:KEPT_PIECES]
+        dist = ndimage.distance_transform_edt(~np.isin(pieces, main_ids), sampling=spacing)
+        # a piece is stray when all its voxels are farther than the margin from the main structure
+        closest = ndimage.minimum(dist, pieces, index=np.arange(1, n + 1))
+        stray_ids = [i + 1 for i, c in enumerate(closest) if c > STRAY_MARGIN_MM and i + 1 not in main_ids]
+        if stray_ids:
+            removed = np.isin(pieces, stray_ids)
+            stray |= removed
+            details.append(f"label {label}: {len(stray_ids)} pieces, {int(removed.sum())} voxels")
+    if not details:
+        return False, ""
+    detail = f"{int(stray.sum())} voxels removed ({'; '.join(details)})"
+    if no_changes:
+        return True, f"not fixed (no_changes): {detail}"
+    cleaned = data.copy()
+    cleaned[box][stray] = 0
+    d.save(cleaned)
+    return True, f"fixed: {detail}"
 
 
 def incomplete(d, no_changes=False):
@@ -194,6 +235,10 @@ def run_problem(name, table, indices=None, no_changes=False):
         if flag_col not in table:
             table[flag_col] = pd.Series("", index=table.index, dtype=object)
             table[fix_col] = pd.Series("", index=table.index, dtype=object)
+        elif table[flag_col].dtype != object:
+            # read back from the CSV, a column with empty cells is typed 'str' (pandas 3) and refuses booleans
+            table[flag_col] = table[flag_col].astype(object)
+            table[fix_col] = table[fix_col].astype(object)
         table.loc[index, flag_col], table.loc[index, fix_col] = bool(flag), fix
         if flag and not no_changes:
             save_table(table)  # the file has just changed: save the table now, so both stay in sync
