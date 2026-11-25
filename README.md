@@ -10,3 +10,4 @@ both are in the DATA folder
 
 https://drive.google.com/drive/folders/1HmK6o5iPhs-EqgodOnhW-E7jxmgKsDdD?usp=drive_link 
 
+Rule: the viewer should show the delineations as they really are and never alter the data before showing it.
