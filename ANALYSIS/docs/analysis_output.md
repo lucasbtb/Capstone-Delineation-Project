@@ -16,7 +16,9 @@ DATA/DELINEATION_DATA  (raw, from the Google Drive, never modified)
             staple.py ◄───────────────────┤  ──► DATA/STAPLE              (reference delineations)
                                           │   └─► RESULTS/staple_report.md + staple_report_*.csv
                                           │
-            viewer/build_viewer.py ◄──────┘  ──► RESULTS/viewer/index.html (visual comparison)
+            viewer/build_viewer.py ◄──────┘  ──► RESULTS/viewer/index.html (visual comparison, clean data only:
+                    ▲                             delineations.csv + problem columns + DATA/STAPLE)
+                    └──────────── DATA/STAPLE
 
 delineation_explorer/   opens any .nii / .nii.gz in a local page (independent of the pipeline)
 ```
@@ -28,7 +30,7 @@ delineation_explorer/   opens any .nii / .nii.gz in a local page (independent of
 | `explore_delineations.ipynb` | Notebook summarising `delineations.csv` with charts: delineations by type and session, raters per scan (STAPLE threshold), sessions per subject, per group / rater, problems flagged, what the cleaning did. Read-only |
 | `helpers.py` | Shared helpers: reading files whatever their format, reading names, Dice, reorientation |
 | `fix_problems.py` | Further problems: one function per problem, flags each delineation and fixes it in place (~20 s) |
-| `viewer/` | Web page comparing the raters of a subject, plus a CSV reader (`docs/viewer.md`) |
+| `viewer/` | Web page comparing the raters of a scan with each other and with the STAPLE reference, showing the `fix_problems.py` flags; plus a CSV reader (`docs/viewer.md`) |
 | `delineation_explorer/` | Web page to open any delineation files (`delineation_explorer/delineation_explorer.md`) |
 
 Run order:
@@ -72,7 +74,8 @@ Every script rebuilds its outputs from scratch: rerun the later steps after chan
 Extra output, not in the instructions: `RESULTS/build_clean_data_report.csv`, the log of everything the cleaning
 did. One row per raw file and issue: `original_file, issue, action, new_file`. `action` is "not copied…" or what
 was done (converted, reoriented, placed with the corrected name); `new_file` is the delineation it became.
-A delineation with no row was copied unchanged. The viewer reads it to show each file's status.
+A delineation with no row was copied unchanged. The viewer no longer reads it (it only shows the clean data);
+it stays readable in the viewer's CSV reader.
 
 Current result: **408 delineations from 440 raw files, 110 scans, 67 subjects, 81 raters.**
 
@@ -161,10 +164,15 @@ vs the reference 0.77, whole-thalamus Dice 0.88; 14 masks with a mean Dice < 0.5
    checked without the assignment spreadsheet, which is not on every machine.
 6. **The duplicate rule relies on file dates.** "Keep the most recently modified" assumes the modification dates
    survived the Drive download; it gives the right answer on the two current cases (the newer file is complete).
-7. **The viewer mixes two rater ID styles.** Clean delineations use the new IDs (`3_2`); excluded raw files keep
-   their folder name (`3b`), since they were never renumbered.
+   It already gives different results on different machines: on one local copy (2026-11-23) rater 15a's
+   SUBG009_ses1 `.nii` / `.nii.gz` pair was not treated as a duplicate the same way, and `nuclei` then flagged
+   **25** delineations instead of 23. Everyone should work from the same download, or the rule should not depend on dates.
+7. **The viewer cannot draw deleted delineations.** `fix_problems.py` deletes the file and `delineations.csv` does
+   not record which raw file each clean file came from, so the viewer lists them (red, with the reason) but cannot
+   show what was wrong. Keeping an `original_file` column in `delineations.csv` would allow it (instructions change).
 8. **Generated data must be rebuilt after a code change**, in order: `build_clean_data.py`, `fix_problems.py`,
-   `staple.py`, `build_viewer.py`. Rerunning `build_clean_data.py` alone brings back the deleted files.
+   `staple.py`, `build_viewer.py`. Rerunning `build_clean_data.py` alone brings back the deleted files. The viewer's
+   STAPLE layer is only as recent as the last `staple.py` run.
 9. **Old files left in `RESULTS/`**: `01_inventory.csv`, `02_easy_clean.csv` (from deleted scripts, with local changes)
    and `02_new_delineations.csv`, `02_new_subjects.csv` (from the old `02_new_clean.py`). Nothing reads them; they
    could not be deleted automatically and are left for you to remove.
@@ -194,3 +202,15 @@ vs the reference 0.77, whole-thalamus Dice 0.88; 14 masks with a mean Dice < 0.5
   writes it + `_report` and saved in `RESULTS/`: `build_clean_data_report.csv` (moved from `DATA/DELINEATION_CLEAN`),
   `staple_report.md`, `staple_report_raters.csv`, `staple_report_scans.csv` (were `03_staple_*`).
 - 2026-11-15 — `explore_delineations.ipynb` added (data summary charts); `matplotlib==3.11.2` added to `requirements.txt`.
+- 2026-11-23 — Viewer (branch `dataviz2`) based only on the clean data: one page per scan (no subject / session
+  selectors, no Clean / Excluded filter); raw files and `build_clean_data_report.csv` no longer read; each delineation
+  shows its `<problem>_flag` / `_fix` columns (problems without columns = *not run*, list taken from
+  `fix_problems.PROBLEMS`); files deleted by `fix_problems.py` listed in red with the reason (not drawable); STAPLE
+  reference added as an extra layer when `DATA/STAPLE/<scan>_staple.nii.gz` exists. Notes are now keyed by the clean
+  file path and exported as `scan, group, rater, file, problems_flagged, note, date`.
+- 2026-11-23 — Viewer: manual review. For each delineation, the automatic errors (`fix_problems.py` flags + viewer checks,
+  grouped per type / label / side) can be confirmed or rejected with a comment, errors can be added by hand (type from
+  the problems of `analysis_instructions.md`, label, side, cursor position, comment) and the delineation ticked
+  *reviewed*. Export as `review_viewer_<date>.xlsx` (sheets `Delineations` and `Errors`), replacing the notes CSV.
+  Stored in the browser only. The manual flags are not read back by the pipeline yet: they are meant to decide which
+  problem functions to implement and to check them.

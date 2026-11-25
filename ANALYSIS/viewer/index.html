@@ -66,6 +66,22 @@ aside h2:first-child { margin-top: 0; }
 .badge { display: inline-block; font-size: 10px; font-weight: 600; padding: 0 5px; border-radius: 4px;
   border: 1px solid currentColor; margin: 2px 0; }
 .badge.ok { color: var(--good); } .badge.fix { color: #6ea8f0; } .badge.ko { color: var(--bad); }
+.del.deleted { cursor: pointer; opacity: .85; }
+.del.deleted .name { text-decoration: line-through; color: var(--bad); }
+.del .flag { color: var(--bad); font-size: 11px; }
+td.left { text-align: left; }
+input.txt, .rev select { background: var(--panel-2); color: var(--text); border: 1px solid var(--line); border-radius: 6px;
+  padding: 3px 6px; font: inherit; }
+.rev table { width: 100%; }
+.rev td { vertical-align: middle; }
+.rev input.txt { width: 100%; min-width: 120px; }
+.rev .dec button { font-size: 11px; padding: 1px 7px; }
+.rev .dec button.on.ok { background: var(--good); color: #000; }
+.rev .dec button.on.ko { background: var(--bad); color: #000; }
+.rev tr.rejected td:not(.keep) { color: var(--muted); text-decoration: line-through; }
+.rev .add { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin-top: 6px; }
+.rev .head { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; margin-bottom: 6px; }
+.badge.rv { color: var(--good); }
 .del .key { color: var(--muted); font-size: 11px; font-variant-numeric: tabular-nums; }
 .del .solo { font-size: 11px; padding: 1px 6px; }
 .nuc { display: flex; align-items: center; gap: 6px; padding: 2px 0; }
@@ -112,16 +128,12 @@ textarea { width: 100%; min-height: 64px; background: var(--panel-2); color: var
 </head>
 <body>
 <header>
-  <h1>Delineations</h1>
-  <span class="ctl">Data
-    <span class="seg" id="filter">
-      <button data-v="clean" class="on" title="Every delineation of DATA/DELINEATION_CLEAN (build_clean_data.py)">Clean</button><button data-v="correct" title="Copied unchanged from the raw data (nothing in build_clean_data_report.csv)">Uncorrected</button><button data-v="rejected" title="Raw files that build_clean_data.py did not copy (build_clean_data_report.csv)">Excluded</button><button data-v="all" title="Clean and excluded together">All</button>
-    </span></span>
-  <label class="ctl">Subject <select id="subject"></select></label>
-  <span class="ctl">Session <span class="seg" id="sessions"></span></span>
+  <h1>Clean delineations</h1>
+  <label class="ctl" title="Scan = C|G ID + session (folder of DATA/DELINEATION_CLEAN)">Scan <select id="subject"></select></label>
   <span class="spacer"></span>
   <a href="tables.html" style="color:var(--accent)" title="Read delineations.csv, build_clean_data_report.csv, the STAPLE results, notes_viewer.csv…">CSV tables</a>
-  <button id="exportNotes" title="Download every note (all subjects) as CSV">Export notes (0)</button>
+  <label class="ctl" title="Your name, written in the export">Reviewer <input id="reviewer" class="txt" style="width:110px" placeholder="your name"></label>
+  <button id="exportReview" title="Download your review (every scan) as an Excel file">Export review (.xlsx)</button>
   <details class="settings" id="settings"><summary>Settings ▾</summary>
     <div class="pop">
       <span class="ctl">Display
@@ -152,8 +164,8 @@ textarea { width: 100%; min-height: 64px; background: var(--panel-2); color: var
     <div class="note" style="margin-top:6px">Labels shown by number. The nucleus name (on hover) is an unconfirmed assumption.</div>
   </aside>
   <section class="views">
-    <div id="sesWarn" class="warnbox" hidden>⚠ Several sessions shown: they are different MRIs, a voxel-by-voxel overlay has no anatomical meaning.</div>
     <div class="grid3" id="grid"></div>
+    <div class="panel"><h3 id="revTitle">Review</h3><div id="rev" class="note">Click a delineation on the left.</div></div>
     <div class="panel"><h3 id="ctlTitle">Checks</h3><div id="ctl" class="note">Click a delineation on the left.</div></div>
     <div class="panel"><h3>Overview: whole volume</h3>
       <div class="note">Every slice of the visible delineations, overlaid. Dashed line = frame of the slices above.
@@ -177,26 +189,20 @@ const NUCLEI = window.VIEWER_NUCLEI || [];
 const NUC = {}; NUCLEI.forEach(n => NUC[n.label] = n);
 const INDEX = window.VIEWER_INDEX || [];
 const ISOLATED_MM = (window.VIEWER_PARAMS || {}).isolated_mm || 3;
-// Volume of a label (per side) compared with the median of the delineations of the same session
+// Volume of a label (per side) compared with the median of the raters of the same scan
 const VOL_LOW = 0.5, VOL_HIGH = 2, MIN_PEERS = 3;
 const SIDES = ["L", "R"], SIDE_NAME = { L: "left", R: "right" };
 
-// Filter on the status computed by build_viewer.py from RESULTS/build_clean_data_report.csv: clean, fixed, excluded
-const FILTERS = {
-  clean: s => s === "clean" || s === "fixed",
-  correct: s => s === "clean",
-  rejected: s => s === "excluded",
-  all: () => true,
-};
-const STEP_BADGE = {
-  "clean": ["ok", "✓ clean"], "fixed": ["fix", "✓ fixed"], "excluded": ["ko", "✗ excluded"],
-};
-const passes = step => FILTERS[S.filter](step);
-const countFor = entry => entry.dels.filter(([, st]) => passes(st)).length;
+const STAPLE_COLOR = "#f0efec";
+// Problems of fix_problems.py, per delineation: [name, flag (true / false / null = not run), fix]
+const flagged = d => d.problems.filter(p => p[1]);
+const notRun = d => d.problems.filter(p => p[1] === null).map(p => p[0]);
+const drawable = d => !d.deleted;
+const isRater = d => d.kind === "rater";
+const delName = d => isRater(d) ? `Rater ${d.rater}` : "STAPLE reference";
 
 const S = {
-  filter: "clean",
-  subject: null, data: null, session: null, dels: [], visible: new Set(), active: null, mark: null,
+  subject: null, data: null, dels: [], visible: new Set(), active: null, mark: null,
   labelsOn: new Set(NUCLEI.map(n => n.label)), mode: "contour", colorBy: "del",
   opacity: 0.55, zoom: 1, cross: true, cur: [0, 0, 0],
 };
@@ -210,33 +216,272 @@ const labColor = l => NUC[l] ? NUC[l].color : "#ffffff";
 const labTitle = l => NUC[l] ? `unconfirmed assumption: ${NUC[l].name}` : "label outside 1–9";
 const labChip = l => `<span class="chip" style="background:${labColor(l)}"></span><span title="${labTitle(l)}">L${l}</span>`;
 
-// ---------------------------------------------------------------- notes (browser)
-const NOTES_KEY = "viewer.notes";
-let NOTES = {};
-try { NOTES = JSON.parse(localStorage.getItem(NOTES_KEY) || "{}") || {}; } catch (e) { NOTES = {}; }
-function saveNotes() {
+// ---------------------------------------------------------------- review (browser)
+// One record per delineation (key = path of the clean file), saved in this browser:
+//   reviewed / reviewedAt / reviewer, comment, decisions {autoId: {decision: "confirmed"|"rejected", comment}},
+//   manual [{id, type, label, side, pos, comment, date}], auto = snapshot of the automatic errors (for the export).
+const REVIEW_KEY = "viewer.review", OLD_NOTES_KEY = "viewer.notes";
+// Error types: the problems of fix_problems.py (analysis_instructions.md), then the viewer checks
+const ERROR_TYPES = {
+  nuclei: "more or fewer nuclei than 1–9", lr_flip: "left-right orientation", stray_points: "stray points",
+  incomplete: "incomplete delineation", swapped_labels: "swapped labels", far_points: "points far from the nuclei",
+  stopped_halfway: "rater stopped halfway", missing_frames: "missing frames (slices)", shifted_scan: "shifted delineation / wrong scan",
+  isolated_fragment: "isolated fragment (viewer)", gap: "gap between slices (viewer)", abnormal_volume: "abnormal volume (viewer)",
+  outside_frame: "voxels outside the frame (viewer)", other: "other",
+};
+const typeText = t => ERROR_TYPES[t] || t;
+const now = () => new Date().toISOString().slice(0, 16).replace("T", " ");
+let REVIEW = {};
+try { REVIEW = JSON.parse(localStorage.getItem(REVIEW_KEY) || "{}") || {}; } catch (e) { REVIEW = {}; }
+try {  // notes of the previous viewer: become the comment of the delineation
+  const old = JSON.parse(localStorage.getItem(OLD_NOTES_KEY) || "{}") || {};
+  Object.entries(old).forEach(([f, n]) => {
+    if (!REVIEW[f] && n && n.text) REVIEW[f] = { comment: n.text, updated: n.date, scan: n.scan || n.subject || "",
+      rater: n.rater || "", group: n.group || "", decisions: {}, manual: [], auto: [] };
+  });
+} catch (e) {}
+let REVIEWER = "";
+try { REVIEWER = localStorage.getItem("viewer.reviewer") || ""; } catch (e) {}
+
+function recOf(d) { return REVIEW[d.file]; }
+function ensureRec(d) {
+  return REVIEW[d.file] || (REVIEW[d.file] = { decisions: {}, manual: [], auto: [], comment: "", reviewed: false });
+}
+const hasContent = r => r && (r.reviewed || (r.comment || "").trim() || r.manual.length || Object.keys(r.decisions).length);
+function saveReview(d) {
+  if (d) {
+    const r = ensureRec(d);
+    Object.assign(r, { scan: S.subject, rater: d.rater, group: d.group, kind: d.kind, deleted: !!d.deleted,
+      auto: autoItems(d), updated: now() });
+    if (!hasContent(r)) delete REVIEW[d.file];
+  }
   let ok = true;
-  try { localStorage.setItem(NOTES_KEY, JSON.stringify(NOTES)); } catch (e) { ok = false; }
-  const m = $("noteMsg");
-  if (m) m.textContent = ok ? "Saved in this browser." : "⚠ Cannot save here: export the notes now.";
-  refreshNoteCount();
+  try { localStorage.setItem(REVIEW_KEY, JSON.stringify(REVIEW)); } catch (e) { ok = false; }
+  const m = $("revMsg");
+  if (m) m.textContent = ok ? "Saved in this browser." : "⚠ Cannot save here: export the review now.";
+  refreshReviewCount();
 }
-function setNote(d, text) {
-  if (text.trim()) NOTES[d.file] = { text, date: new Date().toISOString().slice(0, 16).replace("T", " "),
-    subject: S.subject, session: d.session, group: d.group, rater: d.rater, step: d.step };
-  else delete NOTES[d.file];
-  saveNotes();
+function refreshReviewCount() {
+  const n = Object.values(REVIEW).filter(r => r.reviewed).length;
+  $("exportReview").textContent = `Export review (.xlsx) · ${n} reviewed`;
 }
-function refreshNoteCount() { $("exportNotes").textContent = `Export notes (${Object.keys(NOTES).length})`; }
-function exportNotes() {
-  const q = v => `"${String(v == null ? "" : v).replace(/"/g, '""')}"`;
-  const rows = Object.entries(NOTES)
-    .sort((a, b) => (a[1].subject + a[0]).localeCompare(b[1].subject + b[0]))
-    .map(([f, n]) => [n.subject, n.session, n.group, n.rater, f, n.step, n.text, n.date].map(q).join(","));
-  const csv = "﻿" + ["subject,session,group,rater,file,status,note,date", ...rows].join("\r\n");
+
+// Automatic errors of a delineation, grouped per type / label / side (stable ids, so a decision survives a rebuild)
+function autoItems(d) {
+  const out = [];
+  d.problems.filter(p => p[1]).forEach(([name, , fix]) =>
+    out.push({ id: "fp:" + name, source: "fix_problems.py", type: name, label: "", side: "", detail: fix || "flagged", pos: null }));
+  if (d.deleted) return out;
+  const groups = {};
+  const add = (kind, l, s, extra) => { const k = kind + ":" + l + s; (groups[k] = groups[k] || { kind, l, s, items: [] }).items.push(extra); };
+  d.frags.filter(f => f[6] > ISOLATED_MM).forEach(f => add("isolated_fragment", f[0], f[1], f));
+  d.gaps.forEach(g => add("gap", g[0], g[1], g));
+  Object.values(groups).forEach(g => {
+    let detail, pos;
+    if (g.kind === "isolated_fragment") {
+      const big = g.items.reduce((a, b) => (b[2] > a[2] ? b : a));
+      detail = `${plural(g.items.length, "fragment")}, ${g.items.reduce((a, f) => a + f[2], 0)} vox, up to ${Math.max(...g.items.map(f => f[6]))} mm from the block`;
+      pos = big.slice(3, 6);
+    } else {
+      detail = g.items.map(x => `${"xyz"[x[2]]} = ${x[3]}${x[4] > x[3] ? "–" + x[4] : ""}`).join(", ") + " empty";
+      const x = g.items[0], st = d.stats[x[0]] && d.stats[x[0]][x[1]];
+      pos = st ? st.slice(1) : null; if (pos) pos[x[2]] = x[3];
+    }
+    out.push({ id: `${g.kind}:${g.l}${g.s}`, source: "viewer", type: g.kind, label: g.l, side: g.s, detail, pos });
+  });
+  const R = volRef(d), fl = volFlags(d, R);
+  Object.entries(fl).forEach(([k, kind]) => {
+    const l = k.slice(0, -1), s = k.slice(-1), st = d.stats[l] && d.stats[l][s];
+    out.push({ id: `abnormal_volume:${k}`, source: "viewer", type: "abnormal_volume", label: +l, side: s,
+      detail: `${kind}: ${vox(d, l, s)} vox, median ${Math.round(R.ref[k])} (${R.n} raters)`, pos: st ? st.slice(1) : null });
+  });
+  if (d.nfar) out.push({ id: "outside_frame", source: "viewer", type: "outside_frame", label: "", side: "",
+    detail: `${d.nfar} vox outside the slice frame (red in the overview)`, pos: null });
+  const order = t => Object.keys(ERROR_TYPES).indexOf(t);
+  return out.sort((a, b) => order(a.type) - order(b.type) || (+a.label || 0) - (+b.label || 0) || a.side.localeCompare(b.side));
+}
+
+const sideText = s => s ? SIDE_NAME[s] : "";
+const posText = p => p ? `(${p.join(", ")})` : "";
+function reviewSummary(d) {
+  const r = recOf(d); if (!r) return "";
+  const dec = Object.values(r.decisions), rej = dec.filter(x => x.decision === "rejected").length;
+  const parts = [];
+  if (r.manual.length) parts.push(`+${r.manual.length} added`);
+  if (rej) parts.push(`${rej} rejected`);
+  if ((r.comment || "").trim()) parts.push("📝");
+  return (r.reviewed ? '<span class="badge rv" title="Reviewed">✓ reviewed</span> ' : "") +
+    (parts.length ? `<span class="meta">${parts.join(" · ")}</span>` : "");
+}
+
+function renderReview() {
+  const d = S.dels[S.active], el = $("rev");
+  if (!d) { $("revTitle").textContent = "Review"; el.className = "note"; el.innerHTML = "Click a delineation on the left."; return; }
+  const r = recOf(d) || { decisions: {}, manual: [], comment: "", reviewed: false };
+  const autos = autoItems(d);
+  el.className = "rev";
+  $("revTitle").innerHTML = `Review: ${d.color !== "transparent" ? `<span class="chip" style="background:${d.color}"></span>` : ""}${esc(delName(d))} · ${esc(S.subject)}`;
+  const finalN = autos.filter(a => (r.decisions[a.id] || {}).decision !== "rejected").length + r.manual.length;
+  const autoRows = autos.map(a => {
+    const dc = r.decisions[a.id] || {}, dec = dc.decision || "";
+    return `<tr class="${dec === "rejected" ? "rejected" : ""}" data-id="${esc(a.id)}">
+      <td class="left">${esc(a.source === "viewer" ? "viewer check" : a.source)}</td><td class="left">${esc(typeText(a.type))}</td>
+      <td>${a.label !== "" ? labChip(+a.label) : ""}</td><td class="left">${sideText(a.side)}</td><td class="left">${esc(a.detail)}</td>
+      <td class="keep"><span class="seg dec"><button class="ok ${dec === "confirmed" ? "on" : ""}" data-dec="confirmed" title="It is an error">confirm</button><button class="ko ${dec === "rejected" ? "on" : ""}" data-dec="rejected" title="Not an error: remove it from the list">reject</button></span></td>
+      <td class="keep"><input class="txt dcom" value="${esc(dc.comment || "")}" placeholder="comment"></td>
+      <td class="keep">${a.pos && drawable(d) ? `<button class="go" data-p="${a.pos.join(",")}" data-l="${a.label}">go</button>` : ""}</td></tr>`;
+  }).join("");
+  const manRows = r.manual.map(m => `<tr data-mid="${esc(m.id)}">
+      <td class="left">${esc(typeText(m.type))}</td><td>${m.label ? labChip(+m.label) : ""}</td><td class="left">${sideText(m.side)}</td>
+      <td class="left">${posText(m.pos)}</td><td class="keep"><input class="txt mcom" value="${esc(m.comment || "")}" placeholder="comment"></td>
+      <td class="left dim">${esc(m.date || "")}</td>
+      <td class="keep">${m.pos && drawable(d) ? `<button class="go" data-p="${m.pos.join(",")}" data-l="${m.label || ""}">go</button>` : ""}
+        <button class="go mdel" title="Delete this error">✕</button></td></tr>`).join("");
+  const typeOpts = Object.entries(ERROR_TYPES).map(([k, t]) => `<option value="${k}">${esc(t)}</option>`).join("");
+  const labOpts = '<option value="">label: —</option>' + NUCLEI.map(n => `<option value="${n.label}">L${n.label}</option>`).join("");
+  // crosshair position in voxels of the original volume (read when "Add" is clicked)
+  const cursor = () => S.data && S.data.bbox ? [S.cur[0] + S.data.bbox.x0, S.cur[1] + S.data.bbox.y0, S.cur[2] + S.data.bbox.z0] : null;
+  el.innerHTML = `<div class="head">
+      <label class="ctl"><input type="checkbox" id="revDone" ${r.reviewed ? "checked" : ""}> <b>Reviewed</b></label>
+      <span class="note">${r.reviewed ? `by ${esc(r.reviewer || "—")} · ${esc(r.reviewedAt || "")}` : "Tick when you have gone through this delineation."}</span>
+      <span class="note">Final list: <b>${finalN}</b> error${finalN > 1 ? "s" : ""} (${autos.length} automatic, ${r.manual.length} added)</span></div>
+    <h4>Automatic errors: confirm or reject</h4>
+    ${autos.length ? `<table><tr><th class="left">Source</th><th class="left">Error</th><th>Label</th><th class="left">Side</th><th class="left">Detail</th><th>Decision</th><th class="left">Comment</th><th></th></tr>${autoRows}</table>`
+      : '<div class="note">No automatic error on this delineation.</div>'}
+    <h4>Errors you added</h4>
+    ${manRows ? `<table><tr><th class="left">Error</th><th>Label</th><th class="left">Side</th><th class="left">Position</th><th class="left">Comment</th><th class="left">Date</th><th></th></tr>${manRows}</table>` : '<div class="note">None yet.</div>'}
+    <div class="add">
+      <select id="mType">${typeOpts}</select><select id="mLab">${labOpts}</select>
+      <select id="mSide"><option value="">side: —</option><option value="L">left</option><option value="R">right</option></select>
+      ${cursor() && drawable(d) ? `<label class="ctl" title="Position of the crosshair when you click Add, in voxels of the original volume (move it on the slices first)"><input type="checkbox" id="mPos" checked> at the cursor</label>` : ""}
+      <input class="txt" id="mCom" placeholder="comment" style="flex:1">
+      <button id="mAdd">+ Add error</button></div>
+    <h4>Comment on this delineation</h4>
+    <textarea id="revCom" placeholder="General comment…">${esc(r.comment || "")}</textarea>
+    <div id="revMsg" class="note">Saved automatically in this browser. Export regularly.</div>`;
+
+  const commit = (rerender = true) => { saveReview(d); if (rerender) { renderReview(); renderDelList(); } };
+  $("revDone").onchange = e => {
+    const rr = ensureRec(d); rr.reviewed = e.target.checked;
+    rr.reviewedAt = rr.reviewed ? now() : ""; rr.reviewer = rr.reviewed ? REVIEWER : ""; commit();
+  };
+  el.querySelectorAll("tr[data-id]").forEach(tr => {
+    const id = tr.dataset.id;
+    tr.querySelectorAll(".dec button").forEach(btn => btn.onclick = () => {
+      const rr = ensureRec(d), cur = rr.decisions[id] || {};
+      cur.decision = cur.decision === btn.dataset.dec ? "" : btn.dataset.dec;  // click again: undecided
+      if (!cur.decision && !cur.comment) delete rr.decisions[id]; else rr.decisions[id] = cur;
+      commit();
+    });
+    const inp = tr.querySelector(".dcom");
+    inp.oninput = () => {
+      const rr = ensureRec(d), cur = rr.decisions[id] || {}; cur.comment = inp.value;
+      if (!cur.decision && !cur.comment) delete rr.decisions[id]; else rr.decisions[id] = cur;
+      commit(false);
+    };
+    inp.onchange = () => renderDelList();
+  });
+  el.querySelectorAll("tr[data-mid]").forEach(tr => {
+    const rr = ensureRec(d), m = rr.manual.find(x => x.id === tr.dataset.mid);
+    tr.querySelector(".mcom").oninput = e => { m.comment = e.target.value; commit(false); };
+    tr.querySelector(".mdel").onclick = () => { rr.manual = rr.manual.filter(x => x !== m); commit(); };
+  });
+  $("mAdd").onclick = () => {
+    const rr = ensureRec(d), usePos = $("mPos") && $("mPos").checked;
+    rr.manual.push({ id: Date.now().toString(36), type: $("mType").value, label: $("mLab").value ? +$("mLab").value : "",
+      side: $("mSide").value, pos: usePos ? cursor() : null, comment: $("mCom").value, date: now() });
+    commit();
+  };
+  $("revCom").oninput = e => { ensureRec(d).comment = e.target.value; commit(false); };
+  $("revCom").onchange = () => renderDelList();
+  el.querySelectorAll(".go[data-p]").forEach(btn => btn.onclick = () =>
+    goTo(btn.dataset.p.split(",").map(Number), d, btn.dataset.l === "" ? null : +btn.dataset.l));
+}
+
+// ---------------------------------------------------------------- Excel export (.xlsx written by hand, no library)
+const CRC_T = (() => { const t = new Uint32Array(256); for (let n = 0; n < 256; n++) { let c = n; for (let k = 0; k < 8; k++) c = c & 1 ? 0xEDB88320 ^ (c >>> 1) : c >>> 1; t[n] = c >>> 0; } return t; })();
+function crc32(b) { let c = 0xFFFFFFFF; for (let i = 0; i < b.length; i++) c = CRC_T[(c ^ b[i]) & 0xFF] ^ (c >>> 8); return (c ^ 0xFFFFFFFF) >>> 0; }
+function zipStore(files) {  // [{name, data: Uint8Array}] -> zip without compression
+  const enc = new TextEncoder(), parts = [], central = []; let off = 0;
+  const u16 = v => [v & 255, (v >>> 8) & 255], u32 = v => [v & 255, (v >>> 8) & 255, (v >>> 16) & 255, (v >>> 24) & 255];
+  files.forEach(f => {
+    const name = enc.encode(f.name), crc = crc32(f.data), n = f.data.length;
+    const common = [...u16(20), ...u16(0x0800), ...u16(0), ...u16(0), ...u16(0x21), ...u32(crc), ...u32(n), ...u32(n), ...u16(name.length), ...u16(0)];
+    const local = new Uint8Array([...u32(0x04034b50), ...common, ...name]);
+    parts.push(local, f.data);
+    central.push(new Uint8Array([...u32(0x02014b50), ...u16(20), ...common, ...u16(0), ...u16(0), ...u16(0), ...u32(0), ...u32(off), ...name]));
+    off += local.length + n;
+  });
+  const cdSize = central.reduce((a, c) => a + c.length, 0);
+  const end = new Uint8Array([...u32(0x06054b50), ...u16(0), ...u16(0), ...u16(files.length), ...u16(files.length), ...u32(cdSize), ...u32(off), ...u16(0)]);
+  return new Blob([...parts, ...central, end], { type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" });
+}
+const xmlEsc = v => String(v == null ? "" : v).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]))
+  .replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F]/g, "");
+function sheetXml(rows, widths) {
+  const col = i => { let s = ""; i++; while (i) { const m = (i - 1) % 26; s = String.fromCharCode(65 + m) + s; i = (i - 1 - m) / 26; } return s; };
+  const cell = (v, r, c, head) => typeof v === "number"
+    ? `<c r="${col(c)}${r}"${head ? ' s="1"' : ""}><v>${v}</v></c>`
+    : `<c r="${col(c)}${r}" t="inlineStr"${head ? ' s="1"' : ""}><is><t xml:space="preserve">${xmlEsc(v)}</t></is></c>`;
+  const body = rows.map((row, ri) => `<row r="${ri + 1}">${row.map((v, ci) => cell(v, ri + 1, ci, ri === 0)).join("")}</row>`).join("");
+  return `<?xml version="1.0" encoding="UTF-8" standalone="yes"?><worksheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main">` +
+    `<sheetViews><sheetView workbookViewId="0"><pane ySplit="1" topLeftCell="A2" activePane="bottomLeft" state="frozen"/></sheetView></sheetViews>` +
+    `<cols>${widths.map((w, i) => `<col min="${i + 1}" max="${i + 1}" width="${w}" customWidth="1"/>`).join("")}</cols>` +
+    `<sheetData>${body}</sheetData>` +
+    (rows.length > 1 ? `<autoFilter ref="A1:${col(rows[0].length - 1)}${rows.length}"/>` : "") + `</worksheet>`;
+}
+function xlsx(sheets) {  // [{name, rows, widths}]
+  const enc = new TextEncoder(), X = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>';
+  const R = "http://schemas.openxmlformats.org/officeDocument/2006/relationships";
+  const files = [
+    ["[Content_Types].xml", X + `<Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types"><Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/><Default Extension="xml" ContentType="application/xml"/><Override PartName="/xl/workbook.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet.main+xml"/><Override PartName="/xl/styles.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.styles+xml"/>` +
+      sheets.map((s, i) => `<Override PartName="/xl/worksheets/sheet${i + 1}.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml"/>`).join("") + `</Types>`],
+    ["_rels/.rels", X + `<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="${R}/officeDocument" Target="xl/workbook.xml"/></Relationships>`],
+    ["xl/workbook.xml", X + `<workbook xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main" xmlns:r="${R}"><sheets>` +
+      sheets.map((s, i) => `<sheet name="${xmlEsc(s.name)}" sheetId="${i + 1}" r:id="rId${i + 1}"/>`).join("") + `</sheets>` +
+      `<definedNames>${sheets.map((s, i) => s.rows.length > 1 ? `<definedName name="_xlnm._FilterDatabase" localSheetId="${i}" hidden="1">'${xmlEsc(s.name)}'!$A$1:$${String.fromCharCode(64 + Math.min(s.rows[0].length, 26))}$${s.rows.length}</definedName>` : "").join("")}</definedNames></workbook>`],
+    ["xl/_rels/workbook.xml.rels", X + `<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">` +
+      sheets.map((s, i) => `<Relationship Id="rId${i + 1}" Type="${R}/worksheet" Target="worksheets/sheet${i + 1}.xml"/>`).join("") +
+      `<Relationship Id="rId${sheets.length + 1}" Type="${R}/styles" Target="styles.xml"/></Relationships>`],
+    ["xl/styles.xml", X + `<styleSheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main"><fonts count="2"><font><sz val="11"/><name val="Calibri"/></font><font><b/><sz val="11"/><name val="Calibri"/></font></fonts><fills count="2"><fill><patternFill patternType="none"/></fill><fill><patternFill patternType="gray125"/></fill></fills><borders count="1"><border><left/><right/><top/><bottom/><diagonal/></border></borders><cellStyleXfs count="1"><xf numFmtId="0" fontId="0" fillId="0" borderId="0"/></cellStyleXfs><cellXfs count="2"><xf numFmtId="0" fontId="0" fillId="0" borderId="0" xfId="0"/><xf numFmtId="0" fontId="1" fillId="0" borderId="0" xfId="0" applyFont="1"/></cellXfs></styleSheet>`],
+    ...sheets.map((s, i) => [`xl/worksheets/sheet${i + 1}.xml`, sheetXml(s.rows, s.widths)]),
+  ];
+  return zipStore(files.map(([name, text]) => ({ name, data: enc.encode(text) })));
+}
+function exportReview() {
+  if (S.dels[S.active] && recOf(S.dels[S.active])) saveReview(S.dels[S.active]);  // refresh the snapshot of the open one
+  const recs = Object.entries(REVIEW).filter(([, r]) => hasContent(r))
+    .sort((a, b) => ((a[1].scan || "") + a[0]).localeCompare((b[1].scan || "") + b[0]));
+  const summary = [["Scan", "Rater", "Group", "File", "Deleted by fix_problems.py", "Reviewed", "Reviewer", "Reviewed at",
+    "Automatic errors", "Confirmed", "Rejected", "Not decided", "Added manually", "Final errors", "Comment", "Last change"]];
+  const errors = [["Scan", "Rater", "Group", "File", "Origin", "Error", "Label", "Side", "Position (x, y, z)", "Detail",
+    "Decision", "In final list", "Comment", "Reviewed", "Reviewer", "Date"]];
+  recs.forEach(([file, r]) => {
+    const auto = r.auto || [], dec = id => (r.decisions[id] || {}).decision || "";
+    const nConf = auto.filter(a => dec(a.id) === "confirmed").length, nRej = auto.filter(a => dec(a.id) === "rejected").length;
+    const rater = r.kind === "staple" ? "STAPLE" : r.rater || "";
+    summary.push([r.scan || "", rater, r.group || "", file, r.deleted ? "yes" : "no", r.reviewed ? "yes" : "no", r.reviewer || "",
+      r.reviewedAt || "", auto.length, nConf, nRej, auto.length - nConf - nRej, r.manual.length,
+      auto.length - nRej + r.manual.length, r.comment || "", r.updated || ""]);
+    auto.forEach(a => errors.push([r.scan || "", rater, r.group || "", file,
+      a.source === "viewer" ? "automatic: viewer check" : "automatic: " + a.source, typeText(a.type), a.label === "" ? "" : "L" + a.label,
+      sideText(a.side), posText(a.pos), a.detail, dec(a.id) || "not decided", dec(a.id) === "rejected" ? "no" : "yes",
+      (r.decisions[a.id] || {}).comment || "", r.reviewed ? "yes" : "no", r.reviewer || "", r.updated || ""]));
+    // decisions on automatic errors that no longer exist (data rebuilt since)
+    Object.entries(r.decisions).filter(([id]) => !auto.some(a => a.id === id)).forEach(([id, x]) =>
+      errors.push([r.scan || "", rater, r.group || "", file, "automatic (no longer detected)", id, "", "", "", "",
+        x.decision || "not decided", "no", x.comment || "", r.reviewed ? "yes" : "no", r.reviewer || "", r.updated || ""]));
+    r.manual.forEach(m => errors.push([r.scan || "", rater, r.group || "", file, "manual", typeText(m.type),
+      m.label ? "L" + m.label : "", sideText(m.side), posText(m.pos), "", "added", "yes", m.comment || "",
+      r.reviewed ? "yes" : "no", r.reviewer || "", m.date || ""]));
+  });
+  const blob = xlsx([
+    { name: "Delineations", rows: summary, widths: [10, 8, 7, 44, 12, 9, 12, 16, 10, 10, 9, 11, 11, 10, 50, 16] },
+    { name: "Errors", rows: errors, widths: [10, 8, 7, 44, 22, 32, 7, 7, 16, 50, 12, 10, 40, 9, 12, 16] },
+  ]);
   const a = document.createElement("a");
-  a.href = URL.createObjectURL(new Blob([csv], { type: "text/csv;charset=utf-8" }));
-  a.download = "notes_viewer.csv"; document.body.appendChild(a); a.click(); a.remove();
+  a.href = URL.createObjectURL(blob);
+  a.download = `review_viewer_${new Date().toISOString().slice(0, 10)}.xlsx`; document.body.appendChild(a); a.click(); a.remove();
   setTimeout(() => URL.revokeObjectURL(a.href), 1000);
 }
 
@@ -247,24 +492,36 @@ function decode(b64, Type) {
   return new Type(u8.buffer);
 }
 function loadSubject(subject) {
-  const entry = INDEX.find(s => s.subject === subject);
+  const entry = INDEX.find(s => s.scan === subject);
   const ready = () => {
-    const d = window.VIEWER_DATA[subject], b = d.bbox, n = b.nx * b.ny * b.nz;
-    if (d.dels.some(m => !STEP_BADGE[m.step] || !m.stats)) {  // file generated by an older version of the script
+    const d = window.VIEWER_DATA[subject], b = d.bbox, n = b ? b.nx * b.ny * b.nz : 0;
+    if (!d.problems || d.dels.some(m => !m.kind || (!m.deleted && !m.stats))) {  // generated by an older version of the script
       $("grid").innerHTML = '<div class="empty">Outdated data for ' + esc(subject) +
         ': rerun build_viewer.py then reload the page (Ctrl+Shift+R / Cmd+Shift+R).</div>';
       return;
     }
     S.subject = subject; S.data = d; S.mark = null;
+    if (!b) {  // every delineation of this scan was deleted by fix_problems.py
+      S.dels = d.dels.map((m, i) => ({ ...m, i, color: "transparent" }));
+      S.visible = new Set(); S.active = S.dels.length ? 0 : null;
+      $("grid").innerHTML = '<div class="empty">Nothing to draw: every delineation of ' + esc(subject) +
+        ' was deleted by fix_problems.py (reasons on the left).</div>';
+      $("ov").innerHTML = ""; $("hover").innerHTML = "—";
+      renderDelList(); renderCtl();
+      try { localStorage.setItem("viewer.subject", subject); } catch (e) {}
+      return;
+    }
+    let c = 0;
     S.dels = d.dels.map((m, i) => {
+      if (m.deleted) return { ...m, i, color: "transparent" };
       const vol = new Uint16Array(n), idx = decode(m.idx, Uint32Array), lab = decode(m.lab, Uint16Array);
       for (let k = 0; k < idx.length; k++) vol[idx[k]] = lab[k];
-      return { ...m, i, vol, idxArr: idx, farPts: decode(m.far, Uint16Array), color: DEL_COLORS[i % DEL_COLORS.length] };
+      const color = isRater(m) ? DEL_COLORS[c++ % DEL_COLORS.length] : STAPLE_COLOR;
+      return { ...m, i, vol, idxArr: idx, farPts: decode(m.far, Uint16Array), color };
     });
-    S.session = bestSession();
     S.cur = centerOfMass();
     resetVisible();
-    renderSessions(); renderDelList(); buildViews(); buildOverview(); renderCtl(); draw();
+    renderDelList(); buildViews(); buildOverview(); renderCtl(); draw();
     try { localStorage.setItem("viewer.subject", subject); } catch (e) {}
   };
   if (window.VIEWER_DATA && window.VIEWER_DATA[subject]) return ready();
@@ -273,27 +530,18 @@ function loadSubject(subject) {
   s.onerror = () => { $("grid").innerHTML = '<div class="empty">Fichier data/' + esc(entry.file) + '.js not found: rerun build_viewer.py</div>'; };
   document.head.appendChild(s);
 }
-function sessionCounts() {
-  const c = {};
-  S.dels.filter(d => passes(d.step)).forEach(d => c[d.session] = (c[d.session] || 0) + 1);
-  return Object.entries(c).sort((a, b) => a[0].localeCompare(b[0]));
-}
-// Default session: the one with the most delineations under the current filter
-function bestSession() {
-  const c = sessionCounts().sort((a, b) => b[1] - a[1]);
-  return c.length ? c[0][0] : "all";
-}
-function shown() {
-  return S.dels.filter(d => passes(d.step) && (S.session === "all" || d.session === S.session));
-}
+// Every row of the list (deleted ones included) / the ones that can be drawn
+function shown() { return S.dels; }
+function drawn() { return S.dels.filter(drawable); }
+// By default: the first two raters (not the STAPLE reference)
 function resetVisible() {
-  const list = shown();
-  S.visible = new Set(list.slice(0, 2).map(d => d.i));
-  S.active = list.length ? list[0].i : null;
+  const raters = drawn().filter(isRater);
+  S.visible = new Set((raters.length ? raters : drawn()).slice(0, 2).map(d => d.i));
+  S.active = S.visible.size ? [...S.visible][0] : (S.dels.length ? S.dels[0].i : null);
 }
 function centerOfMass() {
   const b = S.data.bbox; let sx = 0, sy = 0, sz = 0, c = 0;
-  const d = S.dels[0]; if (!d) return [b.nx >> 1, b.ny >> 1, b.nz >> 1];
+  const d = drawn()[0]; if (!d) return [b.nx >> 1, b.ny >> 1, b.nz >> 1];
   for (let z = 0; z < b.nz; z++) for (let y = 0; y < b.ny; y++) for (let x = 0; x < b.nx; x++)
     if (d.vol[x + b.nx * (y + b.ny * z)]) { sx += x; sy += y; sz += z; c++; }
   if (!c) return [b.nx >> 1, b.ny >> 1, b.nz >> 1];
@@ -305,9 +553,9 @@ function centerOfMass() {
 }
 
 // ---------------------------------------------------------------- checks
-// Median volume of each label/side among the delineations of the same session (current filter)
+// Median volume of each label/side among the raters of the scan (drawable ones, STAPLE reference excluded)
 function volRef(d) {
-  const peers = shown().filter(o => o.session === d.session);
+  const peers = drawn().filter(isRater);
   if (peers.length < MIN_PEERS) return { n: peers.length, ref: null };
   const keys = new Set();
   peers.forEach(o => Object.keys(o.stats).forEach(l => SIDES.forEach(s => keys.add(l + s))));
@@ -352,22 +600,40 @@ function goTo(p, d, l) {
   update();
   $("grid").scrollIntoView({ behavior: "smooth", block: "start" });
 }
+// Table of the fix_problems.py columns of a delineation
+function problemsTable(d) {
+  if (!isRater(d)) return '<div class="note">STAPLE reference (staple.py): fix_problems.py does not apply to it.</div>';
+  return `<table><tr><th>Problem</th><th>Flag</th><th class="left">Fix</th></tr>` + d.problems.map(([name, flag, fix]) =>
+    `<tr><td>${esc(name)}</td><td class="${flag ? "bad" : "dim"}">${flag === null ? "not run" : flag ? "⚑ yes" : "no"}</td>
+      <td class="left ${flag ? "bad" : "dim"}">${esc(fix || "")}</td></tr>`).join("") + "</table>";
+}
 function renderCtl() {
+  renderReview();
   const d = S.dels[S.active], el = $("ctl");
-  if (!d || !shown().includes(d)) {
+  if (!d) {
     $("ctlTitle").textContent = "Checks";
     el.className = "note"; el.innerHTML = "Click a delineation on the left."; return;
   }
   el.className = "";
+  const who = isRater(d) ? `Rater ${esc(d.rater)} · group ${esc(d.group)}` : "STAPLE reference";
+  if (d.deleted) {
+    $("ctlTitle").innerHTML = `Checks: ${who} · <span style="color:var(--bad)">deleted by fix_problems.py</span>`;
+    el.innerHTML = `<div class="ctl-grid">
+      <div><h4>Problems (fix_problems.py)</h4>${problemsTable(d)}
+        <div class="note" style="margin-top:6px">The file <code>${esc(d.file)}</code> was deleted: nothing to draw.
+        Its row stays in delineations.csv with the reason.</div></div>
+      <div></div></div>`;
+    return;
+  }
   const R = volRef(d), flags = volFlags(d, R);
-  $("ctlTitle").innerHTML = `Checks: <span class="chip" style="background:${d.color}"></span>Rater ${esc(d.rater)} · group ${esc(d.group)} · ses${esc(d.session)}`;
+  $("ctlTitle").innerHTML = `Checks: <span class="chip" style="background:${d.color}"></span>${who} · ${esc(S.subject)}`;
   const labels = new Set(Object.keys(d.stats)); if (R.ref) Object.keys(R.ref).forEach(k => labels.add(k.slice(0, -1)));
   const fr = {}, gp = {};
   d.frags.forEach(f => { const k = f[0] + f[1]; fr[k] = fr[k] || [0, 0]; fr[k][f[6] > ISOLATED_MM ? 0 : 1]++; });
   d.gaps.forEach(g => { const k = g[0] + g[1]; gp[k] = (gp[k] || 0) + 1; });
   const med = k => R.ref && R.ref[k] != null ? Math.round(R.ref[k]) : "—";
   let tbl = `<table><tr><th>Label</th><th>Side</th><th title="Number of voxels (1 voxel = 1 mm³)">Voxels</th>
-    <th title="Median of the ${R.n} delineations of ses${esc(d.session)} under the current filter">Median</th>
+    <th title="Median of the ${R.n} raters of this scan (STAPLE and deleted files excluded)">Median</th>
     <th title="Fragment more than ${ISOLATED_MM} mm from the main block">Isolated</th><th title="Fragment ${ISOLATED_MM} mm or less away">Detached</th><th>Gaps</th></tr>`;
   [...labels].sort((a, b) => a - b).forEach(l => SIDES.forEach(s => {
     const k = l + s, f = fr[k] || [0, 0], fl = flags[k];
@@ -378,8 +644,8 @@ function renderCtl() {
   }));
   tbl += "</table>";
   const refNote = R.ref
-    ? `Volume in red: less than ${VOL_LOW * 100} % or more than ${VOL_HIGH * 100} % of the median (${R.n} delineations of ses${esc(d.session)}).`
-    : `Median not computed: at least ${MIN_PEERS} delineations are needed in ses${esc(d.session)} (${R.n} here).`;
+    ? `Volume in red: less than ${VOL_LOW * 100} % or more than ${VOL_HIGH * 100} % of the median (${R.n} raters of this scan).`
+    : `Median not computed: at least ${MIN_PEERS} raters are needed in this scan (${R.n} here).`;
   const capped = d.nfrag[0] + d.nfrag[1] > d.frags.length ? ` (first ${d.frags.length} listed)` : "";
 
   const frags = d.frags.map(f => `<div class="item ${f[6] > ISOLATED_MM ? "iso" : ""}">
@@ -394,7 +660,8 @@ function renderCtl() {
   }).join("");
 
   el.innerHTML = `<div class="ctl-grid">
-    <div><h4>Volumes, fragments and gaps per label</h4>${tbl}<div class="note" style="margin-top:6px">${refNote}</div></div>
+    <div><h4>Problems (fix_problems.py)</h4>${problemsTable(d)}
+      <h4>Viewer checks: volumes, fragments and gaps per label</h4>${tbl}<div class="note" style="margin-top:6px">${refNote}</div></div>
     <div>
       <h4>Fragments: ${d.nfrag[0]} isolated (${d.nfrag[2]} vox) · ${d.nfrag[1]} detached (${d.nfrag[3]} vox)${capped}</h4>
       <div class="list">${frags || '<div class="note">None: each label forms a single block per side.</div>'}</div>
@@ -403,17 +670,11 @@ function renderCtl() {
       <h4>Outside the frame</h4>
       <div class="note">${d.nfar ? `<b style="color:${FAR_COLOR}">${d.nfar} voxels</b> outside the slice frame: in red in the overview.` : "No voxel outside the frame."}</div>
       <div id="goMsg" class="warnbox"></div>
-      <h4>Note on this delineation</h4>
-      <textarea id="noteBox" placeholder="Problem seen, to report in the instructions…">${esc(NOTES[d.file] ? NOTES[d.file].text : "")}</textarea>
-      <div id="noteMsg" class="note">${NOTES[d.file] ? "Note of " + esc(NOTES[d.file].date) : "Saved automatically in this browser."}</div>
     </div></div>`;
   el.querySelectorAll(".go").forEach(btn => btn.onclick = () => goTo(btn.dataset.p.split(",").map(Number), d, +btn.dataset.l));
-  const box = $("noteBox");
-  box.oninput = () => setNote(d, box.value);
-  box.onchange = () => renderDelList();
 }
 function setActive(i) {
-  S.active = i; S.visible.add(i); S.mark = null;
+  S.active = i; if (drawable(S.dels[i])) S.visible.add(i); S.mark = null;
   renderCtl(); update();
 }
 
@@ -476,7 +737,7 @@ function hexRGB(h) { return [1, 3, 5].map(i => parseInt(h.slice(i, i + 2), 16));
 function colorFor(d, label) { return S.colorBy === "del" ? d.color : labColor(label); }
 
 function draw() {
-  if (!S.data) return;
+  if (!S.data || !S.data.bbox) return;
   const b = S.data.bbox;
   const vis = S.dels.filter(d => S.visible.has(d.i));
   VIEWS.forEach(v => {
@@ -580,7 +841,7 @@ function buildOverview() {
   });
   // projections of each delineation, computed once per subject
   const b = S.data.bbox, nxy = b.nx * b.ny;
-  S.dels.forEach(d => {
+  drawn().forEach(d => {
     d.proj = OV.map(o => {
       const out = new Int32Array(d.idxArr.length);
       for (let k = 0; k < d.idxArr.length; k++) {
@@ -635,7 +896,7 @@ function showHover(p) {
   if (!vis.length) html += "<div>No visible delineation.</div>";
   html += "<table>" + vis.map(d => {
     const l = d.vol[k];
-    return `<tr><td><span class="chip" style="background:${d.color}"></span>${esc(d.rater)} (ses${esc(d.session)})</td>
+    return `<tr><td><span class="chip" style="background:${d.color}"></span>${esc(delName(d))}</td>
       <td style="text-align:left">${l ? labChip(l) : "—"}</td></tr>`;
   }).join("") + "</table>";
   $("hover").innerHTML = html;
@@ -646,8 +907,7 @@ function scheduleDice() { clearTimeout(diceTimer); diceTimer = setTimeout(comput
 function computeDice() {
   const vis = S.dels.filter(d => S.visible.has(d.i)), labs = [...S.labelsOn].sort((a, b) => a - b);
   const el = $("dice");
-  if (vis.length < 2) { el.innerHTML = "Show at least 2 delineations."; return; }
-  if (new Set(vis.map(d => d.session)).size > 1) { el.innerHTML = "Different sessions: Dice not meaningful."; return; }
+  if (vis.length < 2) { el.innerHTML = "Show at least 2 delineations (or a rater and the STAPLE reference)."; return; }
   // Dice per label for one pair
   const pairDice = (A, B) => {
     const inter = {}, ca = {}, cb = {};
@@ -681,39 +941,42 @@ function computeDice() {
   }
 }
 
-function renderSessions() {
-  const box = $("sessions");
-  const opts = sessionCounts().map(([k, n]) => [k, `ses${k} (${n})`]);
-  if (opts.length > 1) opts.push(["all", "all"]);
-  box.innerHTML = opts.map(([k, t]) => `<button data-v="${k}" class="${k === S.session ? "on" : ""}">${t}</button>`).join("");
-  box.querySelectorAll("button").forEach(btn => btn.onclick = () => {
-    S.session = btn.dataset.v; resetVisible(); renderSessions(); renderDelList(); renderCtl(); draw();
-  });
-  // the warning only makes sense if at least 2 sessions are really present
-  $("sesWarn").hidden = !(S.session === "all" && sessionCounts().length > 1);
+// Problems line of a row: what fix_problems.py flagged (red), or nothing flagged (green), + problems not run
+function problemsLine(d) {
+  if (!isRater(d)) return '<div class="meta">reference computed by staple.py from the raters of this scan</div>';
+  const f = flagged(d), nr = notRun(d).length, ran = d.problems.length - nr;
+  const runNote = `<span class="meta" title="Not run yet: ${esc(notRun(d).join(", "))}"> (${ran}/${d.problems.length} problems run)</span>`;
+  if (!f.length) return `<div class="okc">⚑ no problem flagged${runNote}</div>`;
+  return `<div class="flag">⚑ ${f.map(p => `${esc(p[0])}: ${esc(p[2] || "flagged")}`).join(" · ")}${runNote}</div>`;
 }
 function renderDelList() {
-  const list = shown(), refs = {};
-  const refFor = d => refs[d.session] || (refs[d.session] = volRef(d));
-  $("dels").innerHTML = list.map((d, n) => {
-    const al = alertsOf(d, refFor(d));
+  const R = volRef(null), keys = drawn();
+  $("dels").innerHTML = shown().map(d => {
+    const note = recOf(d) ? " " + reviewSummary(d) : "";
+    const fname = `<div class="meta">${esc(d.file.split(/[\\/]/).pop())}</div>`;
+    if (d.deleted) return `<div class="del deleted ${d.i === S.active ? "active" : ""}" data-i="${d.i}">
+      <input type="checkbox" disabled title="File deleted by fix_problems.py: nothing to draw">
+      <span class="sw" style="border:1px dashed var(--bad)"></span>
+      <span><span class="name">Rater ${esc(d.rater)}</span> <span class="meta">· group ${esc(d.group)}</span>${note}
+        ${fname}<div><span class="badge ko">✗ deleted</span></div>${problemsLine(d)}</span>
+      <span></span></div>`;
+    const al = alertsOf(d, R), n = keys.indexOf(d);
+    const badge = isRater(d) ? "" : '<div><span class="badge fix">STAPLE reference</span></div>';
     return `<div class="del ${S.visible.has(d.i) ? "on" : ""} ${d.i === S.active ? "active" : ""}" data-i="${d.i}">
       <input type="checkbox" title="Show / hide" ${S.visible.has(d.i) ? "checked" : ""}>
       <span class="sw" style="background:${d.color}"></span>
-      <span><span class="name">Rater ${esc(d.rater)}</span> <span class="meta">· group ${esc(d.group)} · ses${esc(d.session)} · <span style="white-space:nowrap">${d.nvox} vox</span></span>${NOTES[d.file] ? ' <span title="Note saved">📝</span>' : ""}
-        <div class="meta">${esc(d.file.split(/[\\/]/).pop())}</div>
-        <div><span class="badge ${STEP_BADGE[d.step][0]}">${STEP_BADGE[d.step][1]}</span>
-          ${d.reason ? `<span class="iss">${esc(d.reason)}</span>` : ""}</div>
-        ${al.length ? `<div class="alerts" title="Viewer checks: click for the detail">● ${al.join(" · ")}</div>` : '<div class="okc">● no check alert</div>'}</span>
+      <span><span class="name">${esc(delName(d))}</span> <span class="meta">${isRater(d) ? "· group " + esc(d.group) + " " : ""}· <span style="white-space:nowrap">${d.nvox} vox</span></span>${note}
+        ${fname}${badge}${problemsLine(d)}
+        ${al.length ? `<div class="alerts" title="Viewer checks: click for the detail">● ${al.join(" · ")}</div>` : '<div class="okc">● no viewer check alert</div>'}</span>
       <span style="display:flex;flex-direction:column;align-items:end;gap:4px">
         <span class="key">${n < 9 ? n + 1 : ""}</span><button class="solo" title="Show only this one">solo</button></span>
     </div>`;
   }).join("") || '<div class="note">No delineation.</div>';
   $("dels").querySelectorAll(".del").forEach(el => {
-    const i = +el.dataset.i, cb = el.querySelector("input");
+    const i = +el.dataset.i, cb = el.querySelector("input"), solo = el.querySelector(".solo");
     cb.onclick = e => e.stopPropagation();
     cb.onchange = () => { cb.checked ? S.visible.add(i) : S.visible.delete(i); update(); };
-    el.querySelector(".solo").onclick = e => { e.stopPropagation(); S.visible = new Set([i]); setActive(i); };
+    if (solo) solo.onclick = e => { e.stopPropagation(); S.visible = new Set([i]); setActive(i); };
     el.onclick = () => setActive(i);
   });
   scheduleDice();
@@ -736,14 +999,16 @@ function seg(id, key) {
 }
 seg("mode", "mode"); seg("colorby", "colorBy");
 $("opacity").oninput = e => { S.opacity = +e.target.value; draw(); };
-$("zoom").oninput = e => { S.zoom = +e.target.value; if (S.data) { sizeViews(); draw(); } };
+$("zoom").oninput = e => { S.zoom = +e.target.value; if (S.data && S.data.bbox) { sizeViews(); draw(); } };
 $("cross").onchange = e => { S.cross = e.target.checked; draw(); };
 document.addEventListener("click", e => { if (!$("settings").contains(e.target)) $("settings").open = false; });
-$("exportNotes").onclick = exportNotes;
-refreshNoteCount();
-$("all").onclick = () => { S.visible = new Set(shown().map(d => d.i)); update(); };
+$("exportReview").onclick = exportReview;
+refreshReviewCount();
+$("reviewer").value = REVIEWER;
+$("reviewer").oninput = e => { REVIEWER = e.target.value; try { localStorage.setItem("viewer.reviewer", REVIEWER); } catch (x) {} };
+$("all").onclick = () => { S.visible = new Set(drawn().map(d => d.i)); update(); };
 $("none").onclick = () => { S.visible = new Set(); update(); };
-const swap = () => { S.visible = new Set(shown().filter(d => !S.visible.has(d.i)).map(d => d.i)); update(); };
+const swap = () => { S.visible = new Set(drawn().filter(d => !S.visible.has(d.i)).map(d => d.i)); update(); };
 $("swap").onclick = swap;
 $("nucAll").onclick = () => { S.labelsOn = new Set(NUCLEI.map(n => n.label)); renderNuclei(); draw(); scheduleDice(); };
 $("nucNone").onclick = () => { S.labelsOn = new Set(); renderNuclei(); draw(); scheduleDice(); };
@@ -753,48 +1018,26 @@ document.addEventListener("keydown", e => {
   if (e.key === " ") { e.preventDefault(); swap(); return; }
   const n = parseInt(e.key, 10);
   if (n >= 1 && n <= 9) {
-    const d = shown()[n - 1]; if (!d) return;
+    const d = drawn()[n - 1]; if (!d) return;
     S.visible.has(d.i) ? S.visible.delete(d.i) : S.visible.add(d.i); update();
   }
 });
-window.addEventListener("resize", () => { if (S.data) { sizeViews(); draw(); } });
+window.addEventListener("resize", () => { if (S.data && S.data.bbox) { sizeViews(); draw(); } });
 
 const sel = $("subject");
-// List of the subjects with at least one delineation under the current filter
-function renderSubjects() {
-  const avail = INDEX.filter(s => countFor(s) > 0);
-  sel.innerHTML = avail.map(s => `<option value="${esc(s.subject)}">${esc(s.subject)} (${countFor(s)} delin.)</option>`).join("");
-  return avail;
-}
-function applyFilter(v) {
-  S.filter = v;
-  $("filter").querySelectorAll("button").forEach(b => b.classList.toggle("on", b.dataset.v === v));
-  try { localStorage.setItem("viewer.filter", v); } catch (e) {}
-  const avail = renderSubjects();
-  if (!avail.length) { $("dels").innerHTML = '<div class="note">No delineation for this filter.</div>'; return false; }
-  if (!avail.some(s => s.subject === S.subject)) { sel.value = avail[0].subject; loadSubject(avail[0].subject); return true; }
-  sel.value = S.subject;
-  if (S.data) { S.session = bestSession(); resetVisible(); renderSessions(); renderDelList(); renderCtl(); draw(); }
-  return true;
-}
-$("filter").querySelectorAll("button").forEach(b => b.onclick = () => applyFilter(b.dataset.v));
+// One entry per scan of DATA/DELINEATION_CLEAN: number of drawable raters, deleted ones, STAPLE
+const scanLabel = s => `${s.scan} (${s.n} delin.${s.ndeleted ? `, ${s.ndeleted} deleted` : ""}${s.staple ? ", STAPLE" : ""})`;
 
-if (!INDEX.length) {
+if (!INDEX.length || !INDEX[0].scan) {
   $("grid").innerHTML = '<div class="empty">No data: run <code>python ANALYSIS/viewer/build_viewer.py</code></div>';
 } else {
+  sel.innerHTML = INDEX.map(s => `<option value="${esc(s.scan)}">${esc(scanLabel(s))}</option>`).join("");
   sel.onchange = () => loadSubject(sel.value);
   renderNuclei();
-  let f = "clean", start = null;
-  try {
-    const sf = localStorage.getItem("viewer.filter"); if (FILTERS[sf]) f = sf;
-    start = localStorage.getItem("viewer.subject");
-  } catch (e) {}
-  S.filter = f;
-  const avail = renderSubjects();
-  if (!avail.some(s => s.subject === start)) start = avail.length ? avail[0].subject : null;
-  S.subject = start;  // applyFilter keeps it if it is available
-  applyFilter(f);
-  if (start) { sel.value = start; loadSubject(start); }
+  let start = null;
+  try { start = localStorage.getItem("viewer.subject"); } catch (e) {}
+  if (!INDEX.some(s => s.scan === start)) start = INDEX[0].scan;
+  sel.value = start; loadSubject(start);
 }
 </script>
 </body>

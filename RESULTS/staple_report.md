@@ -2,36 +2,36 @@
 
 Scans of DELINEATION_CLEAN with at least 3 raters (31 scans have fewer). Dice = agreement of a rater with the STAPLE reference of the same scan; values: median [Q1–Q3].
 
-**Problems of fix_problems.py when this ran:** nuclei: fixed, 23 flagged; lr_flip: not run; stray_points: not run; incomplete: not run; swapped_labels: not run; far_points: not run; stopped_halfway: not run; missing_frames: not run; shifted_scan: not run.
+**Problems of fix_problems.py when this ran:** nuclei: fixed, 25 flagged; lr_flip: not run; stray_points: not run; incomplete: not run; swapped_labels: not run; far_points: not run; stopped_halfway: not run; missing_frames: not run; shifted_scan: not run.
 
 ## Overview
 
 | | value |
 |---|---|
 | scans | 78 |
-| masks used | 333 |
+| masks used | 331 |
 | raters per scan | 4 [3–5] |
 | not converged | 3 |
-| mean Dice 1–9 (per mask) | 0.770 [0.669–0.821] |
-| whole-thalamus Dice | 0.882 [0.846–0.905] |
+| mean Dice 1–9 (per mask) | 0.771 [0.670–0.822] |
+| whole-thalamus Dice | 0.882 [0.847–0.905] |
 | masks with mean Dice < 0.5 | 14 |
-| unanimous voxels (thalamus) | 0.333 [0.263–0.415] |
-| uncertain voxels (prob < 0.9) | 0.058 [0.036–0.094] |
-| reference volume (mm³) | 9316 [8517–10227] |
+| unanimous voxels (thalamus) | 0.337 [0.263–0.422] |
+| uncertain voxels (prob < 0.9) | 0.060 [0.036–0.113] |
+| reference volume (mm³) | 9316 [8485–10212] |
 
 ## Agreement per nucleus
 
 | nucleus | Dice rater vs reference | STAPLE sensitivity | reference volume (mm³) |
 |---|---|---|---|
-| 1 | 0.781 [0.715–0.839] | 0.707 [0.604–0.798] | 306 [262–352] |
-| 2 | 0.777 [0.724–0.826] | 0.709 [0.615–0.785] | 757 [629–866] |
-| 3 | 0.848 [0.782–0.883] | 0.797 [0.691–0.866] | 2234 [1997–2428] |
-| 4 | 0.896 [0.867–0.919] | 0.864 [0.811–0.909] | 2986 [2692–3246] |
-| 5 | 0.788 [0.708–0.835] | 0.709 [0.611–0.800] | 230 [187–280] |
-| 6 | 0.774 [0.691–0.854] | 0.700 [0.585–0.820] | 160 [138–187] |
-| 7 | 0.625 [0.404–0.752] | 0.492 [0.285–0.646] | 355 [300–410] |
-| 8 | 0.877 [0.813–0.907] | 0.842 [0.757–0.895] | 1569 [1424–1738] |
-| 9 | 0.748 [0.539–0.809] | 0.661 [0.442–0.759] | 724 [666–804] |
+| 1 | 0.784 [0.715–0.839] | 0.708 [0.602–0.800] | 306 [262–352] |
+| 2 | 0.778 [0.723–0.828] | 0.709 [0.622–0.786] | 757 [629–861] |
+| 3 | 0.849 [0.782–0.883] | 0.799 [0.693–0.867] | 2234 [1997–2425] |
+| 4 | 0.896 [0.868–0.919] | 0.865 [0.814–0.909] | 2986 [2692–3244] |
+| 5 | 0.788 [0.707–0.835] | 0.709 [0.612–0.802] | 230 [187–278] |
+| 6 | 0.774 [0.692–0.857] | 0.701 [0.586–0.820] | 160 [136–187] |
+| 7 | 0.625 [0.407–0.753] | 0.493 [0.290–0.646] | 355 [300–405] |
+| 8 | 0.878 [0.814–0.907] | 0.842 [0.757–0.895] | 1569 [1422–1738] |
+| 9 | 0.748 [0.547–0.809] | 0.661 [0.443–0.759] | 724 [666–804] |
 
 ## Scans with the least agreement
 
