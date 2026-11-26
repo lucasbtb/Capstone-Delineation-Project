@@ -29,10 +29,12 @@ Group 13/Rater 13f/SUBC042_ses2_WMn_Rater_ 13f_manual_seg.nii.gz,MRI instead of 
 Group 13/Rater 13f/SUBG007_ses1_WMn_Rater_ 13f_manual_seg.nii.gz,MRI instead of a mask (non-integer values),not copied,
 Group 13/Rater 13f/SUBG008_ses2_WMn_Rater 13f_manual_seg.nii.gz,MRI instead of a mask (non-integer values),not copied,
 Group 14/Rater 14k/SUBC053_ses2_Rater14k_manual_seg(INCOMPLETE).nii,wrong type for its name: '.nii' is a NIfTI,converted to .nii.gz,DATA/DELINEATION_CLEAN/C_053_2/C_053_2_14_6.nii.gz
-Group 15/Rater 15a/SUBG009_ses1_Rater15a_manual_seg.nii,duplicate: older version of Group 15/Rater 15a/SUBG009_ses1_Rater15a_manual_seg.nii.gz (different content),not copied (the latest file is kept),
+Group 15/Rater 15a/SUBG009_ses1_Rater15a_manual_seg.nii,wrong type for its name: '.nii' is a NIfTI,converted to .nii.gz,DATA/DELINEATION_CLEAN/G_009_1/G_009_1_15_1.nii.gz
+Group 15/Rater 15a/SUBG009_ses1_Rater15a_manual_seg.nii.gz,duplicate: older version of Group 15/Rater 15a/SUBG009_ses1_Rater15a_manual_seg.nii (different content),not copied (the latest file is kept),
 Group 15/Rater 15a/SUBG010_ses1_Rater15a_manual_seg 2.nii,duplicate: exact copy of Group 15/Rater 15a/SUBG010_ses1_Rater15a_manual_seg.nii.gz,not copied,
 Group 15/Rater 15a/SUBG012_ses1_Rater15a_manual_seg.nii,duplicate: exact copy of Group 15/Rater 15a/SUBG012_ses1_Rater15a_manual_seg.nii.gz,not copied,
-Group 15/Rater 15a/SUBG013_ses1_Rater15a_manual_ses.nii,duplicate: older version of Group 15/Rater 15a/SUBG013_ses1_Rater15a_manual_ses.nii.gz (different content),not copied (the latest file is kept),
+Group 15/Rater 15a/SUBG013_ses1_Rater15a_manual_ses.nii,wrong type for its name: '.nii' is a NIfTI,converted to .nii.gz,DATA/DELINEATION_CLEAN/G_013_1/G_013_1_15_1.nii.gz
+Group 15/Rater 15a/SUBG013_ses1_Rater15a_manual_ses.nii.gz,duplicate: older version of Group 15/Rater 15a/SUBG013_ses1_Rater15a_manual_ses.nii (different content),not copied (the latest file is kept),
 Group 15/Rater 15a/SUBG014_ses1_Rater15a_manual_seg.nii,duplicate: exact copy of Group 15/Rater 15a/SUBG014_ses1_Rater15a_manual_seg.nii.gz,not copied,
 Group 15/Rater 15a/SUBG015_ses1_Rater15a_manual_seg.nii,duplicate: exact copy of Group 15/Rater 15a/SUBG015_ses1_Rater15a_manual_seg.nii.gz,not copied,
 Group 15/Rater 15a/SUBG016_ses1_Rater15a_manual_seg.nii,duplicate: exact copy of Group 15/Rater 15a/SUBG016_ses1_Rater15a_manual_seg.nii.gz,not copied,
