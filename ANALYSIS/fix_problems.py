@@ -178,13 +178,6 @@ def incomplete(d, no_changes=False):
     raise NotImplementedError
 
 
-"""Replaces the stub `swapped_labels` in fix_problems.py (needs only numpy and ndimage, already imported there).
-
-Also change the order of PROBLEMS so that swapped_labels runs FIRST (before `nuclei`, which deletes files):
-    PROBLEMS = {f.__name__: f for f in (swapped_labels, nuclei, lr_flip, stray_points, incomplete,
-                                        far_points, stopped_halfway, missing_frames, shifted_scan)}
-"""
-
 MIN_RATERS = 3          # the consensus of "the others" needs at least 2 peers (3 raters in total)
 DICE_RELABEL = 0.5      # a single label is relabelled when its Dice with the consensus nucleus is above this
 FLAG_DICE = 0.2         # below this the delineation barely overlaps the consensus: not a label swap, not flagged
