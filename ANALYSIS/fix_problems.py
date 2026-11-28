@@ -178,9 +178,112 @@ def incomplete(d, no_changes=False):
     raise NotImplementedError
 
 
+MIN_RATERS = 3          # the consensus of "the others" needs at least 2 peers (3 raters in total)
+DICE_RELABEL = 0.5      # a single label is relabelled when its Dice with the consensus nucleus is above this
+FLAG_DICE = 0.2         # below this the delineation barely overlaps the consensus: not a label swap, not flagged
+CYCLE_MEAN_DICE = 0.5   # labels that trade places (7<->9, 7->8->9->7...) are judged TOGETHER: relabelled when
+CYCLE_MIN_DICE = 0.3    # their mean Dice is >= 0.5 and none is below 0.3
+
+
+def _dice(overlap, size_a, size_b):
+    return 2.0 * overlap / (size_a + size_b) if size_a + size_b else 0.0
+
+
+def _consensus(peer_arrays, shape):
+    """Majority vote of the peers over the nuclei 1-9: a voxel gets nucleus c when MORE than half of the
+    peers say c (so with 2 peers both must agree). Labels outside 1-9 vote for nothing."""
+    n = len(peer_arrays)
+    votes = np.zeros((len(EXPECTED_LABELS) + 1,) + shape, np.uint8)
+    for arr in peer_arrays:
+        for c in EXPECTED_LABELS:
+            votes[c] += (arr == c)
+    win = votes[1:] * 2 > n
+    return np.where(win.any(axis=0), win.argmax(axis=0) + 1, 0)
+
+
+def _cycles(moved):
+    """Groups of labels that trade places: following label -> its best nucleus comes back to the start."""
+    cycles, seen = [], set()
+    for start in moved:
+        path, cur = [], start
+        while cur in moved and cur not in path and cur not in seen:
+            path.append(cur)
+            cur = moved[cur][0]
+        if cur in path:
+            cycles.append(path[path.index(cur):])
+        seen.update(path)
+    return cycles
+
+
 def swapped_labels(d, no_changes=False):
-    """5. Swapped labels."""
-    raise NotImplementedError
+    """5. Swapped labels: each label of the delineation (also 10-13, 35...) is matched to the nucleus of the
+    consensus of the OTHER raters of the same scan (majority vote, without the delineation itself) that it
+    overlaps most. A label whose best match is not itself is relabelled when its Dice with that nucleus is
+    > 0.5 (and better than the identity's), or when it belongs to a group of labels that trade places and the
+    group as a whole is good (mean Dice >= 0.5, none below 0.3). Relabelling is simultaneous (real swaps work).
+    Otherwise it is only flagged; matches with a Dice < 0.2 are ignored (not a label problem: shifted scan...).
+    Scans with fewer than 3 raters are only flagged (check in the viewer).
+    Must run BEFORE `nuclei`, which would delete the delineation for its labels outside 1-9."""
+    data = d.data
+    if not data.any():
+        return False, ""
+    peers = [p for p in d.peers() if p.data.shape == data.shape]
+    if len(peers) + 1 < MIN_RATERS:
+        n = len(peers) + 1
+        return True, f"not fixed (only {n} rater{'s' if n != 1 else ''}, < {MIN_RATERS}): check manually in the viewer"
+
+    # work in the box around everything that is labelled (delineation + peers)
+    union = data != 0
+    for p in peers:
+        union |= p.data != 0
+    box = ndimage.find_objects(union.astype(np.int8))[0]
+    sub = data[box]
+    consensus = _consensus([p.data[box] for p in peers], sub.shape)
+    if not consensus.any():
+        return True, "not fixed (empty consensus of the other raters): check manually in the viewer"
+
+    cons_size = np.bincount(consensus.ravel(), minlength=len(EXPECTED_LABELS) + 1)
+    labels = [int(l) for l in np.unique(sub[sub != 0])]
+    best = {}  # label -> (best nucleus, its Dice, Dice of the identity)
+    for label in labels:
+        mask = sub == label
+        overlap = np.bincount(consensus[mask], minlength=len(EXPECTED_LABELS) + 1)
+        overlap[0] = 0  # background of the consensus is not a nucleus
+        if not overlap.any():
+            continue  # touches no consensus nucleus: nothing to match (extra labels are problem `nuclei`)
+        c = int(overlap.argmax())
+        identity = _dice(overlap[label], mask.sum(), cons_size[label]) if label in EXPECTED_LABELS else 0.0
+        best[label] = (c, _dice(overlap[c], mask.sum(), cons_size[c]), identity)
+
+    # best match is not the identity, and the overlap is big enough to be about labels (not about position)
+    moved = {l: v for l, v in best.items() if v[0] != l and v[1] >= FLAG_DICE}
+    if not moved:
+        return False, ""
+
+    relabel = {l: v[0] for l, v in moved.items() if v[1] > DICE_RELABEL and v[1] > v[2]}
+    for cycle in _cycles(moved):
+        dices = [moved[l][1] for l in cycle]
+        if len(cycle) > 1 and np.mean(dices) >= CYCLE_MEAN_DICE and min(dices) >= CYCLE_MIN_DICE:
+            relabel.update({l: moved[l][0] for l in cycle})
+
+    final = [relabel.get(l, l) for l in labels]
+    text = lambda items: ", ".join(f"{l}->{v[0]} (Dice {v[1]:.2f})" for l, v in items)
+    if relabel and len(set(final)) < len(final):  # two labels would end up with the same nucleus
+        return True, f"not fixed (relabelling would merge labels): {text(moved.items())}"
+    if not relabel:
+        return True, f"not fixed (Dice too low to relabel): {text(moved.items())}"
+
+    detail = text((l, moved[l]) for l in relabel)
+    left = {l: v for l, v in moved.items() if l not in relabel}
+    if left:
+        detail += f"; flagged only: {text(left.items())}"
+    if no_changes:
+        return True, f"not fixed (no_changes): {detail}"
+    fixed = data.copy()
+    for label, c in relabel.items():
+        fixed[data == label] = c  # compared with the ORIGINAL voxels: simultaneous, no label is relabelled twice
+    d.save(fixed)
+    return True, f"fixed: relabelled {detail}"
 
 
 def far_points(d, no_changes=False):
